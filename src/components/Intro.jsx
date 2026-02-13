@@ -199,23 +199,27 @@ export default function Intro() {
 
             {/* TEAM */}
             <section
-              className="grid items-center gap-10 md:grid-cols-[1.2fr,1.1fr]"
+              className="relative grid items-center gap-12 md:grid-cols-2 pb-20"
               aria-label="Team Future Frames"
               data-aos="fade-up"
             >
-              <div className="space-y-4">
+              {/* COLONNA SINISTRA — TESTO */}
+              <div className="text-left space-y-5">
                 <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
                   Il team
                 </p>
+
                 <h3 className="font-antonio font-semibold text-2xl md:text-3xl text-white">
                   Due professionisti, una visione condivisa.
                 </h3>
-                <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
+
+                <p className="font-montserrat text-sm leading-relaxed text-zinc-300 max-w-xl">
                   <strong>Gloria Margarino</strong>, fotografa e videomaker, e{" "}
                   <strong>Ivan Scrofani</strong>, video editor, guidano Future Frames
                   unendo sensibilità visiva e montaggio narrativo. Ogni progetto
                   nasce dal dialogo con il cliente e dalla cura per i dettagli.
                 </p>
+
                 <Link
                   href="/about"
                   className="inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200"
@@ -225,89 +229,38 @@ export default function Intro() {
                 </Link>
               </div>
 
+              {/* COLONNA DESTRA — IMMAGINI */}
               <Link
                 href="/about"
-                className="relative flex items-center justify-center"
+                className="relative w-full justify-self-end flex justify-end"
+                aria-label="Vai alla pagina About"
               >
-                <div className="relative h-64 w-44 sm:h-72 sm:w-52 md:h-80 md:w-56">
-                  <div className="absolute left-[-40%] top-0 h-3/4 w-full overflow-hidden rounded-3xl border border-white/15 bg-zinc-900/60 shadow-[0_18px_50px_rgba(0,0,0,0.9)]">
+                {/* box immagini: niente overflow-hidden (serve vedere l’incrocio) */}
+                <div className="relative w-full max-w-[560px] h-[420px] md:h-[460px]">
+                  {/* Glow */}
+                  <div className="pointer-events-none absolute -top-10 right-10 h-64 w-64 rounded-3xl bg-gradient-to-br from-violet-600/60 via-fuchsia-500/30 to-sky-500/25 blur-3xl" />
+
+                  {/* Gloria (dietro) */}
+                  <div className="absolute top-2 right-24 z-10 w-[320px] h-[320px] md:w-[340px] md:h-[340px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
                     <img
                       src="/images/gloria2.jpeg"
                       alt="Gloria Margarino"
-                      className="h-full w-full object-cover"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </div>
 
-                  <div className="absolute right-[-40%] bottom-[-8%] h-3/4 w-full overflow-hidden rounded-3xl border border-white/15 bg-zinc-900/60 shadow-[0_18px_50px_rgba(0,0,0,0.9)]">
+                  {/* Ivan (davanti) — più in basso e un pelo più a destra */}
+                  <div className="absolute bottom-0 right-0 z-20 w-[360px] h-[300px] md:w-[400px] md:h-[320px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.92)]">
                     <img
                       src="/images/ivan.jpeg"
                       alt="Ivan Scrofani"
-                      className="h-full w-full object-cover"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </div>
                 </div>
               </Link>
-            </section>
-
-            {/* MISSION & VALUES */}
-            <section
-              className="grid gap-10 md:grid-cols-2"
-              aria-label="Missione e valori"
-            >
-              <div
-                className="rounded-2xl border border-white/5 bg-zinc-900/70 p-6 md:p-8 shadow-[0_22px_60px_rgba(0,0,0,0.85)]"
-                data-aos="fade-up"
-              >
-                <h3 className="font-antonio text-sm md:text-base tracking-[0.25em] uppercase text-violet-300 mb-3">
-                  La nostra missione
-                </h3>
-                <p className="font-antonio text-xl md:text-2xl leading-snug mb-4">
-                  Trasformare{" "}
-                  <strong>momenti</strong> ed <strong>esperienze</strong> in{" "}
-                  <strong>immagini</strong> che lasciano un{" "}
-                  <strong>segno</strong>.
-                </p>
-                <p className="font-montserrat text-sm text-zinc-200 leading-relaxed">
-                  Future Frames nasce con l&apos;obiettivo di creare contenuti
-                  visivi che non solo raccontano, ma{" "}
-                  <strong>coinvolgono</strong> e <strong>ispirano</strong>, in
-                  modo autentico e contemporaneo.
-                </p>
-              </div>
-
-              <div
-                className="rounded-2xl border border-violet-500/40 bg-gradient-to-br from-violet-900/60 via-zinc-900 to-black p-6 md:p-8 shadow-[0_25px_70px_rgba(88,28,135,0.9)] flex flex-col justify-between gap-4"
-                data-aos="fade-up"
-                data-aos-delay="150"
-              >
-                <div className="space-y-1">
-                  <p className="font-antonio text-lg tracking-[0.25em] uppercase text-violet-50">
-                    CREATIVITÀ.
-                  </p>
-                  <p className="font-antonio text-lg tracking-[0.25em] uppercase text-violet-100">
-                    AFFIDABILITÀ.
-                  </p>
-                  <p className="font-antonio text-lg tracking-[0.25em] uppercase text-violet-100">
-                    QUALITÀ PROFESSIONALE.
-                  </p>
-                </div>
-                <p className="font-montserrat text-sm text-violet-50 leading-relaxed">
-                  Ogni progetto è guidato da <strong>passione</strong>,{" "}
-                  <strong>cura dei dettagli</strong> e{" "}
-                  <strong>rispetto per la visione del cliente</strong> — perché
-                  ogni storia merita di essere ricordata nel tempo.
-                </p>
-                <div>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center rounded-full bg-violet-500 px-6 py-2 text-xs font-montserrat uppercase tracking-[0.2em] text-black hover:bg-violet-400 transition"
-                  >
-                    Richiedi un preventivo
-                  </Link>
-                </div>
-              </div>
             </section>
           </div>
         </div>

@@ -2,8 +2,28 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Chi Siamo – Future Frames",
-  description: "Scopri il team di Future Frames: Gloria Margarino e Ivan Scrofani, professionisti della fotografia e del videomaking.",
+  description:
+    "Scopri il team di Future Frames: Gloria Margarino e Ivan Scrofani, professionisti della fotografia e del videomaking.",
 };
+
+function ImageFrame({ src, alt, className = "", imgClassName = "" }) {
+  return (
+    <div
+      className={[
+        "overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/70",
+        "shadow-[0_22px_60px_rgba(0,0,0,0.9)]",
+        className,
+      ].join(" ")}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className={["h-full w-full object-cover", imgClassName].join(" ")}
+        loading="lazy"
+      />
+    </div>
+  );
+}
 
 export default function About() {
   return (
@@ -30,20 +50,21 @@ export default function About() {
             Un&apos;agenzia creativa specializzata in fotografia e videomaking
             professionale.
             <br />
-            Raccontiamo persone, aziende ed eventi con un
-            linguaggio visivo pulito, emotivo e contemporaneo.
+            Raccontiamo persone, aziende ed eventi con un linguaggio visivo
+            pulito, emotivo e contemporaneo.
           </p>
         </div>
       </div>
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:py-16 space-y-16 sm:space-y-24 min-h-screen bg-gradient-to-b from-black via-[#0a0b338d] to-[#45115d5c]">
-        {/* PANORAMICA TEAM */}
+        {/* PANORAMICA TEAM (come reference: testo sx + 1 immagine dx “card”) */}
         <section
-          className="grid items-start gap-10 md:grid-cols-[1.3fr,1.1fr]"
+          className="grid items-center gap-10 md:grid-cols-2"
           aria-label="Team Future Frames"
           data-aos="fade-up"
         >
-          <div className="space-y-4">
+          {/* LEFT: TEXT */}
+          <div className="space-y-4 md:pr-6">
             <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
               Il team
             </p>
@@ -52,16 +73,15 @@ export default function About() {
             </h2>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
               <strong>Gloria Margarino</strong>, fotografa e videomaker, e{" "}
-              <strong>Ivan Scrofani</strong>, video editor, guidano Future
-              Frames unendo sensibilità visiva e montaggio narrativo. Ogni
-              progetto nasce dal dialogo con il cliente e dalla cura per i
-              dettagli.
+              <strong>Ivan Scrofani</strong>, video editor, guidano Future Frames unendo
+              sensibilità visiva e montaggio narrativo. Ogni progetto nasce dal dialogo
+              con il cliente e dalla cura per i dettagli.
             </p>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Dalla pianificazione alla consegna finale, il loro obiettivo è
-              trasformare momenti, brand e storie in immagini che restano nel
-              tempo.
+              Dalla pianificazione alla consegna finale, il loro obiettivo è trasformare
+              momenti, brand e storie in immagini che restano nel tempo.
             </p>
+
             <Link
               href="/portfolio"
               className="inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200"
@@ -71,27 +91,26 @@ export default function About() {
             </Link>
           </div>
 
-          <div className="relative flex justify-center">
-            <div className="relative h-96 w-48 sm:h-80 sm:w-56 md:h-96 md:w-64">
-              <div className="absolute left-0 top-0 h-[78%] w-full overflow-hidden rounded-lg border border-violet-300/25 bg-zinc-900/60 shadow-[0_20px_60px_rgba(0,0,0,0.9)]">
-                <img
-                  src="/images/introimg4.webp"
-                  alt="Gloria Margarino"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
+          {/* RIGHT: IMAGE */}
+          <div className="flex md:justify-end">
+            <div className="w-full max-w-[420px]">
+              <ImageFrame
+                src="/images/introimg4.webp"
+                alt="Future Frames – backstage"
+                className="aspect-[4/3]"
+              />
             </div>
           </div>
         </section>
 
-        {/* BIO GLORIA */}
+        {/* BIO GLORIA (testo sx + immagine dx come screenshot) */}
         <section
-          className="grid gap-8 md:grid-cols-[1.1fr,1fr] items-center"
+          className="grid items-center gap-10 md:grid-cols-2"
           aria-label="Gloria Margarino"
           data-aos="fade-up"
         >
-          <div className="space-y-4">
+          {/* LEFT: TEXT */}
+          <div className="space-y-4 md:pr-6">
             <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
               Gloria Margarino
             </p>
@@ -99,47 +118,37 @@ export default function About() {
               Fotografa e videomaker.
             </h3>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Gloria è il cuore visivo di Future Frames. Cura la fotografia e le
-              riprese sul set, con un approccio che unisce sensibilità
-              estetica, attenzione alla luce e naturalezza nelle espressioni.
+              Gloria è il cuore visivo di Future Frames. Cura la fotografia e le riprese
+              sul set, con un approccio che unisce sensibilità estetica, attenzione alla
+              luce e naturalezza nelle espressioni.
             </p>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Dagli eventi privati ai matrimoni, fino ai progetti aziendali, il
-              suo obiettivo è raccontare persone e momenti reali senza perdere
-              eleganza e coerenza visiva.
+              Dagli eventi privati ai matrimoni, fino ai progetti aziendali, il suo
+              obiettivo è raccontare persone e momenti reali senza perdere eleganza e
+              coerenza visiva.
             </p>
           </div>
 
-          <div className="relative flex justify-center">
-            <div className="relative h-72 w-52 sm:h-80 sm:w-56 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/70 shadow-[0_22px_60px_rgba(0,0,0,0.9)]">
-              <img
+          {/* RIGHT: IMAGE */}
+          <div className="flex md:justify-end">
+            <div className="w-full max-w-[380px]">
+              <ImageFrame
                 src="/images/gloria2.jpeg"
                 alt="Gloria Margarino al lavoro"
-                className="h-full w-full object-cover"
-                loading="lazy"
+                className="aspect-[3/4]"
               />
             </div>
           </div>
         </section>
 
-        {/* BIO IVAN */}
+        {/* BIO IVAN (immagine sx + testo dx come screenshot) */}
         <section
-          className="grid gap-8 md:grid-cols-[1fr,1.1fr] items-center"
+          className="grid items-center gap-10 md:grid-cols-2"
           aria-label="Ivan Scrofani"
           data-aos="fade-up"
         >
-          <div className="relative order-2 md:order-1 flex justify-center">
-            <div className="relative h-72 w-52 sm:h-80 sm:w-56 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/70 shadow-[0_22px_60px_rgba(0,0,0,0.9)]">
-              <img
-                src="/images/ivan.jpeg"
-                alt="Ivan Scrofani"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-4 order-1 md:order-2">
+          {/* LEFT: TEXT */}
+          <div className="space-y-4 md:pr-6">
             <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
               Ivan Scrofani
             </p>
@@ -147,26 +156,38 @@ export default function About() {
               Video editor e post-produzione.
             </h3>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Ivan dà ritmo e struttura alle storie. In fase di montaggio
-              unisce immagini, suono e musica per creare narrazioni fluide,
-              dinamiche e coerenti con l&apos;identità del cliente.
+              Ivan dà ritmo e struttura alle storie. In fase di montaggio unisce immagini,
+              suono e musica per creare narrazioni fluide, dinamiche e coerenti con
+              l&apos;identità del cliente.
             </p>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Dai social content ai video corporate, fino agli spot più
-              cinematografici, lavora perché ogni frame abbia un ruolo preciso
-              e un impatto chiaro.
+              Dai social content ai video corporate, fino agli spot più cinematografici,
+              lavora perché ogni frame abbia un ruolo preciso e un impatto chiaro.
             </p>
+          </div>
+
+          {/* RIGHT: IMAGE */}
+          <div className="flex md:justify-end">
+            <div className="w-full max-w-[380px]">
+              <ImageFrame
+                src="/images/ivan.jpeg"
+                alt="Ivan Scrofani"
+                className="aspect-[3/4]"
+                imgClassName="object-[50%_25%]"
+              />
+            </div>
           </div>
         </section>
 
-        {/* DOVE LAVORIAMO */}
+        {/* DOVE LAVORIAMO (come reference: card sx + mappa dx) */}
         <section
           aria-label="Dove lavoriamo"
           className="mt-16 md:mt-20"
           data-aos="fade-up"
         >
-          <div className="grid gap-8 md:grid-cols-[1.1fr,1.1fr] items-stretch">
-            <div className="rounded-3xl border border-white/10 bg-zinc-900/80 p-6 md:p-8 shadow-[0_22px_60px_rgba(0,0,0,0.85)] flex flex-col justify-center">
+          <div className="grid gap-10 md:grid-cols-[1.05fr,1.15fr] items-stretch">
+            {/* card testo */}
+            <div className="rounded-3xl border border-white/10 bg-zinc-900/70 p-6 md:p-8 shadow-[0_22px_60px_rgba(0,0,0,0.85)] flex flex-col justify-center">
               <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 mb-2">
                 Dove lavoriamo
               </p>
@@ -174,23 +195,24 @@ export default function About() {
                 Con base a Pomezia, alle porte di Roma.
               </h3>
               <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-200">
-                Future Frames ha sede a <strong>Pomezia (RM)</strong>, ma lavoriamo in
-                tutta l&apos;area metropolitana di <strong>Roma</strong>: eventi,
+                Future Frames ha sede a <strong>Pomezia (RM)</strong>, ma lavoriamo
+                in tutta l&apos;area metropolitana di <strong>Roma</strong>: eventi,
                 aziende, location private e spazi culturali.
               </p>
               <p className="mt-3 font-montserrat text-sm md:text-base leading-relaxed text-zinc-200">
                 Per progetti strutturati e produzioni più articolate valutiamo
-                <strong> trasferte</strong> in altre città italiane, in accordo con le
-                esigenze del cliente.
+                <strong> trasferte</strong> in altre città italiane, in accordo con
+                le esigenze del cliente.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-violet-500/40 bg-black/60 shadow-[0_26px_80px_rgba(0,0,0,0.95)] overflow-hidden">
+            {/* mappa */}
+            <div className="rounded-3xl border border-violet-500/40 bg-black/60 shadow-[0_26px_80px_rgba(0,0,0,0.95)] overflow-hidden min-h-[320px]">
               <iframe
                 title="Mappa Pomezia"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="h-56 sm:h-64 md:h-full min-h-[280px] w-full border-0"
+                className="h-full w-full border-0"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7469.59805370534!2d12.494142676655008!3d41.669457171703194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132599a4cfbcba4b%3A0xdee4c5c2d3b0f27b!2s00071%20Pomezia%20RM!5e0!3m2!1sit!2sit!4v1733589000000!5m2!1sit!2si"
               />
             </div>
@@ -198,19 +220,16 @@ export default function About() {
         </section>
 
         {/* MISSION + VALORI */}
-        <section
-          className="grid gap-10 md:grid-cols-2"
-          aria-label="Missione e valori"
-        >
+        <section className="grid gap-10 md:grid-cols-2" aria-label="Missione e valori">
           <div className="rounded-2xl border border-white/10 bg-zinc-900/70 p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)]">
             <h3 className="font-antonio text-xl md:text-2xl text-white mb-4">
               La nostra missione
             </h3>
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Trasformare momenti, esperienze e progetti in immagini che
-              lasciano il segno. Future Frames nasce con l&apos;idea di unire
-              qualità professionale e vicinanza umana, per contenuti che non
-              siano solo belli da vedere, ma anche efficaci nel comunicare.
+              Trasformare momenti, esperienze e progetti in immagini che lasciano
+              il segno. Future Frames nasce con l&apos;idea di unire qualità
+              professionale e vicinanza umana, per contenuti che non siano solo
+              belli da vedere, ma anche efficaci nel comunicare.
             </p>
           </div>
 
@@ -224,8 +243,8 @@ export default function About() {
                 giusta e il taglio narrativo più efficace.
               </li>
               <li>
-                <strong>Affidabilità</strong>, dalla pianificazione alle
-                consegne, con comunicazione chiara e rispetto delle scadenze.
+                <strong>Affidabilità</strong>, dalla pianificazione alle consegne,
+                con comunicazione chiara e rispetto delle scadenze.
               </li>
               <li>
                 <strong>Qualità professionale</strong>, in ogni fase: riprese,
