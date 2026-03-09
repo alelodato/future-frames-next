@@ -5,9 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/about", label: "CHI SIAMO" },
+  { href: "/about", label: "ABOUT" },
   { href: "/portfolio", label: "PORTFOLIO" },
   { href: "/servizi", label: "SERVIZI" },
+  { href: "/blog", label: "BLOG" },
   { href: "/contact", label: "CONTATTACI" },
 ];
 
@@ -54,7 +55,7 @@ export default function Navbar() {
             drop-shadow-[0_0_12px_rgba(160,32,240,0.8)]
           "
         >
-          FUTURE <span className="text-[#A020F0]">FRAMES</span>
+          <img src="/images/logo-viola.png" alt="Future Frames Logo" className="h-20 w-auto py-4" />
         </Link>
 
         {/* Desktop Links */}

@@ -41,7 +41,7 @@ export default function About() {
 
         <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-12 sm:pb-16">
           <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
-            Chi siamo
+            About
           </p>
           <h1 className="mt-3 font-antonio font-semibold text-4xl md:text-5xl leading-tight">
             Future Frames

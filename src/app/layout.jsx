@@ -11,6 +11,14 @@ export const metadata = {
   title: "Future Frames – Fotografia e Videomaking Professionale",
   description:
     "Agenzia creativa specializzata in fotografia e videomaking professionale. Raccontiamo persone, aziende ed eventi con un linguaggio visivo pulito, emotivo e contemporaneo.",
+  icons: {
+    icon: [
+      { url: '/images/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/images/apple-touch-icon.png',
+  },
+  manifest: '/images/site.webmanifest',
 };
 
 export default function RootLayout({ children }) {

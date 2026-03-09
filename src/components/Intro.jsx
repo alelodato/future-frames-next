@@ -95,7 +95,7 @@ export default function Intro() {
                   </div>
 
                   {/* IMMAGINE / CARD DESTRA */}
-                  <div className="relative h-full">
+                  <div className="relative h-full lg:mt-16">
                     <div className="relative mx-6 mb-10 lg:mb-0 lg:mr-10">
                       <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-violet-400/40 bg-black/40 shadow-[0_24px_60px_rgba(0,0,0,0.85)]">
                         <img
@@ -111,7 +111,8 @@ export default function Intro() {
                           Behind the scenes
                         </p>
                         <p className="mt-1 max-w-xs font-montserrat text-[0.78rem] leading-snug text-slate-100">
-                          Ogni frame è curato nei dettagli — dalla luce al montaggio
+                          Ogni frame è curato nei dettagli: 
+                          dalla luce al montaggio
                           finale.
                         </p>
                       </div>
@@ -140,10 +141,10 @@ export default function Intro() {
                 </Link>
               </div>
 
-              <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3">
+              <div className="md:grid gap-4 md:grid-cols-3">
                 {services.map((s) => (
                   <Link key={s.id} href={`/servizi#${s.id}`}>
-                    <article className="group relative h-44 sm:h-56 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
+                    <article className="group my-4 lg:my-0 relative h-44 sm:h-56 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
                       <img
                         src={s.img}
                         alt={s.title}
