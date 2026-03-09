@@ -241,7 +241,7 @@ export default function Intro() {
                   <div className="pointer-events-none absolute -top-10 right-10 h-64 w-64 rounded-3xl bg-gradient-to-br from-violet-600/60 via-fuchsia-500/30 to-sky-500/25 blur-3xl" />
 
                   {/* Gloria (dietro) */}
-                  <div className="absolute top-2 right-24 z-10 w-[320px] h-[320px] md:w-[340px] md:h-[340px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
+                  <div className="absolute top-2 right-40 md:right-45 z-10 w-[180px] h-[300px] md:w-[200px] md:h-[450px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
                     <img
                       src="/images/gloria2.jpeg"
                       alt="Gloria Margarino"
@@ -251,7 +251,7 @@ export default function Intro() {
                   </div>
 
                   {/* Ivan (davanti) — più in basso e un pelo più a destra */}
-                  <div className="absolute bottom-0 right-0 z-20 w-[360px] h-[300px] md:w-[400px] md:h-[320px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.92)]">
+                  <div className="absolute bottom-0 right-0 z-20 w-[180px] h-[300px] md:w-[200px] md:h-[450px] rounded-3xl overflow-hidden border border-white/15 bg-zinc-900/40 shadow-[0_25px_70px_rgba(0,0,0,0.92)]">
                     <img
                       src="/images/ivan.jpeg"
                       alt="Ivan Scrofani"
