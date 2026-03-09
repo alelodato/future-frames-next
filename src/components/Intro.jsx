@@ -179,7 +179,7 @@ export default function Intro() {
                       {[
                         { num: "X+", label: "Anni di esperienza" },
                         { num: "X+", label: "Progetti completati" },
-                        { num: "X", label: "xxx" },
+                        { num: "-", label: "-" },
                       ].map((s) => (
                         <div key={s.label}>
                           <p className="font-antonio text-xl text-violet-300">{s.num}</p>
