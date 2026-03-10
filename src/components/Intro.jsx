@@ -137,7 +137,7 @@ export default function Intro() {
       className="bg-black text-white"
     >
       <div className="relative">
-        <div className="mx-auto max-w-6xl px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen bg-gradient-to-b from-black via-[#0a0b33ad] to-[#45115d5c]">
+        <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen bg-gradient-to-b from-black via-[#0a0b33ad] to-[#45115d5c]">
           <div className="relative mx-auto max-w-6xl px-0 sm:px-4 py-10 sm:py-16 space-y-16 sm:space-y-20">
             {/* ── HERO CARD ── */}
             <div className="mx-auto max-w-6xl px-0 sm:px-4">

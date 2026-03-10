@@ -106,7 +106,7 @@ export default function Servizi() {
       </div>
 
       {/* ── SERVIZI ── */}
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20 space-y-24 sm:space-y-32 bg-gradient-to-b from-black via-[#0a0b338d] to-[#45115d5c]">
+      <div className="px-4 py-14 sm:py-20 space-y-24 sm:space-y-32 bg-gradient-to-b from-black via-[#0a0b338d] to-[#45115d5c]">
 
         {/* ── EVENTI ── */}
         <section id="eventi" className="space-y-6" data-aos="fade-up">
