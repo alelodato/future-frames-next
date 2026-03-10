@@ -429,7 +429,7 @@ export default function Portfolio() {
             ))}
           </div>
           <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.25em] text-zinc-600 hidden sm:block">
-            {filtered.length} project{filtered.length !== 1 ? "i" : "o"}
+            {filtered.length} progett{filtered.length !== 1 ? "i" : "o"}
           </span>
         </div>
       </section>

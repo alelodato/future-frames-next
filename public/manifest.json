@@ -3,6 +3,7 @@
   "short_name": "FF Admin",
   "description": "Pannello di gestione Future Frames",
   "start_url": "/admin",
+  "scope": "/admin",
   "display": "standalone",
   "background_color": "#02010b",
   "theme_color": "#02010b",

@@ -17,7 +17,7 @@ export const metadata = {
     ],
     apple: '/images/apple-touch-icon.png',
   },
-  manifest: '/manifest.json',
+  manifest: '/images/site.webmanifest',
 };
 
 export default function RootLayout({ children }) {
