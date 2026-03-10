@@ -1,8 +1,7 @@
 import "./globals.css";
 import "aos/dist/aos.css";
 import Script from "next/script";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import ConditionalLayout from "@/components/ConditionalLayout";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollToTopButton from "@/components/ScrollToTopBtn";
 import AOSInit from "@/components/AOSInit";
@@ -47,9 +46,7 @@ export default function RootLayout({ children }) {
         <AOSInit />
         <ScrollToTop />
         <ScrollToTopButton />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );
