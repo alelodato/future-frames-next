@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
-const categories = ["Spot Aziendale", "Matrimonio", "Food", "Evento", "Videoclip", "Corporate", "Altro"];
+const categories = ["Spot Aziendale", "Podcast", "Matrimonio", "Food", "Evento", "Videoclip", "Corporate", "Altro"];
 
 export default function ProjectEditor({ initialData, onSave, saving }) {
   const [title, setTitle] = useState(initialData?.title || "");
