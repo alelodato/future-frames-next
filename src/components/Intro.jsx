@@ -110,10 +110,10 @@ const services = [
     text: "Raccontiamo la tua azienda con immagini che non si limitano a mostrare, ma comunicano valore.",
   },
   {
-    id: "cerimonie",
+    id: "podcast",
     img: "/images/sfondo.jpg",
-    title: "CERIMONIE",
-    text: "Servizi foto e video per matrimoni, battesimi, 18esimi e anniversari.",
+    title: "PODCAST",
+    text: "Servizi foto e video per interviste, registrazioni e contenuti audiovisivi.",
   },
   {
     id: "food",

@@ -92,7 +92,7 @@ export default function Servizi() {
 
           {/* Nav ancore */}
           <div className="mt-8 flex flex-wrap justify-center gap-2">
-            {["eventi", "aziende", "cerimonie", "food", "montaggio"].map((s) => (
+            {["eventi", "aziende", "podcast", "food", "montaggio"].map((s) => (
               <a
                 key={s}
                 href={`#${s}`}
@@ -225,29 +225,29 @@ export default function Servizi() {
           </div>
         </section>
 
-        {/* ── CERIMONIE ── */}
-        <section id="cerimonie" className="space-y-6" data-aos="fade-up">
-          <Divider icon="fa-solid fa-heart" label="Cerimonie" />
+        {/* ── PODCAST ── */}
+        <section id="podcast" className="space-y-6" data-aos="fade-up">
+          <Divider icon="fa-solid fa-microphone" label="Podcast" />
 
           <div className="grid gap-6 md:gap-12 md:grid-cols-2 items-center">
             <div className="space-y-4">
               <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug">
-                I momenti <span className="text-violet-300">più importanti</span>
+                Il tuo podcast,{" "}<span className="text-violet-300">professionale</span>
                 <span className="block text-zinc-300 text-xl md:text-2xl mt-1 font-normal">
-                  meritano di essere ricordati per sempre.
+                  fin dal primo episodio.
                 </span>
               </h2>
 
               {/* Immagine mobile */}
               <div className="md:hidden relative h-52 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                <img src="/images/sfondo.jpg" alt="Cerimonie" className="h-full w-full object-cover" loading="lazy" />
+                <img src="/images/sfondo.jpg" alt="Podcast" className="h-full w-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               </div>
 
               <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <p className="font-antonio text-base text-violet-200 mb-3">Servizi foto e video per:</p>
+                <p className="font-antonio text-base text-violet-200 mb-3">Cosa includiamo:</p>
                 <ul className="space-y-2 font-montserrat text-sm text-zinc-300 mb-4">
-                  {["Matrimoni", "Anniversari di matrimonio", "Battesimi", "Diciottesimi"].map((item) => (
+                  {["Riprese video multi-camera", "Registrazione audio professionale", "Montaggio video e audio", "Grafiche e intro animate", "Clip social per Instagram e YouTube"].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
                       <span>{item}</span>
@@ -255,7 +255,7 @@ export default function Servizi() {
                   ))}
                 </ul>
                 <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
-                  Stile elegante, reportage naturale, attenzione ai dettagli e ai momenti autentici.
+                  Trasformiamo le tue conversazioni in contenuti video di alta qualità. Dalla regia alla distribuzione, ti seguiamo in ogni fase.
                 </p>
                 <ServiceCTA />
               </div>
@@ -266,12 +266,12 @@ export default function Servizi() {
               <div className="relative h-80">
                 <div className="absolute -top-6 -right-6 h-44 w-44 rounded-3xl bg-gradient-to-br from-fuchsia-600/60 via-violet-500/40 to-sky-500/30 blur-[26px] pointer-events-none" />
                 <div className="relative h-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                  <img src="/images/sfondo.jpg" alt="Cerimonie" className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
+                  <img src="/images/sfondo.jpg" alt="Podcast" className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 </div>
                 {/* Mini immagine sovrapposta */}
                 <div className="absolute -bottom-6 right-6 h-36 w-36 overflow-hidden rounded-2xl border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.85)]">
-                  <img src="/images/introimg5.webp" alt="Cerimonia dettaglio" className="h-full w-full object-cover" loading="lazy" />
+                  <img src="/images/introimg5.webp" alt="Podcast dettaglio" className="h-full w-full object-cover" loading="lazy" />
                 </div>
               </div>
             </div>
