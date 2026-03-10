@@ -62,23 +62,17 @@ export default function Servizi() {
     <section className="min-h-screen bg-[#02010b] text-white">
 
       {/* ── HERO ── */}
-      <div className="relative min-h-[70vh] overflow-hidden">
+      <div className="relative h-[80vh] min-h-[500px] overflow-hidden">
         <img
           src="/images/Tunnel2.jpg"
           alt="Tunnel viola futuristico"
-          className="absolute inset-0 h-full w-full object-cover scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-top scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
-        {/* Glow centrale */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
         <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-64 w-96 rounded-full bg-violet-600/20 blur-3xl" />
 
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-40 text-center min-h-[70vh]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-900/30 px-3 py-1 backdrop-blur-sm mb-5">
-            <div className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-            <p className="font-montserrat text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-violet-300">
-              I nostri servizi
-            </p>
-          </div>
+        <div className="relative z-10 mx-auto flex h-full max-w-4xl flex-col items-center px-4 text-center"
+          style={{ paddingTop: "20%" }}>
 
           <h1 className="font-antonio font-semibold text-4xl sm:text-5xl lg:text-[3rem] leading-tight">
             Creatività, Qualità Professionale
@@ -90,14 +84,10 @@ export default function Servizi() {
             con uno sguardo cinematografico e cura per ogni dettaglio.
           </p>
 
-          {/* Nav ancore */}
-          <div className="mt-8 flex flex-wrap justify-center gap-2">
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
             {["eventi", "aziende", "podcast", "food", "montaggio"].map((s) => (
-              <a
-                key={s}
-                href={`#${s}`}
-                className="rounded-full border border-violet-500/30 bg-violet-900/20 px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm transition hover:bg-violet-900/50 hover:border-violet-400/50"
-              >
+              <a key={s} href={`#${s}`}
+                className="rounded-full border border-violet-500/30 bg-violet-900/20 px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm transition hover:bg-violet-900/50 hover:border-violet-400/50">
                 {s}
               </a>
             ))}

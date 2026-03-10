@@ -59,7 +59,6 @@ const values = [
   },
 ];
 
-// ─── Components ───────────────────────────────────────────────────────────────
 
 function Divider({ icon, label }) {
   return (
@@ -178,34 +177,28 @@ export default function About() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black" />
 
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-12 sm:pb-16">
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 text-center">
           <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300">
             About
           </p>
           <h1 className="mt-3 font-antonio font-semibold text-4xl md:text-5xl leading-tight">
             Future Frames
           </h1>
-          <p className="mt-4 font-montserrat text-sm md:text-base leading-relaxed text-zinc-200">
-            Un&apos;agenzia creativa specializzata in fotografia e videomaking
-            professionale.
-            <br />
-            Raccontiamo persone, aziende ed eventi con un linguaggio visivo
-            pulito, emotivo e contemporaneo.
+          <p className="mt-4 font-montserrat text-sm md:text-base leading-relaxed text-zinc-200 max-w-2xl">
+            Siamo un team di fotografi e videomaker uniti dalla stessa idea: raccontare storie autentiche con uno sguardo contemporaneo.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3 justify-center">
-            <Link href="/portfolio"
-              className="inline-flex items-center justify-center rounded-full bg-violet-400 px-5 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.7)] transition hover:bg-violet-300">
-              Scopri il portfolio
-            </Link>
-            <Link href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-violet-300/70 bg-transparent px-5 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-violet-100/90 transition hover:bg-white/5">
-              Contattaci
-            </Link>
-          </div>
         </div>
 
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.4em] text-zinc-400">Chi Siamo</span>
+          <div className="relative h-10 w-px bg-zinc-700 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full bg-violet-400"
+              style={{ animation: "scrollLine 1.8s ease-in-out infinite" }} />
+          </div>
+          <style>{`@keyframes scrollLine { 0%{height:0;top:0} 50%{height:100%;top:0} 100%{height:0;top:100%} }`}</style>
+        </div>
       </div>
-
       {/* ── BODY ── */}
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20 space-y-20 sm:space-y-28 bg-gradient-to-b from-black via-[#0a0b338d] to-[#45115d5c]">
 
@@ -250,7 +243,7 @@ export default function About() {
               {/* Immagine */}
               <div className="relative min-h-[360px] md:min-h-0 overflow-hidden">
                 <img src="/images/gloria2.jpeg" alt="Gloria Margarino"
-                  className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                  className="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0d0b2a] hidden md:block" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b2a] via-transparent to-transparent md:hidden" />
                 {/* Badge ruolo */}

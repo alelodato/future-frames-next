@@ -177,8 +177,8 @@ export default function Intro() {
                     {/* Stats mini */}
                     <div className="mt-7 flex gap-6 border-t border-violet-500/15 pt-6">
                       {[
-                        { num: "X+", label: "Anni di esperienza" },
-                        { num: "X+", label: "Progetti completati" },
+                        { num: "-", label: "-" },
+                        { num: "-", label: "-" },
                         { num: "-", label: "-" },
                       ].map((s) => (
                         <div key={s.label}>
