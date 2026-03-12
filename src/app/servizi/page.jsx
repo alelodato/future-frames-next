@@ -1,94 +1,442 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// ─── Componenti riutilizzabili ────────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
 
-function Divider({ icon, label }) {
+// ─── DATA ─────────────────────────────────────────────────────
+const services = [
+  {
+    id: "eventi",
+    index: "01",
+    icon: "fa-solid fa-calendar-star",
+    label: "Eventi",
+    title: "Dal backstage al momento clou:",
+    subtitle: "ogni istante catturato con precisione.",
+    titleAccent: false,
+    body: null,
+    list: [
+      "Fotografia e video per eventi privati e aziendali.",
+      "Copertura completa con scatti spontanei e riprese dinamiche.",
+      "Ideale per feste, lanci di prodotto, eventi culturali, convention.",
+    ],
+    media: { type: "image", src: "/images/eventi.webp", alt: "Fotografia eventi" },
+  },
+  {
+    id: "aziende",
+    index: "02",
+    icon: "fa-solid fa-building",
+    label: "Aziende",
+    title: "Contenuti visivi su misura",
+    subtitle: "che rafforzano l'identità del tuo brand.",
+    body: "Dai ritratti corporate ai video istituzionali, fino agli spot pubblicitari e ai contenuti social, ogni progetto è studiato per valorizzare la tua identità e distinguerti sul mercato.",
+    list: [
+      "Video istituzionali e corporate.",
+      "Spot pubblicitari e social video.",
+      "Ritratti e fotografia aziendale.",
+      "Contenuti per employer branding.",
+      "Shooting prodotto/servizio.",
+    ],
+    media: { type: "video", src: "/videos/ToyotaXReply.mp4", alt: "Video aziendale" },
+  },
+  {
+    id: "podcast",
+    index: "03",
+    icon: "fa-solid fa-microphone",
+    label: "Podcast",
+    title: "Il tuo podcast, professionale",
+    subtitle: "fin dal primo episodio.",
+    body: "Trasformiamo le tue conversazioni in contenuti video di alta qualità. Dalla regia alla distribuzione, ti seguiamo in ogni fase.",
+    listLabel: "Cosa includiamo:",
+    list: [
+      "Riprese video multi-camera",
+      "Registrazione audio professionale",
+      "Montaggio video e audio",
+      "Grafiche e intro animate",
+      "Clip social per Instagram e YouTube",
+    ],
+    media: { type: "image", src: "/images/sfondo.jpg", alt: "Podcast" },
+  },
+  {
+    id: "food",
+    index: "04",
+    icon: "fa-solid fa-utensils",
+    label: "Food",
+    title: "Ogni piatto diventa un'immagine",
+    subtitle: "che conquista lo sguardo.",
+    body: null,
+    list: [
+      "Shooting fotografico e video per ristoranti, chef e aziende.",
+      "Immagini per menu, social, campagne pubblicitarie.",
+      "Riprese video con focus su estetica e storytelling del piatto.",
+    ],
+    media: { type: "image", src: "/images/introimg6.webp", alt: "Food photography" },
+  },
+  {
+    id: "montaggio",
+    index: "05",
+    icon: "fa-solid fa-scissors",
+    label: "Montaggio",
+    title: "Dove le immagini trovano",
+    subtitle: "ritmo, senso e impatto.",
+    listLabel: "Post-produzione e editing per:",
+    list: [
+      "Spot pubblicitari",
+      "Videoclip musicali",
+      "Documentari cinematografici e televisivi",
+      "Progetti cinematografici",
+      "Social content e reel",
+    ],
+    media: { type: "image", src: "/images/montaggio.webp", alt: "Editing professionale" },
+  },
+];
+
+// ─── STICKY SERVICES (desktop) ────────────────────────────────
+function StickyServices() {
+  const containerRef = useRef(null);
+  const mediaRefs = useRef([]);
+  const textRefs = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      mediaRefs.current.forEach((el, i) => {
+        if (!el) return;
+        if (i === 0) {
+          gsap.set(el, { opacity: 1, scale: 1 });
+          return;
+        }
+        gsap.set(el, { opacity: 0, scale: 1.04 });
+      });
+
+      textRefs.current.forEach((el, i) => {
+        if (!el) return;
+        if (i === 0) {
+          gsap.set(el, { opacity: 1, y: 0 });
+          return;
+        }
+        gsap.set(el, { opacity: 0, y: 32 });
+      });
+
+      services.forEach((_, i) => {
+        const textEl = textRefs.current[i];
+        const mediaEl = mediaRefs.current[i];
+        const prevTextEl = textRefs.current[i - 1];
+        const prevMediaEl = mediaRefs.current[i - 1];
+        if (!textEl || i === 0) return;
+
+        // Trigger su ogni text block
+        ScrollTrigger.create({
+          trigger: textEl,
+          start: "top 55%",
+          end: "bottom 45%",
+          onEnter: () => {
+            // Fade out previous
+            if (prevMediaEl) gsap.to(prevMediaEl, { opacity: 0, scale: 0.97, duration: 0.7, ease: "expo.out" });
+            if (prevTextEl) gsap.to(prevTextEl, { opacity: 0, y: -24, duration: 0.5, ease: "expo.out" });
+            // Fade in current
+            gsap.to(mediaEl, { opacity: 1, scale: 1, duration: 0.9, ease: "expo.out" });
+            gsap.to(textEl, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" });
+          },
+          onLeaveBack: () => {
+            // Restore previous
+            if (prevMediaEl) gsap.to(prevMediaEl, { opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" });
+            if (prevTextEl) gsap.to(prevTextEl, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" });
+            // Hide current
+            gsap.to(mediaEl, { opacity: 0, scale: 1.04, duration: 0.6, ease: "expo.out" });
+            gsap.to(textEl, { opacity: 0, y: 32, duration: 0.5, ease: "expo.out" });
+          },
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="flex items-center gap-4">
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
-      <div className="flex items-center gap-2">
-        <i className={`${icon} text-violet-400 text-xs`} />
-        <span className="font-montserrat text-[0.65rem] uppercase tracking-[0.3em] text-violet-400">
-          {label}
-        </span>
+    <div ref={containerRef} className="hidden md:grid grid-cols-2 relative">
+
+      {/* ── SINISTRA: testi che scorrono ── */}
+      <div className="py-24 px-12 lg:px-16 space-y-0">
+        {services.map((s, i) => (
+          <div
+            key={s.id}
+            id={s.id}
+            ref={el => textRefs.current[i] = el}
+            className="min-h-screen flex flex-col justify-center py-16 space-y-8"
+          >
+            {/* Label */}
+            <div className="flex items-center gap-3">
+              <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
+              <div className="h-px w-8 bg-zinc-800" />
+              <i className={`${s.icon} text-violet-400/60 text-xs`} />
+              <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">{s.label}</span>
+            </div>
+
+            {/* Titolo */}
+            <div>
+              <h2 className="font-antonio text-4xl lg:text-5xl text-white leading-tight">
+                {s.title}
+              </h2>
+              <h2 className="font-antonio text-4xl lg:text-5xl text-violet-300 leading-tight">
+                {s.subtitle}
+              </h2>
+            </div>
+
+            <div className="h-px w-16 bg-zinc-800" />
+
+            {/* Body */}
+            {s.listLabel && (
+              <p className="font-antonio text-sm text-violet-200/80 uppercase tracking-[0.15em]">{s.listLabel}</p>
+            )}
+            {s.body && (
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-400 max-w-sm">{s.body}</p>
+            )}
+
+            {/* Lista */}
+            <ul className="space-y-3">
+              {s.list.map((item) => (
+                <li key={item} className="flex items-start gap-3 font-montserrat text-sm text-zinc-300">
+                  <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Link href="/contact"
+              className="inline-flex self-start items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70">
+              Richiedi un preventivo
+              <i className="fa-solid fa-arrow-right text-[0.6rem] transition group-hover:translate-x-1" />
+            </Link>
+          </div>
+        ))}
       </div>
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
+
+      {/* ── DESTRA: media sticky ── */}
+      <div className="relative">
+        <div className="sticky top-0 h-screen flex items-center justify-center px-8 lg:px-12">
+          <div className="relative w-full" style={{ height: "70vh", maxHeight: "680px" }}>
+
+            {/* Glow */}
+            <div className="pointer-events-none absolute inset-0 rounded-3xl"
+              style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(139,92,246,0.18) 0%, transparent 70%)" }} />
+
+            {/* Media layers */}
+            {services.map((s, i) => (
+              <div key={s.id} ref={el => mediaRefs.current[i] = el}
+                className="absolute inset-0 overflow-hidden rounded-3xl border border-white/8 shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
+                {s.media.type === "video" ? (
+                  <video src={s.media.src} autoPlay muted loop playsInline
+                    className="h-full w-full object-cover" />
+                ) : (
+                  <img src={s.media.src} alt={s.media.alt}
+                    className="h-full w-full object-cover" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                {/* Service label overlay */}
+                <div className="absolute top-6 left-6">
+                  <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.4em] text-zinc-400 border border-zinc-700/60 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    {s.label}
+                  </span>
+                </div>
+
+                {/* Index bottom right */}
+                <div className="absolute bottom-6 right-6">
+                  <span className="font-antonio text-6xl text-white/8 select-none">{s.index}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-function ServiceCTA() {
+// ─── MOBILE: verticale semplice ───────────────────────────────
+function MobileServices() {
   return (
-    <Link
-      href="/contact"
-      className="inline-flex items-center gap-2 mt-6 rounded-full bg-violet-400 px-6 py-2.5 text-xs font-montserrat font-semibold uppercase tracking-[0.2em] text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.7)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)]"
-    >
-      Richiedi un preventivo
-      <i className="fa-solid fa-circle-arrow-right text-[0.7rem]" />
-    </Link>
-  );
-}
+    <div className="md:hidden px-5 py-16 space-y-20">
+      {services.map((s) => (
+        <section key={s.id} id={`${s.id}-mobile`} className="space-y-6">
+          {/* Label */}
+          <div className="flex items-center gap-3">
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
+            <div className="h-px w-6 bg-zinc-800" />
+            <i className={`${s.icon} text-violet-400/60 text-xs`} />
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">{s.label}</span>
+          </div>
 
-function ServiceImage({ src, alt, glowColor = "from-violet-600/70 via-fuchsia-500/40 to-sky-500/40", glowPosition = "-top-4 -left-4", extra }) {
-  return (
-    <div className="relative">
-      <div className={`absolute ${glowPosition} h-36 w-36 rounded-3xl bg-gradient-to-br ${glowColor} blur-[26px] pointer-events-none`} />
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-        <img src={src} alt={alt} className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-      </div>
-      {extra}
+          {/* Titolo */}
+          <div>
+            <h2 className="font-antonio text-3xl text-white leading-tight">{s.title}</h2>
+            <h2 className="font-antonio text-3xl text-violet-300 leading-tight">{s.subtitle}</h2>
+          </div>
+
+          {/* Media */}
+          <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
+            style={{ height: "240px" }}>
+            {s.media.type === "video" ? (
+              <video src={s.media.src} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+            ) : (
+              <img src={s.media.src} alt={s.media.alt} className="h-full w-full object-cover" loading="lazy" />
+            )}
+          </div>
+
+          {/* Contenuto */}
+          <div className="space-y-4 border-l border-zinc-800 pl-5">
+            {s.listLabel && <p className="font-antonio text-sm text-violet-200/80 uppercase tracking-[0.1em]">{s.listLabel}</p>}
+            {s.body && <p className="font-montserrat text-sm leading-relaxed text-zinc-400">{s.body}</p>}
+            <ul className="space-y-2">
+              {s.list.map((item) => (
+                <li key={item} className="flex items-start gap-3 font-montserrat text-xs text-zinc-300">
+                  <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Link href="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-5 py-2 font-montserrat text-xs uppercase tracking-[0.2em] text-violet-300 transition hover:bg-violet-900/30">
+              Richiedi un preventivo
+              <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+            </Link>
+          </div>
+        </section>
+      ))}
     </div>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── VIDEO RECENSIONE CINEMATOGRAFICA ─────────────────────────
+function VideoReview() {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Video di sfondo */}
+      <video
+        src="/videos/ToyotaXReply.mp4"
+        autoPlay muted loop playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      />
 
+      {/* Overlay a strati */}
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 65%)" }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#02010b] via-transparent to-[#02010b]" />
+
+      {/* Contenuto */}
+      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center space-y-10">
+
+        {/* Stelle */}
+        <div className="flex justify-center gap-2">
+          {[...Array(5)].map((_, i) => (
+            <i key={i} className="fa-solid fa-star text-amber-400 text-sm" />
+          ))}
+        </div>
+
+        {/* Virgolette decorative */}
+        <div className="relative">
+          <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 font-antonio text-[8rem] leading-none text-violet-400/10 select-none">"</span>
+          <blockquote className="font-antonio text-2xl md:text-4xl lg:text-5xl text-white leading-snug">
+            Il video finale ci ha lasciati senza parole. Hanno catturato ogni emozione con una cura che non ci aspettavamo.
+          </blockquote>
+        </div>
+
+        {/* Autore */}
+        <div className="space-y-1">
+          <p className="font-antonio text-lg text-violet-300">Marco & Alessia R.</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-zinc-500">Servizio matrimonio · Roma</p>
+        </div>
+
+        {/* Pulsante play */}
+        <div className="flex flex-col items-center gap-3 pt-2 group cursor-pointer">
+          {/*
+            Quando hai il video reale sostituisci questo div con:
+            <button onClick={() => setModalOpen(true)} ...>
+            oppure un <iframe Vimeo/YouTube> in un modal
+          */}
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm transition-all duration-500 group-hover:border-violet-400/60 group-hover:bg-violet-600/30 group-hover:shadow-[0_0_60px_rgba(139,92,246,0.5)]">
+            {/* Ring animato */}
+            <div className="absolute inset-0 rounded-full border border-violet-400/20 scale-100 group-hover:scale-125 opacity-100 group-hover:opacity-0 transition-all duration-700" />
+            <i className="fa-solid fa-play ml-1.5 text-xl text-white" />
+          </div>
+          <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-zinc-400 group-hover:text-zinc-300 transition">
+            Guarda la video recensione
+          </span>
+        </div>
+      </div>
+
+      {/* Corner info */}
+      <div className="absolute bottom-8 left-8 hidden md:block">
+        <p className="font-montserrat text-[0.5rem] uppercase tracking-[0.4em] text-zinc-600">Video recensione · Disponibile prossimamente</p>
+      </div>
+    </section>
+  );
+}
+
+// ─── CTA FINALE ───────────────────────────────────────────────
+function FinalCTA() {
+  return (
+    <section className="py-32 px-6 text-center space-y-8 border-t border-zinc-800/60 bg-[#02010b]">
+      <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-600">Iniziamo</p>
+      <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight mx-auto max-w-2xl">
+        Hai un progetto<br />
+        <span className="text-violet-300">in mente?</span>
+      </h2>
+      <p className="font-montserrat text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
+        Ogni collaborazione nasce da una conversazione. Raccontaci la tua idea.
+      </p>
+      <Link href="/contact"
+        className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-8 py-3.5 font-montserrat text-xs font-semibold uppercase tracking-[0.25em] text-[#050211] shadow-[0_0_30px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 hover:shadow-[0_0_50px_rgba(167,139,250,0.8)]">
+        Parliamo del tuo progetto
+        <i className="fa-solid fa-arrow-right text-[0.7rem]" />
+      </Link>
+    </section>
+  );
+}
+
+// ─── PAGE ─────────────────────────────────────────────────────
 export default function Servizi() {
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
-      const section = document.querySelector(hash);
-      if (section) {
-        setTimeout(() => section.scrollIntoView({ behavior: "smooth" }), 100);
-      }
+      setTimeout(() => {
+        const section = document.querySelector(hash);
+        if (section) section.scrollIntoView({ behavior: "smooth" });
+      }, 300);
     }
   }, []);
 
   return (
-    <section className="min-h-screen bg-[#02010b] text-white">
+    <div className="min-h-screen bg-[#02010b] text-white">
 
       {/* ── HERO ── */}
       <div className="relative h-[80vh] min-h-[500px] overflow-hidden">
-        <img
-          src="/images/Tunnel2.jpg"
-          alt="Tunnel viola futuristico"
-          className="absolute inset-0 h-full w-full object-cover object-top scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
+        <img src="/images/Tunnel2.jpg" alt="Tunnel viola futuristico"
+          className="absolute inset-0 h-full w-full object-cover object-top scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-[#02010b]" />
         <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-64 w-96 rounded-full bg-violet-600/20 blur-3xl" />
 
         <div className="relative z-10 mx-auto flex h-full max-w-4xl flex-col items-center px-4 text-center"
           style={{ paddingTop: "20%" }}>
-
-          <h1 className="font-antonio font-semibold text-4xl sm:text-5xl lg:text-[3rem] leading-tight">
+          <h1 className="font-antonio text-4xl sm:text-5xl leading-tight">
             Creatività, Qualità Professionale
             <span className="block text-violet-300 mt-1">e massima Affidabilità.</span>
           </h1>
-
           <p className="mt-5 max-w-2xl font-montserrat text-sm sm:text-base leading-relaxed text-zinc-300">
             Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
             con uno sguardo cinematografico e cura per ogni dettaglio.
           </p>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {["eventi", "aziende", "podcast", "food", "montaggio"].map((s) => (
-              <a key={s} href={`#${s}`}
+          {/* Anchor links desktop */}
+          <div className="mt-6 hidden md:flex flex-wrap justify-center gap-2">
+            {services.map((s) => (
+              <a key={s.id} href={`#${s.id}`}
                 className="rounded-full border border-violet-500/30 bg-violet-900/20 px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm transition hover:bg-violet-900/50 hover:border-violet-400/50">
-                {s}
+                {s.label}
               </a>
             ))}
           </div>
@@ -96,281 +444,14 @@ export default function Servizi() {
       </div>
 
       {/* ── SERVIZI ── */}
-      <div className="px-4 py-14 sm:py-20 space-y-24 sm:space-y-32 bg-gradient-to-b from-black via-[#0a0b338d] to-[#45115d5c]">
+      <StickyServices />
+      <MobileServices />
 
-        {/* ── EVENTI ── */}
-        <section id="eventi" className="space-y-6" data-aos="fade-up">
-          <Divider icon="fa-solid fa-calendar-star" label="Eventi" />
+      {/* ── VIDEO RECENSIONE ── */}
+      <VideoReview />
 
-          <div className="grid gap-6 md:gap-12 md:grid-cols-2 items-center">
-            {/* Testo + titolo */}
-            <div className="space-y-4">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug">
-                Dal <span className="text-violet-300">backstage</span> al momento clou:
-                <span className="block text-zinc-300 text-xl md:text-2xl mt-1 font-normal">
-                  ogni istante catturato con precisione.
-                </span>
-              </h2>
-
-              {/* Immagine mobile — tra titolo e card */}
-              <div className="md:hidden">
-                <ServiceImage
-                  src="/images/eventi.webp"
-                  alt="Fotografia eventi"
-                  glowPosition="-top-3 -left-3"
-                  extra={
-                    <div className="absolute inset-0 rounded-3xl" style={{ height: "220px" }} />
-                  }
-                />
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)] h-52">
-                  <img src="/images/eventi.webp" alt="Fotografia eventi" className="h-full w-full object-cover" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <ul className="space-y-3 font-montserrat text-sm leading-relaxed text-zinc-300">
-                  <li className="flex items-start gap-2">
-                    <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                    <span><strong className="text-white">Fotografia e video</strong> per eventi privati e aziendali.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                    <span>Copertura completa con scatti spontanei e riprese dinamiche.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                    <span>Ideale per feste, lanci di prodotto, eventi culturali, convention.</span>
-                  </li>
-                </ul>
-                <ServiceCTA />
-              </div>
-            </div>
-
-            {/* Immagine desktop */}
-            <div className="hidden md:block">
-              <div className="relative">
-                <div className="absolute -top-6 -left-6 h-44 w-44 rounded-3xl bg-gradient-to-br from-violet-600/70 via-fuchsia-500/40 to-sky-500/40 blur-[26px] pointer-events-none" />
-                <div className="relative h-80 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                  <img src="/images/eventi.webp" alt="Fotografia eventi" className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── AZIENDE ── */}
-        <section id="aziende" className="space-y-6" data-aos="fade-up">
-          <Divider icon="fa-solid fa-building" label="Aziende" />
-
-          <div className="grid gap-6 md:gap-12 md:grid-cols-2 items-center">
-            {/* Testo */}
-            <div className="space-y-4 md:order-2">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug">
-                Contenuti visivi <span className="text-violet-300">su misura</span>
-                <span className="block text-zinc-300 text-xl md:text-2xl mt-1 font-normal">
-                  che rafforzano l&apos;identità del tuo brand.
-                </span>
-              </h2>
-
-              {/* Video mobile */}
-              <div className="md:hidden relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)] h-52">
-                <div className="absolute -bottom-3 -right-3 h-32 w-32 rounded-3xl bg-gradient-to-tr from-violet-600/70 via-fuchsia-500/40 to-sky-500/40 blur-[22px] pointer-events-none" />
-                <video className="h-full w-full object-cover" src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline />
-              </div>
-
-              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <p className="font-montserrat text-sm leading-relaxed text-zinc-300 mb-4">
-                  Dai ritratti corporate ai video istituzionali, fino agli spot pubblicitari
-                  e ai contenuti social, ogni progetto è studiato per valorizzare la tua
-                  identità e distinguerti sul mercato.
-                </p>
-                <ul className="space-y-2 font-montserrat text-sm text-zinc-300">
-                  {[
-                    "Video istituzionali e corporate.",
-                    "Spot pubblicitari e social video.",
-                    "Ritratti e fotografia aziendale.",
-                    "Contenuti per employer branding.",
-                    "Shooting prodotto/servizio.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <ServiceCTA />
-              </div>
-            </div>
-
-            {/* Video desktop */}
-            <div className="hidden md:block md:order-1">
-              <div className="relative">
-                <div className="absolute -bottom-6 -right-6 h-44 w-44 rounded-3xl bg-gradient-to-tr from-violet-600/70 via-fuchsia-500/40 to-sky-500/40 blur-[26px] pointer-events-none" />
-                <video className="relative w-full h-80 object-cover rounded-3xl border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.9)]"
-                  src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── PODCAST ── */}
-        <section id="podcast" className="space-y-6" data-aos="fade-up">
-          <Divider icon="fa-solid fa-microphone" label="Podcast" />
-
-          <div className="grid gap-6 md:gap-12 md:grid-cols-2 items-center">
-            <div className="space-y-4">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug">
-                Il tuo podcast,{" "}<span className="text-violet-300">professionale</span>
-                <span className="block text-zinc-300 text-xl md:text-2xl mt-1 font-normal">
-                  fin dal primo episodio.
-                </span>
-              </h2>
-
-              {/* Immagine mobile */}
-              <div className="md:hidden relative h-52 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                <img src="/images/sfondo.jpg" alt="Podcast" className="h-full w-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-              </div>
-
-              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <p className="font-antonio text-base text-violet-200 mb-3">Cosa includiamo:</p>
-                <ul className="space-y-2 font-montserrat text-sm text-zinc-300 mb-4">
-                  {["Riprese video multi-camera", "Registrazione audio professionale", "Montaggio video e audio", "Grafiche e intro animate", "Clip social per Instagram e YouTube"].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
-                  Trasformiamo le tue conversazioni in contenuti video di alta qualità. Dalla regia alla distribuzione, ti seguiamo in ogni fase.
-                </p>
-                <ServiceCTA />
-              </div>
-            </div>
-
-            {/* Immagine desktop con overlay */}
-            <div className="hidden md:block">
-              <div className="relative h-80">
-                <div className="absolute -top-6 -right-6 h-44 w-44 rounded-3xl bg-gradient-to-br from-fuchsia-600/60 via-violet-500/40 to-sky-500/30 blur-[26px] pointer-events-none" />
-                <div className="relative h-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                  <img src="/images/sfondo.jpg" alt="Podcast" className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                </div>
-                {/* Mini immagine sovrapposta */}
-                <div className="absolute -bottom-6 right-6 h-36 w-36 overflow-hidden rounded-2xl border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.85)]">
-                  <img src="/images/introimg5.webp" alt="Podcast dettaglio" className="h-full w-full object-cover" loading="lazy" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── FOOD ── */}
-        <section id="food" className="space-y-6" data-aos="fade-up">
-          <Divider icon="fa-solid fa-utensils" label="Food" />
-
-          <div className="grid gap-6 md:gap-12 md:grid-cols-2 items-center">
-            <div className="space-y-4">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug">
-                Ogni piatto diventa un&apos;immagine
-                <span className="block text-violet-300">che conquista lo sguardo.</span>
-              </h2>
-
-              {/* Immagine mobile */}
-              <div className="md:hidden relative h-52 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                <div className="absolute -top-3 -right-3 h-28 w-28 rounded-3xl bg-gradient-to-br from-amber-400/60 via-violet-500/40 to-emerald-400/40 blur-[20px] pointer-events-none" />
-                <img src="/images/introimg6.webp" alt="Food photography" className="h-full w-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-              </div>
-
-              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <ul className="space-y-3 font-montserrat text-sm leading-relaxed text-zinc-300">
-                  {[
-                    "Shooting fotografico e video per ristoranti, chef e aziende.",
-                    "Immagini per menu, social, campagne pubblicitarie.",
-                    "Riprese video con focus su estetica e storytelling del piatto.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <ServiceCTA />
-              </div>
-            </div>
-
-            {/* Immagine desktop */}
-            <div className="hidden md:block">
-              <div className="relative">
-                <div className="absolute -top-6 -right-6 h-44 w-44 rounded-3xl bg-gradient-to-br from-amber-400/60 via-violet-500/40 to-emerald-400/40 blur-[26px] pointer-events-none" />
-                <div className="relative h-80 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                  <img src="/images/introimg6.webp" alt="Food photography" className="h-full w-full object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── MONTAGGIO ── */}
-        <section id="montaggio" className="space-y-6 pb-20" data-aos="fade-up">
-          <Divider icon="fa-solid fa-scissors" label="Montaggio" />
-
-          <div className="grid gap-6 md:gap-12 md:grid-cols-[1.15fr_1fr] items-center">
-            {/* Immagine */}
-            <div className="space-y-4 md:space-y-0">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug md:hidden">
-                Dove le immagini trovano
-                <span className="block text-violet-300">ritmo, senso e impatto.</span>
-              </h2>
-
-              {/* Immagine mobile */}
-              <div className="md:hidden relative h-52 overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)]">
-                <img src="/images/montaggio.webp" alt="Editing professionale" className="h-full w-full object-cover object-center" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              </div>
-
-              {/* Immagine desktop */}
-              <div className="hidden md:block relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.85)] h-80">
-                <img src="/images/montaggio.webp" alt="Editing professionale" className="h-full w-full object-cover object-center transition duration-700 hover:scale-[1.03]" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              </div>
-            </div>
-
-            {/* Testo */}
-            <div className="space-y-4">
-              <h2 className="font-antonio text-2xl md:text-3xl font-semibold leading-snug hidden md:block">
-                Dove le immagini trovano
-                <span className="block text-violet-300">ritmo, senso e impatto.</span>
-              </h2>
-
-              <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                <p className="font-antonio text-base text-violet-200 mb-3">Post-produzione e editing per:</p>
-                <ul className="space-y-2 font-montserrat text-sm text-zinc-300">
-                  {[
-                    "Spot pubblicitari",
-                    "Videoclip musicali",
-                    "Documentari cinematografici e televisivi",
-                    "Progetti cinematografici",
-                    "Social content e reel",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <i className="fa-solid fa-circle-check text-violet-400 text-xs mt-1 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <ServiceCTA />
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </section>
+      {/* ── CTA ── */}
+      <FinalCTA />
+    </div>
   );
 }

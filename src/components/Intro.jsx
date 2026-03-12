@@ -141,97 +141,116 @@ export default function Intro() {
           <div className="relative mx-auto max-w-6xl px-0 sm:px-4 py-10 sm:py-16 space-y-16 sm:space-y-20">
             {/* ── HERO CARD ── */}
             <div className="mx-auto max-w-6xl px-0 sm:px-4">
-              <div className="overflow-hidden rounded-3xl border border-violet-500/25 bg-gradient-to-br from-violet-900/30 via-[#151333] to-slate-950/90 shadow-[0_0_60px_rgba(124,58,237,0.4)]">
-                <div className="grid items-stretch lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+              <div className="overflow-hidden rounded-3xl border border-white/8 bg-[#080618] shadow-[0_0_80px_rgba(124,58,237,0.25)]">
+                <div className="grid items-stretch lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
 
-                  {/* TESTO */}
-                  <div className="px-7 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-16 flex flex-col justify-center">
-                    {/* Label */}
-                    <div className="inline-flex items-center gap-2 w-fit rounded-full border border-violet-500/30 bg-violet-900/30 px-3 py-1 backdrop-blur-sm mb-5">
-                      <div className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-                      <p className="font-montserrat text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-violet-300">
-                        Future Frames
-                      </p>
+                  {/* ── TESTO ── */}
+                  <div className="relative px-8 py-12 sm:px-12 sm:py-14 lg:px-16 lg:py-20 flex flex-col justify-center overflow-hidden">
+
+                    {/* Glow di sfondo sul testo */}
+                    <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-violet-600/15 blur-[80px]" />
+                    <div className="pointer-events-none absolute bottom-0 right-0 h-48 w-48 rounded-full bg-fuchsia-600/10 blur-[60px]" />
+
+                    {/* Label agenzia */}
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-px w-8 bg-violet-500/40" />
+                      <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.55em] text-violet-400/80">
+                        Fotografia & Videomaking
+                      </span>
                     </div>
 
-                    <h2 className="font-antonio text-3xl sm:text-4xl lg:text-[2.7rem] leading-[1.15] text-white">
-                      Un&apos;agenzia creativa
-                      <span className="block text-violet-300 mt-1">
-                        per immagini che restano.
-                      </span>
-                    </h2>
+                    {/* Titolo principale */}
+                    <div className="space-y-1 mb-6">
+                      <h2 className="font-antonio leading-[1.0] text-white"
+                        style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
+                        Raccontiamo ciò
+                      </h2>
+                      <h2 className="font-antonio leading-[1.0] text-white"
+                        style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
+                        che vale la pena
+                      </h2>
+                      <h2 className="font-antonio leading-[1.0] text-violet-300"
+                        style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
+                        ricordare.
+                      </h2>
+                    </div>
 
-                    <p className="mt-5 max-w-lg font-montserrat text-sm sm:text-base leading-relaxed text-slate-200/85">
-                      Future Frames è un&apos;agenzia specializzata in{" "}
-                      <span className="font-semibold text-white">fotografia</span> e{" "}
-                      <span className="font-semibold text-white">videomaking professionale</span>:
-                      raccontiamo persone, aziende ed eventi con un linguaggio visivo pulito,
-                      emotivo e contemporaneo.
+                    {/* Testo descrittivo — più diretto e con personalità */}
+                    <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-400 mb-8">
+                      Future Frames è un'agenzia creativa specializzata in{" "}
+                      <span className="text-zinc-200">fotografia</span> e{" "}
+                      <span className="text-zinc-200">videomaking professionale</span>.
+                      Trasformiamo momenti, brand ed eventi in contenuti visivi
+                      che parlano da soli — dai social alle campagne più strutturate.
                     </p>
 
-                    <p className="mt-3 max-w-lg font-montserrat text-sm sm:text-base leading-relaxed text-slate-400">
-                      Diamo forma ai tuoi momenti e alla tua identità con contenuti pensati per
-                      durare nel tempo, dai social alle campagne più strutturate.
-                    </p>
-
-                    {/* Stats mini */}
-                    <div className="mt-7 flex gap-6 border-t border-violet-500/15 pt-6">
+                    {/* Stats */}
+                    <div className="flex gap-8 mb-10 border-t border-zinc-800 pt-8">
                       {[
-                        { num: "-", label: "-" },
-                        { num: "-", label: "-" },
-                        { num: "-", label: "-" },
+                        { num: "—", label: "Progetti completati" },
+                        { num: "—", label: "Anni di esperienza" },
+                        { num: "—", label: "Clienti soddisfatti" },
                       ].map((s) => (
                         <div key={s.label}>
-                          <p className="font-antonio text-xl text-violet-300">{s.num}</p>
-                          <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-zinc-500 mt-0.5">{s.label}</p>
+                          <p className="font-antonio text-2xl text-violet-300">{s.num}</p>
+                          <p className="font-montserrat text-[0.58rem] uppercase tracking-[0.18em] text-zinc-600 mt-0.5 leading-tight">
+                            {s.label}
+                          </p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="mt-7 flex flex-wrap gap-3">
-                      <Link
-                        href="/portfolio"
-                        className="inline-flex items-center justify-center rounded-full bg-violet-400 px-5 py-2.5 text-xs sm:text-sm font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.7)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)]"
-                      >
-                        Scopri il nostro portfolio
+                    {/* CTA */}
+                    <div className="flex flex-wrap gap-3">
+                      <Link href="/portfolio"
+                        className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.6)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)]">
+                        Scopri il portfolio
+                        <i className="fa-solid fa-arrow-right text-[0.6rem]" />
                       </Link>
-                      <Link
-                        href="/servizi"
-                        className="inline-flex items-center justify-center rounded-full border border-violet-300/70 bg-transparent px-5 py-2.5 text-xs sm:text-sm font-montserrat font-semibold tracking-wide text-violet-100/90 shadow-[0_0_18px_rgba(129,140,248,0.5)] transition hover:bg-white/5"
-                      >
-                        Esplora i servizi
+                      <Link href="/servizi"
+                        className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-6 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-zinc-300 transition hover:border-zinc-500 hover:text-white">
+                        I nostri servizi
                       </Link>
                     </div>
                   </div>
 
-                  {/* IMMAGINE */}
-                  <div className="relative min-h-[320px] lg:min-h-0 overflow-hidden">
-                    {/* Immagine full bleed */}
+                  {/* ── IMMAGINE ── */}
+                  <div className="relative min-h-[360px] lg:min-h-0 overflow-hidden">
                     <img
                       src="/images/introimg1.webp"
-                      alt="Coppia durante le riprese di un matrimonio"
-                      className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 hover:scale-[1.03]"
+                      alt="Future Frames — behind the scenes"
+                      className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 hover:scale-[1.04]"
                     />
 
-                    {/* Gradient overlay sinistro (fusione con il testo) */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#151333] via-[#151333]/20 to-transparent hidden lg:block" />
-                    {/* Gradient overlay top su mobile */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#151333] via-[#151333]/20 to-transparent lg:hidden" />
-                    {/* Gradient bottom sempre */}
-                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    {/* Gradienti fusione */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#080618] via-[#080618]/30 to-transparent hidden lg:block" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080618] via-[#080618]/20 to-transparent lg:hidden" />
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
 
-                    {/* Badge "Behind the scenes" */}
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <div className="rounded-2xl border border-violet-400/30 bg-black/70 px-4 py-3.5 backdrop-blur-md shadow-[0_18px_35px_rgba(0,0,0,0.9)] max-w-[260px]">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-                          <p className="font-antonio text-[0.65rem] uppercase tracking-[0.26em] text-violet-200">
-                            Behind the scenes
+                    {/* Tag fotografo in alto */}
+                    <div className="absolute top-5 right-5 z-10">
+                      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 backdrop-blur-md">
+                        <i className="fa-solid fa-camera text-violet-400 text-[0.6rem]" />
+                        <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.25em] text-zinc-300">
+                          Gloria Margarino
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Badge bottom */}
+                    <div className="absolute bottom-6 left-6 right-6 z-10">
+                      <div className="flex items-start gap-3 rounded-2xl border border-white/8 bg-black/65 px-4 py-4 backdrop-blur-md shadow-[0_16px_40px_rgba(0,0,0,0.8)] max-w-[260px]">
+                        <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-violet-400/25 bg-violet-900/40">
+                          <i className="fa-solid fa-film text-violet-400 text-[0.6rem]" />
+                        </div>
+                        <div>
+                          <p className="font-antonio text-sm text-white leading-tight">
+                            Ogni frame è una scelta.
+                          </p>
+                          <p className="font-montserrat text-[0.62rem] text-zinc-400 mt-0.5 leading-snug">
+                            Dalla luce al montaggio, niente è lasciato al caso.
                           </p>
                         </div>
-                        <p className="font-montserrat text-[0.75rem] leading-snug text-slate-200">
-                          Ogni frame è curato nei dettagli: dalla luce al montaggio finale.
-                        </p>
                       </div>
                     </div>
                   </div>
