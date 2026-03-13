@@ -237,7 +237,6 @@ export default function About() {
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-5xl mx-auto">
 
         <FadeReveal className="flex items-center gap-4 mb-16">
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">01</span>
           <div className="h-px w-12 bg-zinc-800" />
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Gloria Margarino</span>
         </FadeReveal>
@@ -325,7 +324,6 @@ export default function About() {
         <FadeReveal className="flex items-center gap-4 mb-16 justify-end">
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Ivan Scrofani</span>
           <div className="h-px w-12 bg-zinc-800" />
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">02</span>
         </FadeReveal>
 
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-start">

@@ -551,7 +551,7 @@ export default function Intro() {
                         </div>
                         <div>
                           <p className="font-antonio text-sm tracking-wide text-white">Ivan Scrofani</p>
-                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder Video Editor</p>
+                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder & Video Editor</p>
                         </div>
                       </div>
                     </div>
