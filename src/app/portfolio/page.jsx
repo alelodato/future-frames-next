@@ -15,7 +15,7 @@ function ProjectCard({ project, className = "" }) {
 
   useEffect(() => {
     if (!videoRef.current) return;
-    if (hovered) videoRef.current.play().catch(() => {});
+    if (hovered) videoRef.current.play().catch(() => { });
     else { videoRef.current.pause(); videoRef.current.currentTime = 0; }
   }, [hovered]);
 
@@ -105,13 +105,13 @@ function PatternB({ projects }) {
 
   useEffect(() => {
     if (!video1Ref.current) return;
-    if (hovered1) video1Ref.current.play().catch(() => {});
+    if (hovered1) video1Ref.current.play().catch(() => { });
     else { video1Ref.current.pause(); video1Ref.current.currentTime = 0; }
   }, [hovered1]);
 
   useEffect(() => {
     if (!video2Ref.current) return;
-    if (hovered2) video2Ref.current.play().catch(() => {});
+    if (hovered2) video2Ref.current.play().catch(() => { });
     else { video2Ref.current.pause(); video2Ref.current.currentTime = 0; }
   }, [hovered2]);
 
@@ -321,33 +321,51 @@ function HorizontalPortfolio({ projects }) {
   );
 }
 
-// ─── PATTERN MOBILE A: 1 grande + 2 sotto ─────────────────────
+// ─── PATTERN MOBILE A: grande sopra + due affiancati sotto (metà altezza) ───
+// Pattern A: grande sopra + due affiancati sotto
 function MobilePatternA({ projects }) {
   const [p1, p2, p3] = projects;
   return (
     <div className="flex flex-col gap-0.5">
-      <ProjectCard project={p1} className="w-full h-[70vw]" />
+      <ProjectCard project={p1} className="w-full h-[80vw]" />
       <div className="flex gap-0.5">
-        {p2 && <ProjectCard project={p2} className="flex-1 h-[45vw]" />}
-        {p3 && <ProjectCard project={p3} className="flex-1 h-[45vw]" />}
+        {p2 && <ProjectCard project={p2} className="flex-1 h-[100vw]" />}
+        {p3 && <ProjectCard project={p3} className="flex-1 h-[100vw]" />}
       </div>
     </div>
   );
 }
 
-// ─── PATTERN MOBILE B: due affiancati con altezza piena ──────
+// Pattern B: due affiancati alti
 function MobilePatternB({ projects }) {
   const [p1, p2] = projects;
   return (
-    <div className="flex gap-0.5 h-[75vw]">
-      {p1 && <ProjectCard project={p1} className="flex-1 h-full" />}
-      {p2 && <ProjectCard project={p2} className="flex-1 h-full" />}
+    <div className="flex flex-col gap-0.5">
+      {p1 && <ProjectCard project={p1} className="w-full h-[50vw]" />}
+      {p2 && <ProjectCard project={p2} className="w-full h-[50vw]" />}
     </div>
   );
 }
 
 function MobilePortfolio({ projects }) {
-  const panels = buildPanels(projects);
+  // Sequenza solo A e B alternati
+  const panels = [];
+  let i = 0;
+  let si = 0;
+  const sequence = ["A", "B"];
+
+  while (i < projects.length) {
+    const type = sequence[si % sequence.length];
+    if (type === "A") {
+      panels.push({ type: "A", projects: projects.slice(i, i + 3) });
+      i += 3;
+    } else {
+      panels.push({ type: "B", projects: projects.slice(i, i + 2) });
+      i += 2;
+    }
+    si++;
+  }
+
   return (
     <div className="md:hidden">
       {/* Hero */}
@@ -364,12 +382,21 @@ function MobilePortfolio({ projects }) {
           </div>
           <h1 className="font-antonio text-[5rem] leading-none text-white tracking-tight">PORTFOLIO</h1>
           <p className="mt-4 font-montserrat text-sm text-zinc-400 tracking-[0.15em]">Storie raccontate attraverso il movimento</p>
-          <div className="mt-8 flex items-center justify-center gap-6">
+        </div>
+
+        {/* Scroll indicator verticale */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20">
+          <span className="font-montserrat text-[0.52rem] uppercase tracking-[0.4em] text-zinc-500">Scorri</span>
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-8 w-px bg-zinc-700 relative overflow-hidden">
+              <div className="absolute inset-0 bg-violet-400" style={{ animation: "slideDown 1.6s ease-in-out infinite" }} />
+            </div>
           </div>
         </div>
+        <style>{`@keyframes slideDown { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }`}</style>
       </section>
 
-      {/* Pannelli con pattern */}
+      {/* Pannelli */}
       <div className="flex flex-col gap-0.5">
         {panels.map((panel, i) => {
           if (panel.type === "A") return <MobilePatternA key={i} projects={panel.projects} />;
@@ -427,7 +454,7 @@ export default function Portfolio() {
             <span className="block text-violet-300">la tua storia?</span>
           </h2>
           <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
-            Rendi la tua idea il nostro prossimo progetto. 
+            Rendi la tua idea il nostro prossimo progetto.
           </p>
           <Link href="/contact"
             className="group inline-flex items-center gap-3 rounded-full border border-violet-400/50 px-8 py-4 font-montserrat text-xs uppercase tracking-[0.3em] text-violet-300 transition-all hover:bg-violet-900/30 hover:border-violet-400 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]">
