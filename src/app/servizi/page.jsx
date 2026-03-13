@@ -373,23 +373,25 @@ function VideoReview() {
   );
 }
 
-// ─── CTA FINALE ───────────────────────────────────────────────
 function FinalCTA() {
   return (
     <section className="py-32 px-6 text-center space-y-8 bg-[#02010b]">
-      <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-600">Iniziamo</p>
+      <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-600">Impara con noi</p>
       <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight mx-auto max-w-2xl">
-        Vuoi collaborare <br />
-        <span className="text-violet-300">con noi?</span>
+        Vuoi imparare<br />
+        <span className="text-violet-300">il nostro mestiere?</span>
       </h2>
       <p className="font-montserrat text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
-        Contattaci e diamo vita alla tua idea.
+        Segui le nostre videolezioni su Vimeo: tecniche di ripresa, montaggio e post-produzione per chi vuole fare sul serio.
       </p>
-      <Link href="/contact"
+      <a
+        href="https://vimeo.com/futureframes"
+        target="_blank"
+        rel="noopener noreferrer"
         className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-8 py-3.5 font-montserrat text-xs font-semibold uppercase tracking-[0.25em] text-[#050211] shadow-[0_0_30px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 hover:shadow-[0_0_50px_rgba(167,139,250,0.8)]">
-        Parliamo del tuo progetto
-        <i className="fa-solid fa-arrow-right text-[0.7rem]" />
-      </Link>
+        <i className="fa-brands fa-vimeo text-sm" />
+        Guarda le videolezioni
+      </a>
     </section>
   );
 }

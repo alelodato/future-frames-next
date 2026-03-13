@@ -221,7 +221,6 @@ function buildPanels(projects) {
   return panels;
 }
 
-// ─── Horizontal track ─────────────────────────────────────────
 function HorizontalPortfolio({ projects }) {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
@@ -284,7 +283,7 @@ function HorizontalPortfolio({ projects }) {
             <p className="mt-4 font-montserrat text-sm md:text-base text-zinc-400 tracking-[0.15em]">
               Storie raccontate attraverso il movimento
             </p>
-            <div className="mt-8 flex items-center justify-center gap-6">
+            {/*<div className="mt-8 flex items-center justify-center gap-6">
               <div className="text-center">
                 <p className="font-antonio text-3xl text-white">{projects.length}</p>
                 <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500 mt-0.5">Progetti</p>
@@ -294,7 +293,7 @@ function HorizontalPortfolio({ projects }) {
                 <p className="font-antonio text-3xl text-white">{panels.length}</p>
                 <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500 mt-0.5">Sequenze</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Scroll hint */}
@@ -322,11 +321,48 @@ function HorizontalPortfolio({ projects }) {
   );
 }
 
-// ─── Mobile: griglia verticale ────────────────────────────────
+// ─── PATTERN MOBILE A: 1 grande + 2 sotto ─────────────────────
+function MobilePatternA({ projects }) {
+  const [p1, p2, p3] = projects;
+  return (
+    <div className="flex flex-col gap-0.5">
+      <ProjectCard project={p1} className="w-full h-[70vw]" />
+      <div className="flex gap-0.5">
+        {p2 && <ProjectCard project={p2} className="flex-1 h-[45vw]" />}
+        {p3 && <ProjectCard project={p3} className="flex-1 h-[45vw]" />}
+      </div>
+    </div>
+  );
+}
+
+// ─── PATTERN MOBILE B: due affiancati con altezza piena ──────
+function MobilePatternB({ projects }) {
+  const [p1, p2] = projects;
+  return (
+    <div className="flex gap-0.5 h-[75vw]">
+      {p1 && <ProjectCard project={p1} className="flex-1 h-full" />}
+      {p2 && <ProjectCard project={p2} className="flex-1 h-full" />}
+    </div>
+  );
+}
+
+// ─── PATTERN MOBILE C: tre affiancati ────────────────────────
+function MobilePatternC({ projects }) {
+  const [p1, p2, p3] = projects;
+  return (
+    <div className="flex gap-0.5 h-[55vw]">
+      {p1 && <ProjectCard project={p1} className="flex-1 h-full" />}
+      {p2 && <ProjectCard project={p2} className="flex-1 h-full" />}
+      {p3 && <ProjectCard project={p3} className="flex-1 h-full" />}
+    </div>
+  );
+}
+
 function MobilePortfolio({ projects }) {
   const panels = buildPanels(projects);
   return (
     <div className="md:hidden">
+      {/* Hero */}
       <section className="relative h-screen overflow-hidden flex items-center justify-center">
         <video src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline
           className="absolute inset-0 h-full w-full object-cover opacity-50"
@@ -348,16 +384,20 @@ function MobilePortfolio({ projects }) {
           </div>
         </div>
       </section>
-      <div className="space-y-1">
-        {projects.map((p) => (
-          <ProjectCard key={p.id} project={p} className="w-full h-[60vw] min-h-[280px]" />
-        ))}
+
+      {/* Pannelli con pattern */}
+      <div className="flex flex-col gap-0.5">
+        {panels.map((panel, i) => {
+          if (panel.type === "A") return <MobilePatternA key={i} projects={panel.projects} />;
+          if (panel.type === "B") return <MobilePatternB key={i} projects={panel.projects} />;
+          if (panel.type === "C") return <MobilePatternC key={i} projects={panel.projects} />;
+          return null;
+        })}
       </div>
     </div>
   );
 }
 
-// ─── PAGE ─────────────────────────────────────────────────────
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -399,17 +439,12 @@ export default function Portfolio() {
         <div className="pointer-events-none absolute inset-0"
           style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.12) 0%, transparent 70%)" }} />
         <div className="relative z-10 text-center px-4 space-y-6">
-          <div className="flex items-center justify-center gap-4">
-            <div className="h-px w-8 bg-violet-500/50" />
-            <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">Next project</span>
-            <div className="h-px w-8 bg-violet-500/50" />
-          </div>
           <h2 className="font-antonio text-5xl md:text-7xl text-white leading-none">
             Pronto a raccontare
             <span className="block text-violet-300">la tua storia?</span>
           </h2>
           <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
-            Ogni progetto nasce da una conversazione.
+            Rendi la tua idea il nostro prossimo progetto. 
           </p>
           <Link href="/contact"
             className="group inline-flex items-center gap-3 rounded-full border border-violet-400/50 px-8 py-4 font-montserrat text-xs uppercase tracking-[0.3em] text-violet-300 transition-all hover:bg-violet-900/30 hover:border-violet-400 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]">
