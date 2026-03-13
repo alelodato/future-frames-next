@@ -342,14 +342,14 @@ function VideoReview() {
         <div className="relative">
           <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 font-antonio text-[8rem] leading-none text-violet-400/10 select-none">"</span>
           <blockquote className="font-antonio text-2xl md:text-4xl lg:text-5xl text-white leading-snug">
-            Il video finale ci ha lasciati senza parole. Hanno catturato ogni emozione con una cura che non ci aspettavamo.
+            Che sia per un evento aziendale, per lanciare un nuovo videocorso o per lavorare sul Brand della propria azienda attraverso il video marketing, Future Frames è sicuramente la scelta migliore.
           </blockquote>
         </div>
 
         {/* Autore */}
         <div className="space-y-1">
-          <p className="font-antonio text-lg text-violet-300">Marco & Alessia R.</p>
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-zinc-500">Servizio matrimonio · Roma</p>
+          <p className="font-antonio text-lg text-violet-300">Shady I.</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-zinc-500">Servizio video aziendale · Roma</p>
         </div>
 
         {/* Pulsante play */}
@@ -369,11 +369,6 @@ function VideoReview() {
           </span>
         </div>
       </div>
-
-      {/* Corner info */}
-      <div className="absolute bottom-8 left-8 hidden md:block">
-        <p className="font-montserrat text-[0.5rem] uppercase tracking-[0.4em] text-zinc-600">Video recensione · Disponibile prossimamente</p>
-      </div>
     </section>
   );
 }
@@ -381,14 +376,14 @@ function VideoReview() {
 // ─── CTA FINALE ───────────────────────────────────────────────
 function FinalCTA() {
   return (
-    <section className="py-32 px-6 text-center space-y-8 border-t border-zinc-800/60 bg-[#02010b]">
+    <section className="py-32 px-6 text-center space-y-8 bg-[#02010b]">
       <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-600">Iniziamo</p>
       <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight mx-auto max-w-2xl">
-        Hai un progetto<br />
-        <span className="text-violet-300">in mente?</span>
+        Vuoi collaborare <br />
+        <span className="text-violet-300">con noi?</span>
       </h2>
       <p className="font-montserrat text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
-        Ogni collaborazione nasce da una conversazione. Raccontaci la tua idea.
+        Contattaci e diamo vita alla tua idea.
       </p>
       <Link href="/contact"
         className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-8 py-3.5 font-montserrat text-xs font-semibold uppercase tracking-[0.25em] text-[#050211] shadow-[0_0_30px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 hover:shadow-[0_0_50px_rgba(167,139,250,0.8)]">
@@ -421,18 +416,38 @@ export default function Servizi() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-[#02010b]" />
         <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-64 w-96 rounded-full bg-violet-600/20 blur-3xl" />
 
-        <div className="relative z-10 mx-auto flex h-full max-w-4xl flex-col items-center px-4 text-center"
-          style={{ paddingTop: "20%" }}>
-          <h1 className="font-antonio text-4xl sm:text-5xl leading-tight">
+        {/* Mobile: testo in basso */}
+        <div className="md:hidden relative z-10 flex h-full flex-col items-center justify-end px-4 pb-12 text-center">
+          <h1 className="font-antonio text-4xl leading-tight">
             Creatività, Qualità Professionale
             <span className="block text-violet-300 mt-1">e massima Affidabilità.</span>
           </h1>
-          <p className="mt-5 max-w-2xl font-montserrat text-sm sm:text-base leading-relaxed text-zinc-300">
+          <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-300">
             Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
             con uno sguardo cinematografico e cura per ogni dettaglio.
           </p>
-          {/* Anchor links desktop */}
-          <div className="mt-6 hidden md:flex flex-wrap justify-center gap-2">
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {services.map((s) => (
+              <a key={s.id} href={`#${s.id}`}
+                className="rounded-full border border-violet-500/30 bg-violet-900/20 px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm transition hover:bg-violet-900/50 hover:border-violet-400/50">
+                {s.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: testo con paddingTop sotto gli archi */}
+        <div className="hidden md:flex relative z-10 mx-auto h-full max-w-4xl flex-col items-center px-4 text-center"
+          style={{ paddingTop: "20%" }}>
+          <h1 className="font-antonio text-5xl leading-tight">
+            Creatività, Qualità Professionale
+            <span className="block text-violet-300 mt-1">e massima Affidabilità.</span>
+          </h1>
+          <p className="mt-5 max-w-2xl font-montserrat text-base leading-relaxed text-zinc-300">
+            Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
+            con uno sguardo cinematografico e cura per ogni dettaglio.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
             {services.map((s) => (
               <a key={s.id} href={`#${s.id}`}
                 className="rounded-full border border-violet-500/30 bg-violet-900/20 px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm transition hover:bg-violet-900/50 hover:border-violet-400/50">
