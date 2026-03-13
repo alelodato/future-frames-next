@@ -163,25 +163,25 @@ export default function Intro() {
                     <div className="space-y-1 mb-6">
                       <h2 className="font-antonio leading-[1.0] text-white"
                         style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
-                        Raccontiamo ciò
+                        Immagini
                       </h2>
                       <h2 className="font-antonio leading-[1.0] text-white"
                         style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
-                        che vale la pena
+                        che restano
                       </h2>
                       <h2 className="font-antonio leading-[1.0] text-violet-300"
                         style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)" }}>
-                        ricordare.
+                        nel tempo.
                       </h2>
                     </div>
 
                     {/* Testo descrittivo — più diretto e con personalità */}
                     <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-400 mb-8">
-                      Future Frames è un'agenzia creativa specializzata in{" "}
-                      <span className="text-zinc-200">fotografia</span> e{" "}
-                      <span className="text-zinc-200">videomaking professionale</span>.
-                      Trasformiamo momenti, brand ed eventi in contenuti visivi
-                      che parlano da soli — dai social alle campagne più strutturate.
+                      <span className="text-zinc-200">Fotografia</span> e{" "}
+                      <span className="text-zinc-200">videomaking </span>
+                      pensati per trasformare momenti, brand ed eventi in immagini che restano.
+                      <br />
+                      Dai social ai progetti più strutturati, creiamo contenunti visivi autentici, puliti e contemporanei.
                     </p>
 
                     {/* Stats */}
@@ -202,14 +202,10 @@ export default function Intro() {
 
                     {/* CTA */}
                     <div className="flex flex-wrap gap-3">
-                      <Link href="/portfolio"
+                      <Link href="/about"
                         className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.6)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)]">
-                        Scopri il portfolio
+                        Scopri di più
                         <i className="fa-solid fa-arrow-right text-[0.6rem]" />
-                      </Link>
-                      <Link href="/servizi"
-                        className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-6 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-zinc-300 transition hover:border-zinc-500 hover:text-white">
-                        I nostri servizi
                       </Link>
                     </div>
                   </div>
@@ -226,16 +222,6 @@ export default function Intro() {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#080618] via-[#080618]/30 to-transparent hidden lg:block" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#080618] via-[#080618]/20 to-transparent lg:hidden" />
                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-
-                    {/* Tag fotografo in alto */}
-                    <div className="absolute top-5 right-5 z-10">
-                      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 backdrop-blur-md">
-                        <i className="fa-solid fa-camera text-violet-400 text-[0.6rem]" />
-                        <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.25em] text-zinc-300">
-                          Gloria Margarino
-                        </span>
-                      </div>
-                    </div>
 
                     {/* Badge bottom */}
                     <div className="absolute bottom-6 left-6 right-6 z-10">
@@ -346,10 +332,10 @@ export default function Intro() {
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
-                    Dal Portfolio
+                    Dal Nostro Portfolio
                   </h3>
                   <p className="mt-1 font-montserrat text-xs text-zinc-400">
-                    Una selezione dei progetti che ci rappresentano di più.
+                    I nostri lavori, raccontati attraverso immagini e movimento.
                   </p>
                 </div>
                 <Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
@@ -376,7 +362,7 @@ export default function Intro() {
                         Una selezione dei nostri lavori in un unico flusso cinematografico.
                       </p>
                       <span className="mt-4 inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
-                        Esplora tutti i progetti <i className="fa-solid fa-circle-arrow-right" />
+                        Esplora il portfolio <i className="fa-solid fa-circle-arrow-right" />
                       </span>
                     </div>
                   </div>
@@ -557,7 +543,7 @@ export default function Intro() {
                         </div>
                         <div>
                           <p className="font-antonio text-sm tracking-wide text-white">Gloria Margarino</p>
-                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Fotografa & Videomaker</p>
+                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder Fotografa & Videomaker</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 rounded-2xl border border-violet-500/15 bg-white/[0.03] px-4 py-3">
@@ -566,7 +552,7 @@ export default function Intro() {
                         </div>
                         <div>
                           <p className="font-antonio text-sm tracking-wide text-white">Ivan Scrofani</p>
-                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Video Editor</p>
+                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder Video Editor</p>
                         </div>
                       </div>
                     </div>
@@ -675,10 +661,10 @@ export default function Intro() {
                     </div>
 
                     <p className="font-montserrat text-sm sm:text-base leading-relaxed text-zinc-200 italic">
-                      "Professionalità e creatività fuori dal comune. Gloria e Ivan hanno saputo
-                      catturare ogni momento del nostro matrimonio con una sensibilità rara.
-                      Il video finale ci ha lasciati senza parole — esattamente come avevamo
-                      sognato, e anche di più."
+                      "Ho avuto il piacere di collaborare con Gloria per la realizzazione di contenuti video destinati ad un locale/club e l’esperienza è stata estremamente positiva.
+                      Ha dimostrato grande professionalità in ogni fase del lavoro: dall’organizzazione iniziale alle riprese, fino alla post-produzione. Il risultato finale è stato un video curato nei dettagli, coerente con l’identità del locale e capace di valorizzarne al meglio l’atmosfera e i punti di forza.
+                      Gloria è stata molto affidabile, precisa e con ottime competenze tecniche.
+                      La consiglio vivamente a chi cerca una videomaker competente e attenta alle esigenze del cliente."
                     </p>
 
                     {/* Autore */}
@@ -690,9 +676,9 @@ export default function Intro() {
                         </div>
                       </div>
                       <div>
-                        <p className="font-antonio text-sm tracking-wide text-white">Marco & Alessia R.</p>
+                        <p className="font-antonio text-sm tracking-wide text-white">Veronica</p>
                         <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-violet-300">
-                          Servizio matrimonio · Roma
+                          Servizio Foto/Video Per Attivitá · Roma
                         </p>
                       </div>
                     </div>
@@ -807,8 +793,10 @@ export default function Intro() {
                   Parliamo del tuo progetto
                 </h3>
                 <p className="mt-1 font-montserrat text-xs text-zinc-400 max-w-2xl">
-                  Siamo basati a <span className="text-violet-300 font-semibold">Pomezia</span> e operiamo principalmente
-                  nel territorio della provincia di Roma. Disponibili a trasferte su accordo con il cliente.
+                  Ci troviamo a <span className="text-violet-300 font-semibold">Pomezia</span> e operiamo principalmente
+                  nel territorio della provincia di Roma. 
+                  <br />
+                  Disponibili a trasferte su accordo con il cliente.
                 </p>
               </div>
 
@@ -840,7 +828,7 @@ export default function Intro() {
                       </div>
                       <div>
                         <p className="font-montserrat text-[0.7rem] uppercase tracking-[0.2em] text-violet-300 mb-0.5">Sede</p>
-                        <p className="font-montserrat text-sm text-zinc-200">Pomezia, Roma — Lazio</p>
+                        <p className="font-montserrat text-sm text-zinc-200">Pomezia (RM)</p>
                       </div>
                     </div>
 
@@ -852,18 +840,8 @@ export default function Intro() {
                         <p className="font-montserrat text-[0.7rem] uppercase tracking-[0.2em] text-violet-300 mb-0.5">Area operativa</p>
                         <p className="font-montserrat text-sm text-zinc-200">
                           Provincia di Roma e dintorni.{" "}
-                          <span className="text-zinc-400">Trasferte disponibili su accordo con il cliente.</span>
+                          <span className="text-zinc-400">Trasferte disponibili in accordo con il cliente.</span>
                         </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-violet-500/30 bg-violet-900/40">
-                        <i className="fa-solid fa-clock text-violet-400 text-xs" />
-                      </div>
-                      <div>
-                        <p className="font-montserrat text-[0.7rem] uppercase tracking-[0.2em] text-violet-300 mb-0.5">Risposta</p>
-                        <p className="font-montserrat text-sm text-zinc-200">Di solito entro 24–48 ore lavorative.</p>
                       </div>
                     </div>
                   </div>
