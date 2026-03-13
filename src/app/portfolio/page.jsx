@@ -346,18 +346,6 @@ function MobilePatternB({ projects }) {
   );
 }
 
-// ─── PATTERN MOBILE C: tre affiancati ────────────────────────
-function MobilePatternC({ projects }) {
-  const [p1, p2, p3] = projects;
-  return (
-    <div className="flex gap-0.5 h-[55vw]">
-      {p1 && <ProjectCard project={p1} className="flex-1 h-full" />}
-      {p2 && <ProjectCard project={p2} className="flex-1 h-full" />}
-      {p3 && <ProjectCard project={p3} className="flex-1 h-full" />}
-    </div>
-  );
-}
-
 function MobilePortfolio({ projects }) {
   const panels = buildPanels(projects);
   return (
@@ -377,10 +365,6 @@ function MobilePortfolio({ projects }) {
           <h1 className="font-antonio text-[5rem] leading-none text-white tracking-tight">PORTFOLIO</h1>
           <p className="mt-4 font-montserrat text-sm text-zinc-400 tracking-[0.15em]">Storie raccontate attraverso il movimento</p>
           <div className="mt-8 flex items-center justify-center gap-6">
-            <div className="text-center">
-              <p className="font-antonio text-3xl text-white">{projects.length}</p>
-              <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500 mt-0.5">Progetti</p>
-            </div>
           </div>
         </div>
       </section>
@@ -390,7 +374,6 @@ function MobilePortfolio({ projects }) {
         {panels.map((panel, i) => {
           if (panel.type === "A") return <MobilePatternA key={i} projects={panel.projects} />;
           if (panel.type === "B") return <MobilePatternB key={i} projects={panel.projects} />;
-          if (panel.type === "C") return <MobilePatternC key={i} projects={panel.projects} />;
           return null;
         })}
       </div>
