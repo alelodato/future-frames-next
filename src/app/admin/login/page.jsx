@@ -59,7 +59,7 @@ export default function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20"
-                placeholder="admin@futureframes.it"
+                placeholder="futureframes.info@gmail.it"
               />
             </div>
 
