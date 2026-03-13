@@ -9,11 +9,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── DATA ─────────────────────────────────────────────────────
 const reviews = [
-  { name: "Marco & Alessia R.", role: "Servizio matrimonio · Roma", stars: 5, text: "Professionalità e creatività fuori dal comune. Gloria e Ivan hanno saputo catturare ogni momento con una sensibilità rara. Il video finale ci ha lasciati senza parole." },
-  { name: "Chiara M.", role: "Shooting food · Ostia", stars: 5, text: "Ho scelto Future Frames per il lancio del mio ristorante e non potevo fare scelta migliore. Le foto parlano da sole — eleganti, appetitose, perfette per i social." },
-  { name: "Davide F.", role: "Evento aziendale · Roma", stars: 5, text: "Puntuali, discreti e incredibilmente professionali. Hanno fotografato il nostro evento aziendale senza mai essere invasivi, consegnando un lavoro impeccabile." },
-  { name: "Sofia & Andrea B.", role: "Battesimo · Pomezia", stars: 5, text: "Ci hanno regalato ricordi che non avremmo mai saputo immaginare così belli. Ogni foto racconta un'emozione vera. Consigliati a occhi chiusi." },
-  { name: "Roberto C.", role: "Video corporate · Latina", stars: 5, text: "Avevo già lavorato con altre agenzie ma il livello di Future Frames è un altro. Ascolto, cura e un risultato che ha superato ogni aspettativa." },
+  { name: "Reforma Pilates", role: "Contenuti Social", stars: 5, text: "Future Frames è un'assicurazione! Crea contenuti per la nostra pagina da quando abbiamo aperto, ci consegna i lavori sempre con grande puntualità, sono sempre disponibili per ogni nostra esigenza! Che dire..non sapremmo come fare senza!" },
+  { name: "Alex C.", role: "Videoclip Musicali · Roma", stars: 5, text: "Professionisti precisi, efficienti e disponibili: ho realizzato alcuni videoclip musicali e mi sono trovato benissimo! Sempre pronti a curare il dettaglio! Super consigliati!" },
+  { name: "Sharon", role: "Shooting · Roma", stars: 5, text: "Gloria è stata la fotografa del mio shooting e mi sono trovata benissimo. Professionale, disponibile e capace di metterti subito a tuo agio. Scatti stupendi e risultato finale oltre le aspettative. Consigliatissima! 📸✨" },
+  { name: "Marco I.", role: "Collaboratore · Pomezia", stars: 5, text: "Da collaboratore non posso che garantirvi l’estrema professionalità di Future Frames. Servizi per aziende, marketing, personal branding, cerimonie, eventi ecc…la capacità di ascolto e interpretazione delle vostre idee verra sviluppata nella maniera migliore grazie alla professionalità e visione di Gloria. Gentilezza, precisione, innovazione combinati con il suo know how saranno la vostra garanzia per un risultato perfetto! Fiducia massima e per questo super consigliati!" },
+  { name: "Graziano Flavio T.", role: "Servizio Video · Pomezia", stars: 5, text: "Grandi professionisti. Ho avuto il piacere di collaborare e conoscere Gloria per la realizzazione di contenuti video per un club, devo dire l'esperienza è stata molto positiva. Ha dimostrato grande professionalità in ogni fase del lavoro dall’organizzazione alle riprese." },
 ];
 
 const values = [
@@ -132,7 +132,7 @@ function ReviewsSlideshow() {
 // ─── PAGE ─────────────────────────────────────────────────────
 export default function About() {
   return (
-    <div className="bg-[#02010b] text-white min-h-screen">
+    <div className="bg-gradient-to-b from-black via-[#0a0b33ad] to-black text-white min-h-screen">
 
       {/* ── APERTURA EDITORIALE ── */}
       <section className="pt-32 pb-0 px-6 md:px-12 max-w-5xl mx-auto">
@@ -150,9 +150,9 @@ export default function About() {
             {[
               "Non facciamo solo",
               "foto e video.",
-              "Raccontiamo ciò",
-              "che vale la pena",
-              "ricordare.",
+              "Raccontiamo storie",
+              "con immagini",
+              "che restano nel tempo.",
             ].map((line, i) => (
               <FadeReveal key={i} delay={i * 0.08}>
                 <p
@@ -179,9 +179,9 @@ export default function About() {
           {[
             "Non facciamo solo",
             "foto e video.",
-            "Raccontiamo ciò",
-            "che vale la pena",
-            "ricordare.",
+            "Raccontiamo storie",
+            "con immagini",
+            "che restano nel tempo.",
           ].map((line, i) => (
             <FadeReveal key={i} delay={i * 0.08}>
               <p
@@ -279,17 +279,28 @@ export default function About() {
 
             <FadeReveal delay={0.2}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
-                Dagli eventi privati ai matrimoni, fino ai progetti aziendali, il suo obiettivo è raccontare persone e momenti reali senza perdere eleganza e coerenza visiva. Ogni scatto è una scelta, non una casualità.
+                Dagli eventi privati ai progetti aziendali, fino ai corti cinematografici, il suo obiettivo è raccontare persone e momenti reali senza perdere eleganza e coerenza visiva. Ogni scatto è una scelta, non una casualità.
               </p>
             </FadeReveal>
 
-            <FadeReveal delay={0.25}>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {["Matrimoni", "Ritratti", "Food", "Aziende", "Eventi"].map((tag) => (
-                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 border-b border-zinc-700 pb-0.5">
-                    {tag}
-                  </span>
-                ))}
+            <FadeReveal delay={0.3}>
+              <div className="space-y-3 pt-2">
+                <p className="font-montserrat text-xs leading-relaxed text-zinc-600">
+                  Segui il lavoro di Gloria sui suoi profili social.
+                </p>
+                <div className="flex items-center gap-4">
+                  <a href="https://www.instagram.com/gloria.margarino" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
+                    <i className="fa-brands fa-instagram text-sm" />
+                    Instagram
+                  </a>
+                  <div className="h-3 w-px bg-zinc-800" />
+                  <a href="https://www.linkedin.com/in/gloria-margarino" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
+                    <i className="fa-brands fa-linkedin text-sm" />
+                    LinkedIn
+                  </a>
+                </div>
               </div>
             </FadeReveal>
           </div>
@@ -298,7 +309,7 @@ export default function About() {
 
       {/* ── SEPARATORE CITAZIONE ── */}
       <FadeReveal>
-        <div className="border-t border-b border-zinc-800/60 py-16 px-6 md:px-12">
+        <div className="bg-[#02010b] border-t border-b border-zinc-800/60 py-16 px-6 md:px-12">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <p className="font-antonio text-2xl md:text-3xl lg:text-4xl text-zinc-300 leading-snug italic">
               "Ogni frame è una scelta. Noi scegliamo con cura."
@@ -340,7 +351,7 @@ export default function About() {
 
             <FadeReveal delay={0.2}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
-                Dai social content ai video corporate, fino agli spot più cinematografici, lavora perché ogni frame abbia un ruolo preciso e un impatto chiaro. Il montaggio non è tecnica — è scrittura.
+                Dai social content ai video corporate, fino agli spot più cinematografici, lavora perché ogni frame abbia un ruolo preciso e un impatto chiaro. Il montaggio non è tecnica, è scrittura.
               </p>
             </FadeReveal>
 
@@ -371,11 +382,11 @@ export default function About() {
       </section>
 
       {/* ── VALORI ── */}
-      <section className="py-24 border-t border-zinc-800/60">
+      <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-16">
 
           <FadeReveal className="flex items-center gap-4">
-            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Il nostro approccio</span>
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">I nostri valori</span>
             <div className="h-px flex-1 bg-zinc-800" />
           </FadeReveal>
 
@@ -406,15 +417,6 @@ export default function About() {
           {/* Video placeholder */}
           <FadeReveal>
             <div className="relative overflow-hidden rounded-2xl bg-zinc-900/50 border border-zinc-800 aspect-video flex items-center justify-center group cursor-pointer">
-              {/*
-                Quando hai il video reale sostituisci con:
-                <iframe
-                  src="https://player.vimeo.com/video/ID_VIDEO?title=0&byline=0&portrait=0"
-                  className="absolute inset-0 w-full h-full"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
-                />
-              */}
               <div className="absolute inset-0 bg-gradient-to-br from-violet-900/10 to-transparent" />
               <div className="relative z-10 flex flex-col items-center gap-4 text-center px-8">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full border border-violet-400/30 bg-violet-900/30 backdrop-blur-sm transition group-hover:bg-violet-600/50 group-hover:border-violet-400/60 group-hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]">
@@ -422,7 +424,6 @@ export default function About() {
                 </div>
                 <div>
                   <p className="font-antonio text-base text-white">Video recensione</p>
-                  <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.25em] text-zinc-500 mt-1">Disponibile prossimamente</p>
                 </div>
               </div>
               {/* Corner label */}
@@ -461,11 +462,11 @@ export default function About() {
       </section>
 
       {/* ── DOVE LAVORIAMO ── */}
-      <section className="py-24 border-t border-zinc-800/60">
+      <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-12">
 
           <FadeReveal className="flex items-center gap-4">
-            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Dove siamo</span>
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Dove siamo</span>
             <div className="h-px flex-1 bg-zinc-800" />
           </FadeReveal>
 
@@ -473,20 +474,20 @@ export default function About() {
             <FadeReveal className="space-y-6">
               <h3 className="font-antonio text-3xl md:text-4xl text-white leading-tight">
                 Con base a Pomezia,
-                <span className="block text-zinc-500">alle porte di Roma.</span>
+                <span className="block text-violet-300">alle porte di Roma.</span>
               </h3>
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Operiamo principalmente nell&apos;area metropolitana di Roma. Per progetti strutturati valutiamo trasferte in altre città italiane.
               </p>
               <div className="space-y-3 pt-2">
                 {[
-                  { icon: "fa-solid fa-location-dot", text: "Pomezia, Roma — Lazio" },
+                  { icon: "fa-solid fa-location-dot", text: "Pomezia (RM)" },
                   { icon: "fa-solid fa-map", text: "Provincia di Roma e dintorni" },
                   { icon: "fa-solid fa-car", text: "Trasferte su accordo" },
                 ].map((item) => (
                   <div key={item.text} className="flex items-center gap-3">
-                    <i className={`${item.icon} text-zinc-600 text-xs w-4`} />
-                    <span className="font-montserrat text-xs text-zinc-400">{item.text}</span>
+                    <i className={`${item.icon} text-violet-400/50 text-xs w-4`} />
+                    <span className="font-montserrat text-xs text-zinc-300">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -497,9 +498,9 @@ export default function About() {
             </FadeReveal>
 
             <FadeReveal delay={0.1}>
-              <div className="overflow-hidden rounded-2xl border border-zinc-800 min-h-[300px]">
+              <div className="overflow-hidden rounded-2xl border border-violet-500/15 min-h-[300px] shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
                 <iframe title="Mappa Pomezia" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                  className="h-full w-full min-h-[300px] border-0 grayscale contrast-110 opacity-60 transition duration-500 hover:grayscale-0 hover:opacity-90"
+                  className="h-full w-full min-h-[300px] border-0 grayscale contrast-110 opacity-60 transition duration-500 hover:grayscale-0 hover:opacity-100"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7469.59805370534!2d12.494142676655008!3d41.669457171703194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132599a4cfbcba4b%3A0xdee4c5c2d3b0f27b!2s00071%20Pomezia%20RM!5e0!3m2!1sit!2sit!4v1733589000000!5m2!1sit!2si" />
               </div>
             </FadeReveal>
@@ -510,19 +511,19 @@ export default function About() {
       {/* ── CTA FINALE ── */}
       <section className="relative py-32 overflow-hidden">
         <img src="/images/NeonWall.webp" alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#02010b] via-transparent to-[#02010b]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#02010b]/60 via-transparent to-[#02010b]/60" />
-        <div className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 65%)" }} />
+          className="absolute inset-0 w-full h-full object-cover opacity-90" />
+        {/* Solo un fade in alto per entrare dal nero */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent" />
+        {/* Overlay scuro leggero solo per leggibilità del testo */}
+        <div className="absolute inset-0 bg-black/40" />
 
         <FadeReveal className="relative z-10 text-center px-6 space-y-6">
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-500">Iniziamo</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-400">Iniziamo</p>
           <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight">
             Hai un progetto<br />
             <span className="text-violet-300">in mente?</span>
           </h2>
-          <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto">
+          <p className="font-montserrat text-sm text-zinc-300 max-w-sm mx-auto">
             Raccontacelo. Ogni collaborazione nasce da una conversazione.
           </p>
           <Link href="/contact"

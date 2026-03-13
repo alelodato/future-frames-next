@@ -177,11 +177,10 @@ export default function Intro() {
 
                     {/* Testo descrittivo — più diretto e con personalità */}
                     <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-400 mb-8">
-                      <span className="text-zinc-200">Fotografia</span> e{" "}
-                      <span className="text-zinc-200">videomaking </span>
-                      pensati per trasformare momenti, brand ed eventi in immagini che restano.
+                      Future Frames è un’agenzia creativa specializzata in <span className="text-zinc-200">Fotografia</span> e{" "}
+                      <span className="text-zinc-200">videomaking </span> professionale.
                       <br />
-                      Dai social ai progetti più strutturati, creiamo contenunti visivi autentici, puliti e contemporanei.
+                      Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
                     </p>
 
                     {/* Stats */}
