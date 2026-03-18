@@ -69,7 +69,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" onClick={close} className="flex-shrink-0 z-10 my-6">
             <img
-              src="/images/logo-viola.png"
+              src="/images/logo-gradient.png"
               alt="Future Frames"
               className="h-12 sm:h-14 md:h-15 w-auto"
             />
@@ -82,17 +82,39 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 className={`
-                  relative font-orbitron font-semibold text-xs lg:text-sm tracking-widest
-                  transition-all duration-200
-                  ${pathname === l.href
-                    ? "text-violet-400 drop-shadow-[0_0_12px_rgba(167,139,250,0.8)]"
-                    : "text-white hover:text-violet-300 drop-shadow-[0_0_10px_rgba(160,32,240,0.4)] hover:drop-shadow-[0_0_16px_rgba(160,32,240,0.7)]"
+        relative font-orbitron font-semibold text-xs lg:text-sm tracking-widest
+        transition-all duration-300 group
+        ${pathname === l.href
+                    ? "text-violet-400"
+                    : "text-white hover:text-violet-300"
                   }
-                `}
+      `}
               >
-                {l.label}
+                {/* Glow neon dietro il testo all'hover */}
+                <span
+                  className={`
+          absolute inset-0 rounded-sm blur-md transition-opacity duration-300
+          bg-violet-500/30
+          ${pathname === l.href ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+        `}
+                />
+
+                {/* Testo con neon glow */}
+                <span
+                  className={`
+          relative transition-all duration-300
+          ${pathname === l.href
+                      ? "[text-shadow:0_0_8px_rgba(167,139,250,0.9),0_0_20px_rgba(167,139,250,0.6),0_0_40px_rgba(167,139,250,0.3)]"
+                      : "group-hover:[text-shadow:0_0_8px_rgba(167,139,250,0.9),0_0_20px_rgba(167,139,250,0.6),0_0_40px_rgba(167,139,250,0.3)]"
+                    }
+        `}
+                >
+                  {l.label}
+                </span>
+
+                {/* Underline attivo */}
                 {pathname === l.href && (
-                  <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-violet-500 to-fuchsia-500" />
+                  <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-violet-500 to-fuchsia-500 shadow-[0_0_6px_rgba(167,139,250,0.8)]" />
                 )}
               </Link>
             ))}
