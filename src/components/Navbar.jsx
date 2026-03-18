@@ -1,3 +1,4 @@
+// Navbar.jsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const isContact = pathname === "/contact";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -30,19 +32,29 @@ export default function Navbar() {
 
   useEffect(() => {
     setOpen(false);
+    // Reset scroll state quando cambia pagina
+    setScrolled(window.scrollY > 8);
   }, [pathname]);
 
   const close = () => setOpen(false);
+
+  // Su /contact la navbar è sempre visibile e solida
+  // Su tutte le altre: invisibile finché non si scrolla
+  const isVisible = isContact || scrolled;
 
   return (
     <>
       <header
         className={`
-          fixed top-0 left-0 w-full z-[100] transition-all duration-300
-          ${scrolled
+          fixed top-0 left-0 w-full z-[100]
+          transition-all duration-500
+          ${isContact
             ? "bg-[rgba(5,5,10,0.92)] backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-            : "bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-transparent"
+            : scrolled
+              ? "bg-[rgba(5,5,10,0.92)] backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+              : "bg-transparent"
           }
+          ${!isContact && !scrolled ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"}
         `}
       >
         <div className="max-w-[1400px] mx-auto flex items-center justify-between h-[72px] px-6 md:px-10 lg:px-16">
