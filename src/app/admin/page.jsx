@@ -14,6 +14,9 @@ export default function AdminDashboard() {
     totalComments: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [videoRecensione, setVideoRecensione] = useState("");
+  const [uploadingVideoRecensione, setUploadingVideoRecensione] = useState(false);
+  const [videoRecensioneUploaded, setVideoRecensioneUploaded] = useState(false);
 
   useEffect(() => {
     fetchStats();
@@ -29,6 +32,7 @@ export default function AdminDashboard() {
       { count: publishedArticles },
       { count: pendingComments },
       { count: totalComments },
+      { data: videoSetting },
     ] = await Promise.all([
       supabase.from("projects").select("*", { count: "exact", head: true }),
       supabase.from("projects").select("*", { count: "exact", head: true }).eq("published", true),
@@ -36,7 +40,10 @@ export default function AdminDashboard() {
       supabase.from("articles").select("*", { count: "exact", head: true }).eq("published", true),
       supabase.from("article_comments").select("*", { count: "exact", head: true }).eq("approved", false),
       supabase.from("article_comments").select("*", { count: "exact", head: true }),
+      supabase.from("site_settings").select("value").eq("key", "video_recensione_url").single(),
     ]);
+
+    if (videoSetting?.value) setVideoRecensione(videoSetting.value);
 
     setStats({
       projects: projects || 0,
@@ -47,6 +54,23 @@ export default function AdminDashboard() {
       totalComments: totalComments || 0,
     });
     setLoading(false);
+  }
+
+  async function handleVideoRecensioneUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingVideoRecensione(true);
+    const supabase = createSupabaseBrowser();
+    const filename = `recensioni/${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage.from("media").upload(filename, file);
+    if (!error) {
+      const { data } = supabase.storage.from("media").getPublicUrl(filename);
+      setVideoRecensione(data.publicUrl);
+      await supabase.from("site_settings").upsert({ key: "video_recensione_url", value: data.publicUrl });
+      setVideoRecensioneUploaded(true);
+      setTimeout(() => setVideoRecensioneUploaded(false), 2000);
+    }
+    setUploadingVideoRecensione(false);
   }
 
   const cards = [
@@ -129,7 +153,6 @@ export default function AdminDashboard() {
             <Link key={card.title} href={card.href}
               className={`group relative rounded-2xl border ${c.border} bg-gradient-to-br ${c.bg} via-[#0d0b2a] to-slate-950/80 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)]`}>
 
-              {/* Alert badge */}
               {card.alert && (
                 <div className="absolute top-4 right-4 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.6)]">
                   <span className="font-montserrat text-[0.55rem] font-bold text-black">!</span>
@@ -187,9 +210,50 @@ export default function AdminDashboard() {
             <Link href="/admin/commenti"
               className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-900/10 px-4 py-2 font-montserrat text-xs uppercase tracking-[0.18em] text-amber-400 transition hover:bg-amber-900/30">
               <i className="fa-solid fa-clock text-xs" />
-              {stats.pendingComments} commент{stats.pendingComments === 1 ? "o" : "i"} da approvare
+              {stats.pendingComments} comment{stats.pendingComments === 1 ? "o" : "i"} da approvare
             </Link>
           )}
+        </div>
+      </div>
+
+      {/* Video recensione */}
+      <div className="space-y-3">
+        <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.3em] text-zinc-600">Video recensione — About</p>
+        <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4">
+          <p className="font-montserrat text-xs text-zinc-400">
+            Carica il video recensione da mostrare nella pagina About. Sostituirà automaticamente quello precedente.
+          </p>
+
+          {videoRecensione && (
+            <div className="relative overflow-hidden rounded-xl">
+              <video src={videoRecensione} className="w-full h-40 object-cover rounded-xl" controls />
+              <button
+                type="button"
+                onClick={async () => {
+                  const supabase = createSupabaseBrowser();
+                  await supabase.from("site_settings").upsert({ key: "video_recensione_url", value: "" });
+                  setVideoRecensione("");
+                }}
+                className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white hover:bg-red-900/80 transition">
+                <i className="fa-solid fa-xmark text-xs" />
+              </button>
+              <div className="absolute bottom-2 left-2">
+                <span className="font-montserrat text-[0.5rem] uppercase tracking-wider text-zinc-300 bg-black/60 px-2 py-1 rounded-md backdrop-blur-sm">
+                  Video attuale
+                </span>
+              </div>
+            </div>
+          )}
+
+          <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-4 transition hover:border-violet-400/50 ${uploadingVideoRecensione ? "opacity-50 pointer-events-none" : ""}`}>
+            <i className={`fa-solid ${uploadingVideoRecensione ? "fa-spinner animate-spin" : videoRecensioneUploaded ? "fa-check" : "fa-video"} text-violet-400 text-sm`} />
+            <div>
+              <p className="font-montserrat text-xs text-zinc-300">
+                {uploadingVideoRecensione ? "Caricamento in corso..." : videoRecensioneUploaded ? "Video caricato!" : "Carica nuovo video recensione"}
+              </p>
+            </div>
+            <input type="file" accept="video/*" onChange={handleVideoRecensioneUpload} className="hidden" />
+          </label>
         </div>
       </div>
 

@@ -4,17 +4,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
 gsap.registerPlugin(ScrollTrigger);
-
-// ─── DATA ─────────────────────────────────────────────────────
-const reviews = [
-  { name: "Reforma Pilates", role: "Contenuti Social", stars: 5, text: "Future Frames è un'assicurazione! Crea contenuti per la nostra pagina da quando abbiamo aperto, ci consegna i lavori sempre con grande puntualità, sono sempre disponibili per ogni nostra esigenza! Che dire..non sapremmo come fare senza!" },
-  { name: "Alex C.", role: "Videoclip Musicali · Roma", stars: 5, text: "Professionisti precisi, efficienti e disponibili: ho realizzato alcuni videoclip musicali e mi sono trovato benissimo! Sempre pronti a curare il dettaglio! Super consigliati!" },
-  { name: "Sharon", role: "Shooting · Roma", stars: 5, text: "Gloria è stata la fotografa del mio shooting e mi sono trovata benissimo. Professionale, disponibile e capace di metterti subito a tuo agio. Scatti stupendi e risultato finale oltre le aspettative. Consigliatissima! 📸✨" },
-  { name: "Marco I.", role: "Collaboratore · Pomezia", stars: 5, text: "Da collaboratore non posso che garantirvi l’estrema professionalità di Future Frames. Servizi per aziende, marketing, personal branding, cerimonie, eventi ecc…la capacità di ascolto e interpretazione delle vostre idee verra sviluppata nella maniera migliore grazie alla professionalità e visione di Gloria. Gentilezza, precisione, innovazione combinati con il suo know how saranno la vostra garanzia per un risultato perfetto! Fiducia massima e per questo super consigliati!" },
-  { name: "Graziano Flavio T.", role: "Servizio Video · Pomezia", stars: 5, text: "Grandi professionisti. Ho avuto il piacere di collaborare e conoscere Gloria per la realizzazione di contenuti video per un club, devo dire l'esperienza è stata molto positiva. Ha dimostrato grande professionalità in ogni fase del lavoro dall’organizzazione alle riprese." },
-];
 
 const values = [
   { icon: "fa-solid fa-eye", title: "Creatività", text: "Trovare sempre l'inquadratura giusta e il taglio narrativo più efficace, progetto dopo progetto." },
@@ -23,35 +15,11 @@ const values = [
   { icon: "fa-solid fa-comments", title: "Ascolto", text: "Ogni progetto nasce dal dialogo con il cliente. La tua visione è il nostro punto di partenza." },
 ];
 
-// ─── REVEAL LINE (singola riga che appare) ────────────────────
-function useLineReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    gsap.from(el, {
-      y: 40,
-      opacity: 0,
-      duration: 1.1,
-      ease: "expo.out",
-      scrollTrigger: {
-        trigger: el,
-        start: "top 88%",
-        toggleActions: "play none none none",
-      },
-    });
-  }, []);
-  return ref;
-}
-
 function FadeReveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    // Piccolo delay per aspettare il render completo dopo navigazione
     const timer = setTimeout(() => {
       gsap.from(el, {
         y: 30,
@@ -67,148 +35,88 @@ function FadeReveal({ children, className = "", delay = 0 }) {
       });
       ScrollTrigger.refresh();
     }, 100);
-
     return () => {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
-
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-// ─── REVIEWS SLIDESHOW ────────────────────────────────────────
-function ReviewsSlideshow() {
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const go = (idx) => {
-    if (animating) return;
-    setAnimating(true);
-    setTimeout(() => { setCurrent(idx); setAnimating(false); }, 250);
-  };
-  const r = reviews[current];
-  return (
-    <div className="space-y-4">
-      <div className="relative rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-7 sm:p-9 shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-opacity duration-250"
-        style={{ opacity: animating ? 0 : 1 }}>
-        <span className="font-antonio text-[6rem] leading-none text-violet-500/15 select-none absolute top-2 left-6">"</span>
-        <div className="relative z-10 space-y-5">
-          <div className="flex gap-1">{[...Array(r.stars)].map((_, i) => <i key={i} className="fa-solid fa-star text-amber-400 text-sm" />)}</div>
-          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-zinc-200 italic max-w-3xl">&ldquo;{r.text}&rdquo;</p>
-          <div className="flex items-center justify-between pt-4 border-t border-violet-500/15">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 flex-shrink-0 rounded-full border border-violet-400/20 bg-violet-900/40 flex items-center justify-center">
-                <i className="fa-solid fa-user text-violet-400 text-sm" />
-              </div>
-              <div>
-                <p className="font-antonio text-sm tracking-wide text-white">{r.name}</p>
-                <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-violet-300">{r.role}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => go((current - 1 + reviews.length) % reviews.length)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-violet-500/30 bg-violet-900/30 transition hover:bg-violet-600/50">
-                <i className="fa-solid fa-arrow-left text-violet-300 text-xs" />
-              </button>
-              <span className="font-montserrat text-[0.65rem] text-zinc-500">{current + 1} / {reviews.length}</span>
-              <button onClick={() => go((current + 1) % reviews.length)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-violet-500/30 bg-violet-900/30 transition hover:bg-violet-600/50">
-                <i className="fa-solid fa-arrow-right text-violet-300 text-xs" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-center gap-2">
-        {reviews.map((_, i) => (
-          <button key={i} onClick={() => go(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-violet-400" : "w-1.5 bg-violet-500/30"}`} />
-        ))}
-      </div>
-    </div>
-  );
-}
 
-// ─── PAGE ─────────────────────────────────────────────────────
 export default function About() {
+  const [videoRecensioneUrl, setVideoRecensioneUrl] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(() => ScrollTrigger.refresh(), 200);
+
+    async function loadVideoUrl() {
+      const supabase = createSupabaseBrowser();
+      const { data } = await supabase
+        .from("site_settings")
+        .select("value")
+        .eq("key", "video_recensione_url")
+        .single();
+      if (data?.value) setVideoRecensioneUrl(data.value);
+    }
+    loadVideoUrl();
+  }, []);
+
   return (
-    <div className="bg-gradient-to-b from-black via-[#0a0b33ad] to-black text-white min-h-screen">
+    <div className="text-white min-h-screen"
+      style={{ background: "radial-gradient(ellipse at center, #0d0b2a 0%, #06050f 60%, #000000 100%)" }}>
 
       {/* ── APERTURA EDITORIALE ── */}
       <section className="pt-32 pb-0 px-6 md:px-12 max-w-5xl mx-auto">
-
-        {/* Label — stile magazine */}
         <FadeReveal className="flex items-center gap-4 mb-14">
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">About</span>
           <div className="h-px flex-1 bg-zinc-800" />
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Future Frames</span>
         </FadeReveal>
 
-        {/* Desktop/tablet: titolo sinistra + immagine+logo destra */}
+        {/* Desktop/tablet */}
         <div className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-start mb-16">
           <div className="space-y-2">
-            {[
-              "Non facciamo solo",
-              "foto e video.",
-              "Raccontiamo storie",
-              "con immagini",
-              "che restano nel tempo.",
-            ].map((line, i) => (
+            {["Non facciamo solo", "foto e video.", "Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
               <FadeReveal key={i} delay={i * 0.08}>
-                <p
-                  className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
-                  style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)" }}
-                >
+                <p className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
+                  style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)" }}>
                   {line}
                 </p>
               </FadeReveal>
             ))}
           </div>
-
-          <FadeReveal delay={0.3} className="flex-shrink-0 w-[500px] lg:w-[400px] flex flex-col gap-4 pt-1">
-            <div className=" shadow-[0_20px_60px_rgba(0,0,0,0.7)]"
-              style={{ aspectRatio: "3/4" }}>
+          <FadeReveal delay={0.3} className="flex-shrink-0 flex flex-col gap-4 pt-1">
+            <div style={{ aspectRatio: "3/4" }}>
               <img src="/images/eventi.webp" alt="Future Frames Logo"
-                className="w-full h-full object-contain opacity-80 transition duration-700 hover:scale-[1.03]" />
+                className="w-[200px] lg:w-[400px] h-auto object-contain opacity-80 transition duration-700 hover:scale-[1.03]" />
             </div>
           </FadeReveal>
         </div>
 
-        {/* Mobile: solo titolo */}
+        {/* Mobile */}
         <div className="md:hidden space-y-2 mb-8">
-          {[
-            "Non facciamo solo",
-            "foto e video.",
-            "Raccontiamo storie",
-            "con immagini",
-            "che restano nel tempo.",
-          ].map((line, i) => (
+          {["Non facciamo solo", "foto e video.", "Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
             <FadeReveal key={i} delay={i * 0.08}>
-              <p
-                className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
-                style={{ fontSize: "clamp(2.2rem, 10vw, 3.5rem)" }}
-              >
+              <p className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
+                style={{ fontSize: "clamp(2.2rem, 10vw, 3.5rem)" }}>
                 {line}
               </p>
             </FadeReveal>
           ))}
         </div>
 
-        {/* Immagine full bleed — solo mobile, subito dopo il titolo */}
+        {/* Immagine full bleed mobile */}
         <FadeReveal className="md:hidden -mx-6 mb-10">
           <div className="relative w-full overflow-hidden" style={{ height: "clamp(260px, 50vw, 420px)" }}>
             <img src="/images/introimg4.webp" alt="Future Frames backstage"
               className="w-full h-full object-cover opacity-70" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#02010b] via-transparent to-[#02010b]" />
-            <div className="absolute bottom-5 right-5">
-              <p className="font-montserrat text-[0.5rem] uppercase tracking-[0.3em] text-zinc-500">
-                Backstage · Roma, 2024
-              </p>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
           </div>
         </FadeReveal>
 
-        {/* Intro testo — due colonne */}
+        {/* Intro testo */}
         <FadeReveal className="grid md:grid-cols-2 gap-8 md:gap-16 border-t border-zinc-800 pt-12 pb-24">
           <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
             Future Frames nasce a Pomezia, alle porte di Roma, dall'incontro tra due sensibilità complementari. Gloria dietro l'obiettivo, Ivan in fase di montaggio: insieme formano un'unica visione creativa.
@@ -219,69 +127,53 @@ export default function About() {
         </FadeReveal>
       </section>
 
-      {/* ── IMMAGINE FULL BLEED ── */}
+      {/* Immagine full bleed desktop */}
       <FadeReveal className="hidden md:block">
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(300px, 55vh, 600px)" }}>
           <img src="/images/introimg4.webp" alt="Future Frames backstage"
             className="w-full h-full object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#02010b] via-transparent to-[#02010b]" />
-          <div className="absolute bottom-8 right-8">
-            <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500">
-              Backstage · Roma, 2024
-            </p>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
         </div>
       </FadeReveal>
 
       {/* ── GLORIA ── */}
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-5xl mx-auto">
-
         <FadeReveal className="flex items-center gap-4 mb-16">
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">01</span>
           <div className="h-px w-12 bg-zinc-800" />
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Gloria Margarino</span>
         </FadeReveal>
 
         <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-20 items-start">
-
-          {/* Foto */}
           <FadeReveal>
             <div className="relative">
               <div className="overflow-hidden rounded-2xl aspect-[3/4]">
                 <img src="/images/gloria2.jpeg" alt="Gloria Margarino"
                   className="w-full h-full object-cover object-top transition duration-700 hover:scale-[1.03]" />
               </div>
-              {/* Badge */}
               <div className="absolute -bottom-4 -right-4 rounded-xl border border-violet-400/20 bg-[#02010b] px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.8)]">
                 <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.25em] text-violet-400">Fotografa & Videomaker</p>
               </div>
             </div>
           </FadeReveal>
 
-          {/* Testo */}
           <div className="space-y-8 pt-4 md:pt-12">
             <FadeReveal>
               <h2 className="font-antonio text-4xl md:text-5xl lg:text-6xl text-white leading-none">
-                Gloria<br />
-                <span className="text-zinc-500">Margarino</span>
+                Gloria<br /><span className="text-zinc-500">Margarino</span>
               </h2>
             </FadeReveal>
-
-            <FadeReveal delay={0.1}>
-              <div className="h-px w-full bg-zinc-800" />
-            </FadeReveal>
-
+            <FadeReveal delay={0.1}><div className="h-px w-full bg-zinc-800" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Gloria è il cuore visivo di Future Frames. Cura la fotografia e le riprese sul set con un approccio che unisce sensibilità estetica, attenzione alla luce e naturalezza nelle espressioni.
               </p>
             </FadeReveal>
-
             <FadeReveal delay={0.2}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
                 Dagli eventi privati ai progetti aziendali, fino ai corti cinematografici, il suo obiettivo è raccontare persone e momenti reali senza perdere eleganza e coerenza visiva. Ogni scatto è una scelta, non una casualità.
               </p>
             </FadeReveal>
-
             <FadeReveal delay={0.3}>
               <div className="space-y-3 pt-2">
                 <p className="font-montserrat text-xs leading-relaxed text-zinc-600">
@@ -290,14 +182,12 @@ export default function About() {
                 <div className="flex items-center gap-4">
                   <a href="https://www.instagram.com/gloria.margarino" target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
-                    <i className="fa-brands fa-instagram text-sm" />
-                    Instagram
+                    <i className="fa-brands fa-instagram text-sm" />Instagram
                   </a>
                   <div className="h-3 w-px bg-zinc-800" />
                   <a href="https://www.linkedin.com/in/gloria-margarino" target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
-                    <i className="fa-brands fa-linkedin text-sm" />
-                    LinkedIn
+                    <i className="fa-brands fa-linkedin text-sm" />LinkedIn
                   </a>
                 </div>
               </div>
@@ -308,7 +198,8 @@ export default function About() {
 
       {/* ── SEPARATORE CITAZIONE ── */}
       <FadeReveal>
-        <div className="bg-[#02010b] border-t border-b border-zinc-800/60 py-16 px-6 md:px-12">
+        <div className="border-t border-b border-zinc-800/40 py-16 px-6 md:px-12"
+          style={{ background: "radial-gradient(ellipse at center, #0d0b2a 0%, transparent 100%)" }}>
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <p className="font-antonio text-2xl md:text-3xl lg:text-4xl text-zinc-300 leading-snug italic">
               "Ogni frame è una scelta. Noi scegliamo con cura."
@@ -320,51 +211,39 @@ export default function About() {
 
       {/* ── IVAN ── */}
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-5xl mx-auto">
-
         <FadeReveal className="flex items-center gap-4 mb-16 justify-end">
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Ivan Scrofani</span>
           <div className="h-px w-12 bg-zinc-800" />
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">02</span>
         </FadeReveal>
 
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-start">
-
-          {/* Testo */}
           <div className="space-y-8 pt-4 md:pt-12 order-2 md:order-1">
             <FadeReveal>
               <h2 className="font-antonio text-4xl md:text-5xl lg:text-6xl text-white leading-none">
-                Ivan<br />
-                <span className="text-zinc-500">Scrofani</span>
+                Ivan<br /><span className="text-zinc-500">Scrofani</span>
               </h2>
             </FadeReveal>
-
-            <FadeReveal delay={0.1}>
-              <div className="h-px w-full bg-zinc-800" />
-            </FadeReveal>
-
+            <FadeReveal delay={0.1}><div className="h-px w-full bg-zinc-800" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Ivan dà ritmo e struttura alle storie. In fase di montaggio unisce immagini, suono e musica per creare narrazioni fluide, dinamiche e coerenti con l&apos;identità del cliente.
               </p>
             </FadeReveal>
-
             <FadeReveal delay={0.2}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
                 Dai social content ai video corporate, fino agli spot più cinematografici, lavora perché ogni frame abbia un ruolo preciso e un impatto chiaro. Il montaggio non è tecnica, è scrittura.
               </p>
             </FadeReveal>
-
             <FadeReveal delay={0.25}>
               <div className="flex flex-wrap gap-2 pt-2">
                 {["Montaggio", "Color grading", "Motion graphics", "Corporate", "Spot"].map((tag) => (
-                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 border-b border-zinc-700 pb-0.5">
-                    {tag}
-                  </span>
+                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 border-b border-zinc-700 pb-0.5">{tag}</span>
                 ))}
               </div>
             </FadeReveal>
           </div>
 
-          {/* Foto */}
           <FadeReveal className="order-1 md:order-2">
             <div className="relative">
               <div className="overflow-hidden rounded-2xl aspect-[3/4]">
@@ -382,12 +261,10 @@ export default function About() {
       {/* ── VALORI ── */}
       <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-16">
-
           <FadeReveal className="flex items-center gap-4">
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">I nostri valori</span>
             <div className="h-px flex-1 bg-zinc-800" />
           </FadeReveal>
-
           <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <FadeReveal key={v.title} delay={i * 0.08}>
@@ -404,38 +281,37 @@ export default function About() {
 
       {/* ── VIDEO RECENSIONE ── */}
       <section className="py-24 px-6 md:px-12 max-w-5xl mx-auto space-y-12">
-
         <FadeReveal className="flex items-center gap-4">
           <div className="h-px flex-1 bg-zinc-800" />
           <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Dicono di noi</span>
         </FadeReveal>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start">
-
-          {/* Video placeholder */}
+        <div>
           <FadeReveal>
-            <div className="relative overflow-hidden rounded-2xl bg-zinc-900/50 border border-zinc-800 aspect-video flex items-center justify-center group cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/10 to-transparent" />
-              <div className="relative z-10 flex flex-col items-center gap-4 text-center px-8">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-violet-400/30 bg-violet-900/30 backdrop-blur-sm transition group-hover:bg-violet-600/50 group-hover:border-violet-400/60 group-hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]">
-                  <i className="fa-solid fa-play ml-1 text-lg text-white" />
+            <div className="relative overflow-hidden rounded-2xl bg-zinc-900/50 border border-zinc-800 aspect-video">
+              {videoRecensioneUrl ? (
+                <video
+                  src={videoRecensioneUrl}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  controls
+                  playsInline
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-8">
+                  <div className="absolute inset-0 bg-gradient-to-br from-violet-900/10 to-transparent" />
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-violet-400/30 bg-violet-900/30 backdrop-blur-sm">
+                    <i className="fa-solid fa-play ml-1 text-lg text-white" />
+                  </div>
+                  <div className="relative">
+                    <p className="font-antonio text-base text-white">Video recensione</p>
+                    <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-600 mt-1">Disponibile prossimamente</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-antonio text-base text-white">Video recensione</p>
-                </div>
-              </div>
-              {/* Corner label */}
-              <div className="absolute bottom-4 left-4">
-                <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-600">Cliente · Settore · Anno</p>
-              </div>
+              )}
             </div>
           </FadeReveal>
-
-          {/* Slideshow recensioni testo */}
-          <FadeReveal delay={0.1}>
-            <ReviewsSlideshow />
-          </FadeReveal>
         </div>
+
         <FadeReveal>
           <a href="https://www.trustpilot.com/review/futureframes.it" target="_blank" rel="noopener noreferrer"
             className="group flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl border border-zinc-800 bg-zinc-900/30 px-8 py-7 transition hover:border-[#00b67a]/30 hover:bg-[#00b67a]/5">
@@ -462,12 +338,10 @@ export default function About() {
       {/* ── DOVE LAVORIAMO ── */}
       <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-12">
-
           <FadeReveal className="flex items-center gap-4">
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Dove siamo</span>
             <div className="h-px flex-1 bg-zinc-800" />
           </FadeReveal>
-
           <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] items-stretch">
             <FadeReveal className="space-y-6">
               <h3 className="font-antonio text-3xl md:text-4xl text-white leading-tight">
@@ -479,7 +353,7 @@ export default function About() {
               </p>
               <div className="space-y-3 pt-2">
                 {[
-                  { icon: "fa-solid fa-location-dot", text: "Pomezia (RM)" },
+                  { icon: "fa-solid fa-location-dot", text: "Pomezia, Roma — Lazio" },
                   { icon: "fa-solid fa-map", text: "Provincia di Roma e dintorni" },
                   { icon: "fa-solid fa-car", text: "Trasferte su accordo" },
                 ].map((item) => (
@@ -494,7 +368,6 @@ export default function About() {
                 Scrivici <i className="fa-solid fa-arrow-right text-[0.6rem]" />
               </Link>
             </FadeReveal>
-
             <FadeReveal delay={0.1}>
               <div className="overflow-hidden rounded-2xl border border-violet-500/15 min-h-[300px] shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
                 <iframe title="Mappa Pomezia" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
@@ -509,19 +382,18 @@ export default function About() {
       {/* ── CTA FINALE ── */}
       <section className="relative py-32 overflow-hidden">
         <img src="/images/NeonWall.webp" alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-90" />
-        {/* Solo un fade in alto per entrare dal nero */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent" />
-        {/* Overlay scuro leggero solo per leggibilità del testo */}
-        <div className="absolute inset-0 bg-black/40" />
-
+          className="absolute inset-0 w-full h-full object-cover opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+        <div className="pointer-events-none absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 65%)" }} />
         <FadeReveal className="relative z-10 text-center px-6 space-y-6">
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-400">Iniziamo</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-500">Iniziamo</p>
           <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight">
             Hai un progetto<br />
             <span className="text-violet-300">in mente?</span>
           </h2>
-          <p className="font-montserrat text-sm text-zinc-300 max-w-sm mx-auto">
+          <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto">
             Raccontacelo. Ogni collaborazione nasce da una conversazione.
           </p>
           <Link href="/contact"
