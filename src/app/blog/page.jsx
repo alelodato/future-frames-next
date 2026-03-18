@@ -219,11 +219,10 @@ export default function Blog() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-full px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] transition border ${
-                  activeCategory === cat
+                className={`rounded-full px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] transition border ${activeCategory === cat
                     ? "bg-violet-500 border-violet-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
                     : "border-violet-500/25 bg-violet-900/10 text-violet-400 hover:bg-violet-900/30"
-                }`}
+                  }`}
               >
                 {cat}
               </button>

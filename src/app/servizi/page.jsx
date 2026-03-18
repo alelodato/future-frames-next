@@ -412,7 +412,7 @@ export default function Servizi() {
     <div className="min-h-screen bg-[#02010b] text-white">
 
       {/* ── HERO ── */}
-      <div className="relative h-[80vh] min-h-[500px] overflow-hidden">
+      <div className="relative h-[80vh] min-h-[500px] overflow-hidden mb-24">
         <img src="/images/Tunnel2.jpg" alt="Tunnel viola futuristico"
           className="absolute inset-0 h-full w-full object-cover object-top scale-105" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-[#02010b]" />

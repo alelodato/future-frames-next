@@ -16,11 +16,10 @@ function ToolbarButton({ onClick, active, title, children }) {
       type="button"
       onClick={onClick}
       title={title}
-      className={`flex h-8 w-8 items-center justify-center rounded-lg transition text-sm ${
-        active
-          ? "bg-violet-600 text-white"
-          : "text-zinc-400 hover:bg-violet-900/30 hover:text-violet-300"
-      }`}
+      className={`flex h-8 w-8 items-center justify-center rounded-lg transition text-sm ${active
+        ? "bg-violet-600 text-white"
+        : "text-zinc-400 hover:bg-violet-900/30 hover:text-violet-300"
+        }`}
     >
       {children}
     </button>
@@ -31,7 +30,6 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
   const [title, setTitle] = useState(initialData?.title || "");
   const [excerpt, setExcerpt] = useState(initialData?.excerpt || "");
   const [category, setCategory] = useState(initialData?.category || "");
-  const [author, setAuthor] = useState(initialData?.author || "Future Frames");
   const [readTime, setReadTime] = useState(initialData?.read_time || 5);
   const [coverImage, setCoverImage] = useState(initialData?.cover_image || "");
   const [published, setPublished] = useState(initialData?.published || false);
@@ -116,7 +114,7 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
 
         <div className="space-y-1.5">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">
-            Excerpt (anteprima)
+            Anteprima
           </label>
           <textarea
             value={excerpt}
@@ -142,18 +140,6 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">
-              Autore
-            </label>
-            <input
-              type="text"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white outline-none transition focus:border-violet-400/60"
-            />
           </div>
         </div>
 

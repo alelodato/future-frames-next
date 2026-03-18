@@ -67,11 +67,14 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto flex items-center justify-between h-[72px] px-6 md:px-10 lg:px-16">
 
           {/* Logo */}
-          <Link href="/" onClick={close} className="flex-shrink-0 z-10 my-6">
+          <Link href="/" onClick={close} className="flex-shrink-0 z-10 my-6 group">
             <img
               src="/images/logo-gradient.png"
               alt="Future Frames"
-              className="h-12 sm:h-14 md:h-15 w-auto"
+              className="h-12 sm:h-14 md:h-15 w-auto transition-all duration-300
+      drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]
+      group-hover:drop-shadow-[0_0_16px_rgba(167,139,250,0.9)]
+      group-hover:brightness-110"
             />
           </Link>
 
