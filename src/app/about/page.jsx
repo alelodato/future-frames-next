@@ -165,10 +165,10 @@ export default function About() {
             ))}
           </div>
 
-          <FadeReveal delay={0.3} className="flex-shrink-0 w-[200px] lg:w-[260px] flex flex-col gap-4 pt-1">
+          <FadeReveal delay={0.3} className="flex-shrink-0 w-[500px] lg:w-[400px] flex flex-col gap-4 pt-1">
             <div className=" shadow-[0_20px_60px_rgba(0,0,0,0.7)]"
               style={{ aspectRatio: "3/4" }}>
-              <img src="/images/logo-gradient.webp" alt="Future Frames Logo"
+              <img src="/images/eventi.webp" alt="Future Frames Logo"
                 className="w-full h-full object-contain opacity-80 transition duration-700 hover:scale-[1.03]" />
             </div>
           </FadeReveal>
