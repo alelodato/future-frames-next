@@ -42,12 +42,6 @@ export default function NuovoArticolo() {
           className="flex h-9 w-9 items-center justify-center rounded-full border border-violet-500/25 bg-violet-900/20 transition hover:bg-violet-900/40">
           <i className="fa-solid fa-arrow-left text-violet-400 text-xs" />
         </button>
-        <div>
-          <h1 className="font-antonio text-3xl text-white">Nuovo articolo</h1>
-          <p className="font-montserrat text-xs text-zinc-500 mt-0.5">
-            Lo slug verrà generato automaticamente dal titolo
-          </p>
-        </div>
       </div>
 
       {error && (

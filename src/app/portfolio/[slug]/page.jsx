@@ -364,26 +364,6 @@ export default function ProjectPage() {
         </section>
       )}
 
-      {/* ── CTA FINALE ── */}
-      <section className="py-20 md:py-28 text-center px-4">
-        <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 h-64 w-96 rounded-full bg-violet-600/10 blur-3xl" />
-        <div className="relative space-y-5">
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">Next step</p>
-          <h2 className="font-antonio text-4xl md:text-6xl text-white leading-none">
-            Raccontiamo insieme
-            <span className="block text-violet-300">la tua storia.</span>
-          </h2>
-          <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
-            Ogni progetto nasce da una conversazione. Parliamo di quello che vuoi realizzare.
-          </p>
-          <Link href="/contact"
-            className="inline-flex items-center gap-3 rounded-full border border-violet-400/50 px-8 py-4 font-montserrat text-xs uppercase tracking-[0.3em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]">
-            Contattaci
-            <i className="fa-solid fa-arrow-right text-xs" />
-          </Link>
-        </div>
-      </section>
-
       {/* ── LIGHTBOX ── */}
       {lightbox !== null && (
         <Lightbox images={images} startIndex={lightbox} onClose={() => setLightbox(null)} />

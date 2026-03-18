@@ -83,7 +83,6 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
       title,
       excerpt,
       category,
-      author,
       read_time: readTime,
       cover_image: coverImage,
       content: editor?.getHTML() || "",
@@ -120,7 +119,7 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
             rows={2}
-            placeholder="Breve descrizione mostrata nella lista articoli..."
+            placeholder="Breve descrizione mostrata nella lista degli articoli del blog"
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none"
           />
         </div>

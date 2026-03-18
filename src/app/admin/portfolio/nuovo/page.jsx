@@ -58,7 +58,6 @@ export default function NuovoProgetto() {
         </button>
         <div>
           <h1 className="font-antonio text-3xl text-white">Nuovo progetto</h1>
-          <p className="font-montserrat text-xs text-zinc-500 mt-0.5">Lo slug viene generato automaticamente dal titolo</p>
         </div>
       </div>
 

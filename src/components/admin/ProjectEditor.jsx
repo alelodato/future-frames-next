@@ -16,13 +16,13 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
   const [videoTeaserUrl, setVideoTeaserUrl] = useState(initialData?.video_teaser_url || "");
   const [videoFullUrl, setVideoFullUrl] = useState(initialData?.video_full_url || "");
   const [videoPlatform, setVideoPlatform] = useState(initialData?.video_platform || "vimeo");
-  const [tagsInput, setTagsInput] = useState((initialData?.tags || []).join(", "));
   const [featured, setFeatured] = useState(initialData?.featured || false);
   const [published, setPublished] = useState(initialData?.published || false);
   const [uploadingCover, setUploadingCover] = useState(false);
   const [uploadingTeaser, setUploadingTeaser] = useState(false);
   const [images, setImages] = useState(initialData?.project_images || []);
   const [uploadingGallery, setUploadingGallery] = useState(false);
+  const [uploadingGalleryVideo, setUploadingGalleryVideo] = useState(false);
 
   async function handleCoverUpload(e) {
     const file = e.target.files[0];
@@ -63,14 +63,32 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       const { error } = await supabase.storage.from("media").upload(filename, file);
       if (!error) {
         const { data } = supabase.storage.from("media").getPublicUrl(filename);
-        newImages.push({ url: data.publicUrl, position: images.length + newImages.length });
+        newImages.push({ url: data.publicUrl, type: "image", position: images.length + newImages.length });
       }
     }
     setImages((prev) => [...prev, ...newImages]);
     setUploadingGallery(false);
   }
 
-  function removeGalleryImage(idx) {
+  async function handleGalleryVideoUpload(e) {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    setUploadingGalleryVideo(true);
+    const supabase = createSupabaseBrowser();
+    const newVideos = [];
+    for (const file of files) {
+      const filename = `portfolio/gallery/${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage.from("media").upload(filename, file);
+      if (!error) {
+        const { data } = supabase.storage.from("media").getPublicUrl(filename);
+        newVideos.push({ url: data.publicUrl, type: "video", position: images.length + newVideos.length });
+      }
+    }
+    setImages((prev) => [...prev, ...newVideos]);
+    setUploadingGalleryVideo(false);
+  }
+
+  function removeGalleryItem(idx) {
     setImages((prev) => prev.filter((_, i) => i !== idx));
   }
 
@@ -82,8 +100,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       cover_image: coverImage,
       video_teaser_url: videoTeaserUrl,
       video_full_url: videoFullUrl,
-      video_platform: videoPlatform,
-      tags, featured, published,
+      video_platform: videoPlatform, featured, published,
       _images: images,
     });
   }
@@ -127,9 +144,9 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Excerpt (anteprima)</label>
+          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Anteprima</label>
           <textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} rows={2}
-            placeholder="Breve descrizione mostrata nella griglia..."
+            placeholder="Breve descrizione mostrata nell'anteprima della pagina portfolio"
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none" />
         </div>
 
@@ -138,13 +155,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4}
             placeholder="Descrizione dettagliata del progetto..."
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none" />
-        </div>
-
-        <div className="space-y-1.5">
-          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Tags (separati da virgola)</label>
-          <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)}
-            placeholder="Corporate, Spot, Montaggio"
-            className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60" />
         </div>
       </div>
 
@@ -212,14 +222,24 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
 
       {/* ── GALLERIA ── */}
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4">
-        <h3 className="font-antonio text-base text-violet-300">Galleria immagini</h3>
+        <h3 className="font-antonio text-base text-violet-300">Galleria</h3>
 
         {images.length > 0 && (
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-            {images.map((img, i) => (
+            {images.map((item, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-xl group">
-                <img src={img.url} alt={`Gallery ${i}`} className="h-full w-full object-cover" />
-                <button type="button" onClick={() => removeGalleryImage(i)}
+                {item.type === "video" ? (
+                  <>
+                    <video src={item.url} className="h-full w-full object-cover" muted playsInline />
+                    <div className="absolute top-1.5 left-1.5 rounded-md bg-black/70 px-1.5 py-0.5 flex items-center gap-1">
+                      <i className="fa-solid fa-film text-violet-400 text-[0.5rem]" />
+                      <span className="font-montserrat text-[0.45rem] uppercase tracking-wider text-zinc-300">Video</span>
+                    </div>
+                  </>
+                ) : (
+                  <img src={item.url} alt={`Gallery ${i}`} className="h-full w-full object-cover" />
+                )}
+                <button type="button" onClick={() => removeGalleryItem(i)}
                   className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition">
                   <i className="fa-solid fa-trash text-red-400 text-sm" />
                 </button>
@@ -228,12 +248,22 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           </div>
         )}
 
+        {/* Upload immagini */}
         <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGallery ? "opacity-50 pointer-events-none" : ""}`}>
           <i className={`fa-solid ${uploadingGallery ? "fa-spinner animate-spin" : "fa-images"} text-violet-400 text-sm`} />
           <span className="font-montserrat text-xs text-zinc-400">
-            {uploadingGallery ? "Caricamento..." : "Aggiungi immagini galleria (selezione multipla)"}
+            {uploadingGallery ? "Caricamento..." : "Aggiungi immagini"}
           </span>
           <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
+        </label>
+
+        {/* Upload video */}
+        <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGalleryVideo ? "opacity-50 pointer-events-none" : ""}`}>
+          <i className={`fa-solid ${uploadingGalleryVideo ? "fa-spinner animate-spin" : "fa-film"} text-violet-400 text-sm`} />
+          <span className="font-montserrat text-xs text-zinc-400">
+            {uploadingGalleryVideo ? "Caricamento..." : "Aggiungi video"}
+          </span>
+          <input type="file" accept="video/*" multiple onChange={handleGalleryVideoUpload} className="hidden" />
         </label>
       </div>
 
@@ -253,7 +283,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               className={`relative h-6 w-11 rounded-full transition-colors ${featured ? "bg-amber-500" : "bg-zinc-700"}`}>
               <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${featured ? "translate-x-5" : "translate-x-0.5"}`} />
             </div>
-            <span className="font-montserrat text-xs text-zinc-300">Featured</span>
+            <span className="font-montserrat text-xs text-zinc-300">Progetto in evidenza</span>
           </label>
         </div>
 
