@@ -20,19 +20,19 @@ export default function Hero() {
       .to(logoFRef.current, {
         x: 0,
         opacity: 1,
-        duration: 0.9,
+        duration: 1.5,
         ease: "expo.out",
       })
       .to(logoScrittaRef.current, {
         x: 0,
         opacity: 1,
-        duration: 0.9,
+        duration: 1.5,
         ease: "expo.out",
       }, "<")
       .to(ctaRef.current, {
         opacity: 1,
         y: 0,
-        duration: 0.7,
+        duration: 1.5,
         ease: "expo.out",
       }, "-=0.3");
 
