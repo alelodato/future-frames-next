@@ -1,11 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
-
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+import { useState } from "react";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -14,16 +9,6 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
-
-  useEffect(() => {
-    try {
-      if (PUBLIC_KEY && typeof emailjs.init === "function") {
-        emailjs.init(PUBLIC_KEY);
-      }
-    } catch (e) {
-      // non bloccare la UI
-    }
-  }, []);
 
   const isValidEmail = (v) => /^\S+@\S+\.\S+$/.test(v);
   const isValidPhone = (v) => /^\+?[0-9\s().-]{7,20}$/.test(v);
@@ -48,27 +33,43 @@ export default function Contact() {
     setLoading(true);
     setStatus(null);
 
-    const templateParams = {
-      from_name: nameTrim,
-      from_email: emailTrim,
-      phone: phoneTrim,
-      message: messageTrim,
-    };
-
     try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        templateParams,
-        PUBLIC_KEY || undefined
-      );
-      setStatus("success");
-      setName("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "1b0d0f54-1851-43e7-a0dd-1259cfb5c549",
+          subject: `✉️ Nuovo messaggio da ${nameTrim} — Future Frames`,
+          from_name: nameTrim,
+          email: emailTrim,
+          message: `━━━━━━━━━━━━━━━━━━━━
+NUOVO MESSAGGIO — FUTURE FRAMES
+━━━━━━━━━━━━━━━━━━━━
+
+👤 Nome: ${nameTrim}
+📧 Email: ${emailTrim}
+📞 Telefono: ${phoneTrim || "Non fornito"}
+
+💬 Messaggio:
+${messageTrim}
+
+━━━━━━━━━━━━━━━━━━━━`,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+      } else {
+        setStatus("error");
+      }
     } catch (err) {
-      console.error("EmailJS error:", err);
+      console.error("Web3Forms error:", err);
       setStatus("error");
     } finally {
       setLoading(false);
@@ -191,7 +192,12 @@ export default function Contact() {
               aria-disabled={!formValid || loading}
               className="inline-flex items-center justify-center rounded-full bg-gradient-to-b from-violet-500 to-fuchsia-600 px-8 py-2.5 text-xs sm:text-sm font-antonio tracking-[0.2em] uppercase text-white shadow-[0_18px_45px_rgba(88,28,135,0.7)] transition hover:shadow-[0_24px_60px_rgba(129,140,248,0.9)] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
             >
-              {loading ? "Invio..." : "Invia messaggio"}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <i className="fa-solid fa-spinner animate-spin text-xs" />
+                  Invio...
+                </span>
+              ) : "Invia messaggio"}
             </button>
           </div>
 

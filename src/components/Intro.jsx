@@ -3,11 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import PortfolioModal from "@/components/PortfolioModal";
-import emailjs from "@emailjs/browser";
-
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
 
 function ContactForm() {
   const [name, setName] = useState("");
@@ -16,12 +11,6 @@ function ContactForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
-
-  useEffect(() => {
-    try {
-      if (PUBLIC_KEY && typeof emailjs.init === "function") emailjs.init(PUBLIC_KEY);
-    } catch (e) { }
-  }, []);
 
   const isValidEmail = (v) => /^\S+@\S+\.\S+$/.test(v);
   const isValidPhone = (v) => /^\+?[0-9\s().-]{7,20}$/.test(v);
@@ -34,17 +23,43 @@ function ContactForm() {
   async function onSubmit(e) {
     e.preventDefault();
     if (!formValid) return;
-    setLoading(true); setStatus(null);
+    setLoading(true);
+    setStatus(null);
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID,
-        { from_name: nameTrim, from_email: emailTrim, phone: phoneTrim, message: messageTrim },
-        PUBLIC_KEY || undefined
-      );
-      setStatus("success");
-      setName(""); setEmail(""); setPhone(""); setMessage("");
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "1ea524ab-7ae6-46f2-9aab-9171754bf0f3",
+          subject: `✉️ Nuovo messaggio da ${nameTrim} — Future Frames`,
+          from_name: nameTrim,
+          email: emailTrim,
+          message: `━━━━━━━━━━━━━━━━━━━━
+NUOVO MESSAGGIO — FUTURE FRAMES
+━━━━━━━━━━━━━━━━━━━━
+
+👤 Nome: ${nameTrim}
+📧 Email: ${emailTrim}
+📞 Telefono: ${phoneTrim || "Non fornito"}
+
+💬 Messaggio:
+${messageTrim}
+
+━━━━━━━━━━━━━━━━━━━━`,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setName(""); setEmail(""); setPhone(""); setMessage("");
+      } else {
+        setStatus("error");
+      }
     } catch (err) {
       setStatus("error");
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
