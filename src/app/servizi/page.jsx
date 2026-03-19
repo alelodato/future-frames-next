@@ -409,13 +409,10 @@ export default function Servizi() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02010b] text-white">
+    <div className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {/* ── HERO ── */}
       <div className="relative h-[80vh] min-h-[500px] overflow-hidden mb-24">
-        <img src="/images/Tunnel2.jpg" alt="Tunnel viola futuristico"
-          className="absolute inset-0 h-full w-full object-cover object-top scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-[#02010b]" />
         <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-64 w-96 rounded-full bg-violet-600/20 blur-3xl" />
 
         {/* Mobile: testo in basso */}

@@ -53,16 +53,19 @@ export default function Navbar() {
     <>
       <header
         className={`
-    fixed top-0 left-0 w-full z-[100]
-    transition-all duration-500
-    ${isContact
-            ? "bg-[rgba(5,5,10,0.92)] backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+  fixed top-0 left-0 w-full z-[100]
+  transition-all duration-500
+  ${isContact
+            ? "backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
             : scrolled
-              ? "bg-[rgba(5,5,10,0.92)] backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+              ? "backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
               : "bg-transparent"
           }
-    ${(!isHome || navReady) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-  `}
+  ${(!isHome || navReady) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+`}
+        style={scrolled || isContact ? {
+          background: "linear-gradient(to right, rgba(5,2,15,0.95) 0%, rgba(30,5,60,0.95) 40%, rgba(50, 6, 64, 0.925) 70%, rgba(100,5,60,0.92) 100%)"
+        } : {}}
       >
         <div className="max-w-[1400px] mx-auto flex items-center justify-between h-[72px] px-6 md:px-10 lg:px-16">
 
@@ -85,7 +88,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 className={`
-        relative font-orbitron font-semibold text-xs lg:text-sm tracking-widest
+        relative font-montserrat font-semibold text-sm lg:text-md tracking-widest
         transition-all duration-300 group
         ${pathname === l.href
                     ? "text-violet-400"

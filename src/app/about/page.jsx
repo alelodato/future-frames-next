@@ -15,6 +15,14 @@ const values = [
   { icon: "fa-solid fa-comments", title: "Ascolto", text: "Ogni progetto nasce dal dialogo con il cliente. La tua visione è il nostro punto di partenza." },
 ];
 
+// ─── Linea decorativa con glow ───────────────────────────────
+function GlowLine({ className = "" }) {
+  return (
+    <div className={`h-px ${className}`}
+      style={{ background: "linear-gradient(to right, transparent, #818cf8, #a855f7, #818cf8, transparent)", boxShadow: "0 0 8px rgba(129,140,248,0.6)" }} />
+  );
+}
+
 function FadeReveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -43,7 +51,6 @@ function FadeReveal({ children, className = "", delay = 0 }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-
 export default function About() {
   const [videoRecensioneUrl, setVideoRecensioneUrl] = useState(null);
 
@@ -64,14 +71,15 @@ export default function About() {
   }, []);
 
   return (
-    <div className="relative text-white min-h-screen bg-gradient-to-b from-black via-[#0a0b2580] to-[#00000040]">
+    <div className="relative text-white min-h-screen"
+      style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {/* ── APERTURA EDITORIALE ── */}
       <section className="pt-32 pb-0 px-6 md:px-12 max-w-5xl mx-auto">
         <FadeReveal className="flex items-center gap-4 mb-14">
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">About</span>
-          <div className="h-px flex-1 bg-zinc-800" />
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Future Frames</span>
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-indigo-400/70">About</span>
+          <GlowLine className="flex-1" />
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-indigo-400/70">Future Frames</span>
         </FadeReveal>
 
         {/* Desktop/tablet */}
@@ -117,11 +125,14 @@ export default function About() {
         </FadeReveal>
 
         {/* Intro testo */}
-        <FadeReveal className="grid md:grid-cols-2 gap-8 md:gap-16 border-t border-zinc-800 pt-12 pb-24">
-          <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-            Future Frames nasce a Pomezia, alle porte di Roma, dall'incontro tra due sensibilità complementari. Gloria dietro l'obiettivo, Ivan in fase di montaggio: insieme formano un'unica visione creativa.
-          </p>
-          <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-500">
+        <FadeReveal className="grid md:grid-cols-2 gap-8 md:gap-16 pt-12 pb-24">
+          <div>
+            <GlowLine className="w-full mb-12" />
+            <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
+              Future Frames nasce a Pomezia, alle porte di Roma, dall'incontro tra due sensibilità complementari. Gloria dietro l'obiettivo, Ivan in fase di montaggio: insieme formano un'unica visione creativa.
+            </p>
+          </div>
+          <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-500 md:pt-[calc(1rem+48px)]">
             Il nostro approccio è semplice: ascoltiamo prima di fotografare, capiamo prima di girare. Ogni progetto nasce da una conversazione e si chiude con immagini che parlano da sole.
           </p>
         </FadeReveal>
@@ -130,19 +141,27 @@ export default function About() {
       {/* Immagine full bleed desktop */}
       <FadeReveal className="hidden md:block">
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(300px, 55vh, 600px)" }}>
+          {/* Sfumatura esterna — sopra e sotto */}
+          <div className="absolute inset-x-0 top-0 h-32 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, #000000 0%, transparent 100%)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-32 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to top, #000000 0%, transparent 100%)" }} />
+          {/* Sfumatura esterna — lati */}
+          <div className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to right, #000000 0%, transparent 100%)" }} />
+          <div className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to left, #000000 0%, transparent 100%)" }} />
           <img src="/images/introimg4.webp" alt="Future Frames backstage"
             className="w-full h-full object-cover" />
-          <div className="absolute inset-0"
-            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />
         </div>
       </FadeReveal>
 
       {/* ── GLORIA ── */}
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-5xl mx-auto">
         <FadeReveal className="flex items-center gap-4 mb-16">
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">01</span>
-          <div className="h-px w-12 bg-zinc-800" />
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Gloria Margarino</span>
+          <div className="h-px w-12"
+            style={{ background: "linear-gradient(to right, #818cf8, transparent)", boxShadow: "0 0 6px rgba(129,140,248,0.5)" }} />
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-400/80">Gloria Margarino</span>
         </FadeReveal>
 
         <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-20 items-start">
@@ -164,7 +183,7 @@ export default function About() {
                 Gloria<br /><span className="text-zinc-500">Margarino</span>
               </h2>
             </FadeReveal>
-            <FadeReveal delay={0.1}><div className="h-px w-full bg-zinc-800" /></FadeReveal>
+            <FadeReveal delay={0.1}><GlowLine className="w-full" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Gloria è il cuore visivo di Future Frames. Cura la fotografia e le riprese sul set con un approccio che unisce sensibilità estetica, attenzione alla luce e naturalezza nelle espressioni.
@@ -177,17 +196,18 @@ export default function About() {
             </FadeReveal>
             <FadeReveal delay={0.3}>
               <div className="space-y-3 pt-2">
-                <p className="font-montserrat text-xs leading-relaxed text-zinc-600">
+                <p className="font-montserrat text-xs leading-relaxed text-indigo-400/60">
                   Segui il lavoro di Gloria sui suoi profili social.
                 </p>
                 <div className="flex items-center gap-4">
                   <a href="https://www.instagram.com/gloria.margarino" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
+                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-indigo-400/60 hover:text-violet-300 transition border-b border-indigo-500/30 hover:border-violet-400/40 pb-0.5">
                     <i className="fa-brands fa-instagram text-sm" />Instagram
                   </a>
-                  <div className="h-3 w-px bg-zinc-800" />
+                  <div className="h-3 w-px"
+                    style={{ background: "linear-gradient(to bottom, transparent, #818cf8, transparent)" }} />
                   <a href="https://www.linkedin.com/in/gloria-margarino" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 hover:text-violet-300 transition border-b border-zinc-800 hover:border-violet-400/40 pb-0.5">
+                    className="flex items-center gap-2 font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-indigo-400/60 hover:text-violet-300 transition border-b border-indigo-500/30 hover:border-violet-400/40 pb-0.5">
                     <i className="fa-brands fa-linkedin text-sm" />LinkedIn
                   </a>
                 </div>
@@ -199,13 +219,12 @@ export default function About() {
 
       {/* ── SEPARATORE CITAZIONE ── */}
       <FadeReveal>
-        <div className="border-t border-b border-zinc-800/40 py-16 px-6 md:px-12"
-          style={{ background: "radial-gradient(ellipse at center, #0d0b2a 0%, transparent 100%)" }}>
+        <div className="py-16 px-6 md:px-12">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <p className="font-antonio text-2xl md:text-3xl lg:text-4xl text-zinc-300 leading-snug italic">
+            <p className="font-antonio text-2xl md:text-4xl lg:text-6xl text-zinc-300 leading-snug italic">
               "Ogni frame è una scelta. Noi scegliamo con cura."
             </p>
-            <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-zinc-600">Future Frames</p>
+            <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-indigo-400/60">Future Frames</p>
           </div>
         </div>
       </FadeReveal>
@@ -213,9 +232,9 @@ export default function About() {
       {/* ── IVAN ── */}
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-5xl mx-auto">
         <FadeReveal className="flex items-center gap-4 mb-16 justify-end">
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Ivan Scrofani</span>
-          <div className="h-px w-12 bg-zinc-800" />
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">02</span>
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-400/80">Ivan Scrofani</span>
+          <div className="h-px w-12"
+            style={{ background: "linear-gradient(to left, #818cf8, transparent)", boxShadow: "0 0 6px rgba(129,140,248,0.5)" }} />
         </FadeReveal>
 
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-start">
@@ -225,7 +244,7 @@ export default function About() {
                 Ivan<br /><span className="text-zinc-500">Scrofani</span>
               </h2>
             </FadeReveal>
-            <FadeReveal delay={0.1}><div className="h-px w-full bg-zinc-800" /></FadeReveal>
+            <FadeReveal delay={0.1}><GlowLine className="w-full" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Ivan dà ritmo e struttura alle storie. In fase di montaggio unisce immagini, suono e musica per creare narrazioni fluide, dinamiche e coerenti con l&apos;identità del cliente.
@@ -239,7 +258,7 @@ export default function About() {
             <FadeReveal delay={0.25}>
               <div className="flex flex-wrap gap-2 pt-2">
                 {["Montaggio", "Color grading", "Motion graphics", "Corporate", "Spot"].map((tag) => (
-                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-zinc-500 border-b border-zinc-700 pb-0.5">{tag}</span>
+                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-indigo-400/60 border-b border-indigo-500/30 pb-0.5">{tag}</span>
                 ))}
               </div>
             </FadeReveal>
@@ -263,13 +282,15 @@ export default function About() {
       <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-16">
           <FadeReveal className="flex items-center gap-4">
-            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">I nostri valori</span>
-            <div className="h-px flex-1 bg-zinc-800" />
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-indigo-400/70">I nostri valori</span>
+            <GlowLine className="flex-1" />
           </FadeReveal>
           <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <FadeReveal key={v.title} delay={i * 0.08}>
-                <div className="space-y-4 border-t border-zinc-800 pt-6">
+                <div className="space-y-4 pt-6">
+                  <div className="h-px w-full mb-6"
+                    style={{ background: "linear-gradient(to right, #818cf8, #a855f7, transparent)", boxShadow: "0 0 6px rgba(129,140,248,0.4)" }} />
                   <i className={`${v.icon} text-violet-400/60 text-sm`} />
                   <h4 className="font-antonio text-xl text-white">{v.title}</h4>
                   <p className="font-montserrat text-xs leading-relaxed text-zinc-500">{v.text}</p>
@@ -283,8 +304,8 @@ export default function About() {
       {/* ── VIDEO RECENSIONE ── */}
       <section className="py-24 px-6 md:px-12 max-w-5xl mx-auto space-y-12">
         <FadeReveal className="flex items-center gap-4">
-          <div className="h-px flex-1 bg-zinc-800" />
-          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">Dicono di noi</span>
+          <GlowLine className="flex-1" />
+          <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-indigo-400/70">Dicono di noi</span>
         </FadeReveal>
 
         <div>
@@ -305,7 +326,7 @@ export default function About() {
                   </div>
                   <div className="relative">
                     <p className="font-antonio text-base text-white">Video recensione</p>
-                    <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-600 mt-1">Disponibile prossimamente</p>
+                    <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-indigo-400/60 mt-1">Disponibile prossimamente</p>
                   </div>
                 </div>
               )}
@@ -340,8 +361,8 @@ export default function About() {
       <section className="py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto space-y-12">
           <FadeReveal className="flex items-center gap-4">
-            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">Dove siamo</span>
-            <div className="h-px flex-1 bg-zinc-800" />
+            <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-400/80">Dove siamo</span>
+            <GlowLine className="flex-1" />
           </FadeReveal>
           <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] items-stretch">
             <FadeReveal className="space-y-6">
@@ -382,12 +403,9 @@ export default function About() {
 
       {/* ── CTA FINALE ── */}
       <section className="relative py-32 overflow-hidden">
-        <img src="/images/NeonWall.webp" alt=""
-          className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)" }} />
+        {/* Sfumatura bordi */}
         <FadeReveal className="relative z-10 text-center px-6 space-y-6">
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-400">Iniziamo</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-indigo-400/70">Iniziamo</p>
           <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight">
             Hai un progetto<br />
             <span className="text-violet-300">in mente?</span>
