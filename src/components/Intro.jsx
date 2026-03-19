@@ -143,7 +143,7 @@ export default function Intro() {
       className="bg-black text-white"
     >
       <div className="relative">
-        <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen" style={{ background: "radial-gradient(ellipse at center, #1d0b3d 0%, #0d0630 50%, #000000 100%)" }}>
+        <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
           <div className="relative mx-auto max-w-6xl px-0 sm:px-4 py-10 sm:py-16 space-y-16 sm:space-y-20">
             {/* ── HERO CARD ── */}
             <div className="mx-auto max-w-6xl px-0 sm:px-4">
@@ -373,14 +373,14 @@ export default function Intro() {
                   </div>
                 </Link>
               </div>
-              <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-              <button
-                onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer">
-                <i className="fa-solid fa-download text-xs" />
-                Scarica il portfolio completo
-              </button>
             </section>
+            <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+            <button
+              onClick={() => setModalOpen(true)}
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer">
+              <i className="fa-solid fa-download text-xs" />
+              Scarica il portfolio completo
+            </button>
             {/* BLOG */}
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">

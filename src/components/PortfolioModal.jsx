@@ -74,7 +74,7 @@ Azienda/Professione: ${form.azienda || "Non fornita"}
 
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={onClose} />
+            <div className="inset-0 bg-black/90 backdrop-blur-md" onClick={onClose} />
 
             {/* Modal */}
             <div className="relative w-full max-w-sm md:max-w-2xl rounded-3xl border border-violet-500/20 bg-gradient-to-br from-[#0d0b2a] via-[#0a0820] to-black shadow-[0_0_80px_rgba(124,58,237,0.3)] overflow-hidden">

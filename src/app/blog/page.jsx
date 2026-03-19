@@ -186,7 +186,7 @@ export default function Blog() {
   const rest = filtered.slice(1);
 
   return (
-    <section className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #1d0b3d 0%, #0d0630 50%, #000000 100%)" }}>
+    <section className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {/* ── HERO ── */}
       <div className="relative overflow-hidden py-32 md:py-40 text-center">
