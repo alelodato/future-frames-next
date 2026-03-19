@@ -500,7 +500,7 @@ export default function Intro() {
               aria-label="Team Future Frames"
               data-aos="fade-up"
             >
-              {/* Separatore coerente con le altre sezioni */}
+              {/* Separatore */}
               <div className="flex items-center gap-4 mb-10">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
                 <div className="flex items-center gap-2">
@@ -512,7 +512,7 @@ export default function Intro() {
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
               </div>
 
-              <div className="overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 shadow-[0_0_45px_rgba(124,58,237,0.15)]">
+              <div className="overflow-hidden rounded-3xl border border-violet-500/20 bg-violet-900/10 backdrop-blur-sm shadow-[0_0_45px_rgba(124,58,237,0.15)]">
                 <div className="grid items-center gap-0 md:grid-cols-2">
 
                   {/* COLONNA SINISTRA — TESTO */}
@@ -571,27 +571,23 @@ export default function Intro() {
                     aria-label="Vai alla pagina About"
                     className="relative flex h-[420px] md:h-[520px] items-end justify-end overflow-hidden"
                   >
-                    {/* Sfondo gradient lato destro */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-900/10 via-transparent to-fuchsia-900/20" />
-
                     {/* Glow */}
-                    <div className="pointer-events-none absolute top-10 right-10 h-72 w-72 rounded-full bg-gradient-to-br from-violet-600/40 via-fuchsia-500/20 to-sky-500/15 blur-3xl" />
+                    <div className="pointer-events-none absolute top-10 right-10 h-72 w-72 rounded-full bg-gradient-to-br from-violet-600/30 via-fuchsia-500/15 to-sky-500/10 blur-3xl" />
 
-                    {/* Gloria (dietro, sinistra) */}
-                    <div className="absolute top-8 left-8 md:left-12 z-10 w-[170px] md:w-[195px] h-[300px] md:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] group-hover:scale-[1.02] transition duration-500">
+                    {/* Gloria */}
+                    <div className="absolute top-8 left-8 md:left-12 z-10 w-[170px] md:w-[195px] h-[300px] md:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] transition duration-500 hover:scale-[1.02]">
                       <img
                         src="/images/gloria2.jpeg"
                         alt="Gloria Margarino"
                         className="w-full h-full object-cover transition duration-700 hover:scale-[1.04]"
                         loading="lazy"
                       />
-                      {/* Label in basso */}
                       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
                         <p className="font-antonio text-[0.7rem] tracking-wide text-white">Gloria</p>
                       </div>
                     </div>
 
-                    {/* Ivan (davanti, destra) */}
+                    {/* Ivan */}
                     <div className="absolute bottom-8 right-8 md:right-12 z-20 w-[170px] md:w-[195px] h-[300px] md:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.92)] transition duration-700 hover:scale-[1.04]">
                       <img
                         src="/images/ivan.jpeg"
@@ -604,7 +600,7 @@ export default function Intro() {
                       </div>
                     </div>
 
-                    {/* Badge hover CTA */}
+                    {/* Badge */}
                     <div className="absolute top-4 right-4 z-30 rounded-full border border-violet-400/40 bg-black/60 px-3 py-1.5 backdrop-blur-sm">
                       <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-violet-300">
                         Scopri di più →
