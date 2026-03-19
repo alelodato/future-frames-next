@@ -12,7 +12,7 @@ export default function Footer() {
               href="/"
               className="font-orbitron font-bold tracking-[0.3em] text-[#A020F0] text-xs md:text-sm drop-shadow-[0_0_14px_rgba(160,32,240,0.85)] uppercase"
             >
-              <img src="/images/logo-viola.png" alt="Future Frames Logo" className="h-20 w-auto py-4" />
+              <img src="/images/logo-gradient.png" alt="Future Frames Logo" className="h-20 w-auto py-4" />
             </Link>
             <p className="font-montserrat text-xs text-zinc-300 leading-relaxed">
               Agenzia creativa specializzata in{" "}

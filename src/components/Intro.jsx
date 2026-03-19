@@ -137,7 +137,7 @@ export default function Intro() {
       className="bg-black text-white"
     >
       <div className="relative">
-        <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen" style={{ background: "radial-gradient(ellipse at center, #0d0b2a 0%, #06050f 60%, #000000 100%)" }}>
+        <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen" style={{ background: "radial-gradient(ellipse at center, #1d0b3d 0%, #0d0630 50%, #000000 100%)" }}>
           <div className="relative mx-auto max-w-6xl px-0 sm:px-4 py-10 sm:py-16 space-y-16 sm:space-y-20">
             {/* ── HERO CARD ── */}
             <div className="mx-auto max-w-6xl px-0 sm:px-4">

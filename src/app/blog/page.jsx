@@ -186,11 +186,11 @@ export default function Blog() {
   const rest = filtered.slice(1);
 
   return (
-    <section className="min-h-screen bg-[#02010b] text-white">
+    <section className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #1d0b3d 0%, #0d0630 50%, #000000 100%)" }}>
 
       {/* ── HERO ── */}
       <div className="relative overflow-hidden py-32 md:py-40 text-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-950/30 via-[#02010b] to-[#02010b]" />
+        <div className="absolute inset-0" />
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-72 w-[600px] rounded-full bg-violet-600/15 blur-3xl" />
 
         <div className="relative mx-auto max-w-3xl px-4">
@@ -220,8 +220,8 @@ export default function Blog() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`rounded-full px-4 py-1.5 font-montserrat text-[0.65rem] uppercase tracking-[0.2em] transition border ${activeCategory === cat
-                    ? "bg-violet-500 border-violet-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-                    : "border-violet-500/25 bg-violet-900/10 text-violet-400 hover:bg-violet-900/30"
+                  ? "bg-violet-500 border-violet-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
+                  : "border-violet-500/25 bg-violet-900/10 text-violet-400 hover:bg-violet-900/30"
                   }`}
               >
                 {cat}

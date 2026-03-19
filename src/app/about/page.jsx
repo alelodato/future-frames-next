@@ -64,8 +64,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="text-white min-h-screen"
-      style={{ background: "radial-gradient(ellipse at center, #0d0b2a 0%, #06050f 60%, #000000 100%)" }}>
+    <div className="relative text-white min-h-screen bg-gradient-to-b from-black via-[#0a0b2580] to-[#00000040]">
 
       {/* ── APERTURA EDITORIALE ── */}
       <section className="pt-32 pb-0 px-6 md:px-12 max-w-5xl mx-auto">
@@ -111,8 +110,9 @@ export default function About() {
         <FadeReveal className="md:hidden -mx-6 mb-10">
           <div className="relative w-full overflow-hidden" style={{ height: "clamp(260px, 50vw, 420px)" }}>
             <img src="/images/introimg4.webp" alt="Future Frames backstage"
-              className="w-full h-full object-cover opacity-70" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
+              className="w-full h-full object-cover" />
+            <div className="absolute inset-0"
+              style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />
           </div>
         </FadeReveal>
 
@@ -131,8 +131,9 @@ export default function About() {
       <FadeReveal className="hidden md:block">
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(300px, 55vh, 600px)" }}>
           <img src="/images/introimg4.webp" alt="Future Frames backstage"
-            className="w-full h-full object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
+            className="w-full h-full object-cover" />
+          <div className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />
         </div>
       </FadeReveal>
 
@@ -382,18 +383,16 @@ export default function About() {
       {/* ── CTA FINALE ── */}
       <section className="relative py-32 overflow-hidden">
         <img src="/images/NeonWall.webp" alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-25" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
-        <div className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 65%)" }} />
+          className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0"
+          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)" }} />
         <FadeReveal className="relative z-10 text-center px-6 space-y-6">
-          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-500">Iniziamo</p>
+          <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.5em] text-zinc-400">Iniziamo</p>
           <h2 className="font-antonio text-4xl md:text-6xl text-white leading-tight">
             Hai un progetto<br />
             <span className="text-violet-300">in mente?</span>
           </h2>
-          <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto">
+          <p className="font-montserrat text-sm text-zinc-300 max-w-sm mx-auto">
             Raccontacelo. Ogni collaborazione nasce da una conversazione.
           </p>
           <Link href="/contact"
