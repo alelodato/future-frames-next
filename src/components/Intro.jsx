@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import PortfolioModal from "@/components/PortfolioModal";
 import emailjs from "@emailjs/browser";
 
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
@@ -96,6 +97,8 @@ function ContactForm() {
   );
 }
 
+
+
 const services = [
   {
     id: "eventi",
@@ -130,6 +133,9 @@ const services = [
 ];
 
 export default function Intro() {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <section
       id="intro"
@@ -367,6 +373,13 @@ export default function Intro() {
                   </div>
                 </Link>
               </div>
+              <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+              <button
+                onClick={() => setModalOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer">
+                <i className="fa-solid fa-download text-xs" />
+                Scarica il portfolio completo
+              </button>
             </section>
             {/* BLOG */}
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">

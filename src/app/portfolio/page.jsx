@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import PortfolioModal from "@/components/PortfolioModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -411,6 +412,7 @@ function MobilePortfolio({ projects }) {
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => { fetchProjects(); }, []);
 
@@ -456,11 +458,13 @@ export default function Portfolio() {
           <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
             Rendi la tua idea il nostro prossimo progetto.
           </p>
-          <Link href="/contact"
-            className="group inline-flex items-center gap-3 rounded-full border border-violet-400/50 px-8 py-4 font-montserrat text-xs uppercase tracking-[0.3em] text-violet-300 transition-all hover:bg-violet-900/30 hover:border-violet-400 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]">
-            Contattaci
-            <i className="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1" />
-          </Link>
+          <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+          <button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer">
+            <i className="fa-solid fa-download text-xs" />
+            Scarica il portfolio completo
+          </button>
         </div>
       </section>
 
