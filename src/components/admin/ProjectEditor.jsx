@@ -16,6 +16,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
   const [videoTeaserUrl, setVideoTeaserUrl] = useState(initialData?.video_teaser_url || "");
   const [videoFullUrl, setVideoFullUrl] = useState(initialData?.video_full_url || "");
   const [videoPlatform, setVideoPlatform] = useState(initialData?.video_platform || "vimeo");
+  const [tagsInput, setTagsInput] = useState((initialData?.tags || []).join(", "));
   const [featured, setFeatured] = useState(initialData?.featured || false);
   const [published, setPublished] = useState(initialData?.published || false);
   const [uploadingCover, setUploadingCover] = useState(false);
@@ -100,7 +101,8 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       cover_image: coverImage,
       video_teaser_url: videoTeaserUrl,
       video_full_url: videoFullUrl,
-      video_platform: videoPlatform, featured, published,
+      video_platform: videoPlatform,
+      tags, featured, published,
       _images: images,
     });
   }
@@ -156,6 +158,13 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
             placeholder="Descrizione dettagliata del progetto..."
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none" />
         </div>
+
+        <div className="space-y-1.5">
+          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Tags (separati da virgola)</label>
+          <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)}
+            placeholder="Corporate, Spot, Montaggio"
+            className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60" />
+        </div>
       </div>
 
       {/* ── MEDIA ── */}
@@ -185,7 +194,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
 
         {/* Video teaser */}
         <div className="space-y-2">
-          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Video teaser (hover preview)</label>
+          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Video teaser (Anteprima)</label>
           {videoTeaserUrl && (
             <div className="relative">
               <video src={videoTeaserUrl} className="w-full h-24 object-cover rounded-xl" muted />
@@ -248,7 +257,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           </div>
         )}
 
-        {/* Upload immagini */}
         <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGallery ? "opacity-50 pointer-events-none" : ""}`}>
           <i className={`fa-solid ${uploadingGallery ? "fa-spinner animate-spin" : "fa-images"} text-violet-400 text-sm`} />
           <span className="font-montserrat text-xs text-zinc-400">
@@ -257,7 +265,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
         </label>
 
-        {/* Upload video */}
         <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGalleryVideo ? "opacity-50 pointer-events-none" : ""}`}>
           <i className={`fa-solid ${uploadingGalleryVideo ? "fa-spinner animate-spin" : "fa-film"} text-violet-400 text-sm`} />
           <span className="font-montserrat text-xs text-zinc-400">
