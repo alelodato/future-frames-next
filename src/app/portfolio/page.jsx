@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── Project Card ─────────────────────────────────────────────
 function ProjectCard({ project, className = "" }) {
+  console.log(project.title, project.cover_position_x, project.cover_position_y);
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef(null);
 
@@ -27,7 +28,11 @@ function ProjectCard({ project, className = "" }) {
       <img
         src={project.cover_image || "/images/introimg1.webp"}
         alt={project.title}
-        className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ${hovered ? "scale-[1.07]" : "scale-100"}`}
+        className={`absolute inset-0 h-full w-full object-cover cover-pos transition-transform duration-700 ${hovered ? "scale-[1.07]" : "scale-100"}`}
+        style={{
+          "--pos-x": `${project.cover_position_x ?? 50}%`,
+          "--pos-y": `${project.cover_position_y ?? 50}%`,
+        }}
       />
       {project.video_teaser_url && (
         <video ref={videoRef} src={project.video_teaser_url} muted loop playsInline
@@ -416,7 +421,7 @@ export default function Portfolio() {
     const supabase = createSupabaseBrowser();
     const { data } = await supabase
       .from("projects")
-      .select("id, slug, title, category, year, location, excerpt, cover_image, video_teaser_url, featured")
+      .select("id, slug, title, category, year, location, excerpt, cover_image, cover_position_x, cover_position_y, video_teaser_url, featured")
       .eq("published", true)
       .order("created_at", { ascending: false });
 

@@ -136,3 +136,7 @@ a {
   opacity: 0;
   animation: tunnel-rise 3s cubic-bezier(0.19, 1, 0.22, 1) 0.4s both;
 }
+
+.cover-pos {
+  object-position: var(--pos-x, 50%) var(--pos-y, 50%);
+}
