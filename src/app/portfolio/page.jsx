@@ -177,10 +177,6 @@ function PatternB({ projects }) {
           <div className={`absolute bottom-0 right-0 h-0.5 bg-gradient-to-l from-violet-500 to-fuchsia-500 transition-all duration-700 ${hovered2 ? "w-full" : "w-0"}`} />
         </Link>
       )}
-
-      {/* Separatore diagonale decorativo */}
-      <div className="absolute inset-0 pointer-events-none z-20"
-        style={{ background: "linear-gradient(to right, transparent 48%, rgba(139,92,246,0.4) 50%, transparent 52%)" }} />
     </div>
   );
 }
@@ -266,7 +262,7 @@ function HorizontalPortfolio({ projects }) {
 
         {/* Hero panel */}
         <div className="flex-shrink-0 w-screen h-screen relative overflow-hidden flex items-center justify-center">
-          <video src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline
+          <video src="/videos/showreel-sfocato.mp4" autoPlay muted loop playsInline
             className="absolute inset-0 h-full w-full object-cover opacity-50"
             style={{ filter: "saturate(0.6)" }} />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black" />
@@ -371,7 +367,7 @@ function MobilePortfolio({ projects }) {
     <div className="md:hidden">
       {/* Hero */}
       <section className="relative h-screen overflow-hidden flex items-center justify-center">
-        <video src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline
+        <video src="/videos/showreel-sfocato.mp4" autoPlay muted loop playsInline
           className="absolute inset-0 h-full w-full object-cover opacity-50"
           style={{ filter: "saturate(0.6)" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black" />
