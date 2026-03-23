@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
 const categories = ["Spot Aziendale", "Podcast", "Matrimonio", "Food", "Evento", "Videoclip", "Corporate", "Altro"];
@@ -9,24 +9,17 @@ function PatternAccordion({ label, content }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-xl border border-violet-500/20 overflow-hidden">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
+      <button type="button" onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-3 py-2.5 bg-violet-900/10 hover:bg-violet-900/20 transition">
         <span className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-violet-400">{label}</span>
         <i className={`fa-solid fa-chevron-down text-violet-400 text-xs transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && (
-        <div className="px-3 py-3 bg-black/20">
-          {content}
-        </div>
-      )}
+      {open && <div className="px-3 py-3 bg-black/20">{content}</div>}
     </div>
   );
 }
 
-// ─── Cover Position Picker ────────────────────────────────────
-function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
+function CoverPositionPicker({ imageUrl, posX, posY, onChange, label, isMobile = false }) {
   const containerRef = useRef(null);
   const isDragging = useRef(false);
 
@@ -39,52 +32,164 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
     return { x, y };
   }
 
-  function handleStart(e) {
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    function onTouchStart(e) {
+      e.preventDefault();
+      isDragging.current = true;
+      const { x, y } = getPosition(e);
+      onChange(x, y);
+    }
+
+    function onTouchMove(e) {
+      if (!isDragging.current) return;
+      e.preventDefault();
+      const { x, y } = getPosition(e);
+      onChange(x, y);
+    }
+
+    function onTouchEnd() {
+      isDragging.current = false;
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: false });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [onChange]);
+
+  function handleMouseDown(e) {
     isDragging.current = true;
     const { x, y } = getPosition(e);
     onChange(x, y);
   }
 
-  function handleMove(e) {
+  function handleMouseMove(e) {
     if (!isDragging.current) return;
     const { x, y } = getPosition(e);
     onChange(x, y);
   }
 
-  function handleEnd() {
+  function handleMouseEnd() {
     isDragging.current = false;
   }
 
-  const imgStyle = { objectPosition: `${posX}% ${posY}%` };
+  const imgStyle = { objectFit: "cover", objectPosition: `${posX}% ${posY}%` };
 
-  const slots = [
-    { label: "Pattern A — Grande", ratio: "1/2", width: "w-1/3" },
-    { label: "Pattern A — Piccolo", ratio: "1/1", width: "w-1/3" },
-    { label: "Pattern C — Stretto", ratio: "1/3", width: "w-1/3" },
+  const desktopPatterns = [
+    {
+      id: "A", label: "Pattern A — Grande + 2 piccoli",
+      content: (
+        <div className="flex gap-1 justify-center">
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 flex-shrink-0" style={{ width: "45%", aspectRatio: "1/2" }}>
+            <img src={imageUrl} alt="A grande" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+          </div>
+          <div className="flex flex-col gap-1 flex-shrink-0" style={{ width: "45%" }}>
+            <div className="overflow-hidden rounded-lg border border-violet-500/20" style={{ aspectRatio: "1/1" }}>
+              <img src={imageUrl} alt="A top" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            </div>
+            <div className="overflow-hidden rounded-lg border border-violet-500/20" style={{ aspectRatio: "1/1" }}>
+              <img src={imageUrl} alt="A bottom" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "B", label: "Pattern B — Diagonale",
+      content: (
+        <div className="flex gap-1 justify-center">
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 relative flex-shrink-0" style={{ width: "48%", aspectRatio: "1/2" }}>
+            <img src={imageUrl} alt="B sx" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            <div className="absolute inset-0 bg-black pointer-events-none" style={{ clipPath: "polygon(75% 0, 100% 0, 100% 100%, 62% 100%)" }} />
+            <p className="absolute bottom-1 left-1 font-montserrat text-[0.45rem] text-zinc-400">Sinistra</p>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 relative flex-shrink-0" style={{ width: "48%", aspectRatio: "1/2" }}>
+            <img src={imageUrl} alt="B dx" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            <div className="absolute inset-0 bg-black pointer-events-none" style={{ clipPath: "polygon(0 0, 38% 0, 25% 100%, 0 100%)" }} />
+            <p className="absolute bottom-1 right-1 font-montserrat text-[0.45rem] text-zinc-400">Destra</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "C", label: "Pattern C — Tre colonne",
+      content: (
+        <div className="flex gap-1 justify-center">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="overflow-hidden rounded-lg border border-violet-500/20" style={{ width: "30%", aspectRatio: "1/3" }}>
+              <img src={imageUrl} alt={`C ${i}`} className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            </div>
+          ))}
+        </div>
+      ),
+    },
   ];
+
+  const mobilePatterns = [
+    {
+      id: "A", label: "Pattern A — Grande + 2 affiancati",
+      content: (
+        <div className="space-y-1">
+          {/* Grande sopra — w-full h-[80vw] → ratio 5:4 */}
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 w-full" style={{ aspectRatio: "5/4" }}>
+            <img src={imageUrl} alt="A grande" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+          </div>
+          {/* Due affiancati sotto — flex-1 h-[100vw] → ratio 1:2 */}
+          <div className="flex gap-1">
+            <div className="flex-1 overflow-hidden rounded-lg border border-violet-500/20" style={{ aspectRatio: "1/2" }}>
+              <img src={imageUrl} alt="A sx" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            </div>
+            <div className="flex-1 overflow-hidden rounded-lg border border-violet-500/20" style={{ aspectRatio: "1/2" }}>
+              <img src={imageUrl} alt="A dx" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "B", label: "Pattern B — Due impilati",
+      content: (
+        <div className="space-y-1">
+          {/* Due full-width impilati — w-full h-[50vw] → ratio 2:1 */}
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 w-full" style={{ aspectRatio: "2/1" }}>
+            <img src={imageUrl} alt="B top" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+          </div>
+          <div className="overflow-hidden rounded-lg border border-violet-500/20 w-full" style={{ aspectRatio: "2/1" }}>
+            <img src={imageUrl} alt="B bottom" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const patterns = isMobile ? mobilePatterns : desktopPatterns;
 
   return (
     <div className="space-y-3">
-      <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">
-        Posizione anteprima — trascina il mirino
-      </label>
+      <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">{label}</label>
 
-      {/* Picker principale */}
-      <div
-        ref={containerRef}
+      <div ref={containerRef}
         className="relative w-full overflow-hidden rounded-xl cursor-crosshair select-none border border-violet-500/25"
         style={{ height: "200px" }}
-        onMouseDown={handleStart}
-        onMouseMove={handleMove}
-        onMouseUp={handleEnd}
-        onMouseLeave={handleEnd}
-        onTouchStart={handleStart}
-        onTouchMove={handleMove}
-        onTouchEnd={handleEnd}
-      >
-        <img src={imageUrl} alt="Picker"
-          className="w-full h-full object-cover pointer-events-none"
-          style={imgStyle} draggable={false} />
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseEnd}
+        onMouseLeave={handleMouseEnd}>
+        {imageUrl ? (
+          <img src={imageUrl} alt="Picker" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
+        ) : (
+          <div className="w-full h-full bg-zinc-900/50 flex items-center justify-center">
+            <span className="font-montserrat text-xs text-zinc-600">Carica prima un'immagine</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 bottom-0 w-px bg-white/20" style={{ left: `${posX}%` }} />
@@ -99,76 +204,12 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
         </div>
       </div>
 
-      {/* Anteprime con proporzioni reali dei pattern */}
       <div className="space-y-2">
-        <p className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-zinc-500">
-          Anteprima nelle proporzioni reali del portfolio
-        </p>
-
-        {[
-          {
-            id: "A",
-            label: "Pattern A — Grande + 2 piccoli",
-            content: (
-              <div className="flex gap-1 items-stretch" style={{ height: "160px" }}>
-                <div style={{ width: "50%", aspectRatio: "1/2" }} className="overflow-hidden rounded-lg border border-violet-500/20 flex-shrink-0">
-                  <img src={imageUrl} alt="A grande" className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                </div>
-                <div className="flex flex-col gap-1 flex-1">
-                  <div className="overflow-hidden rounded-lg border border-violet-500/20 flex-1">
-                    <img src={imageUrl} alt="A top" className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                  </div>
-                  <div className="overflow-hidden rounded-lg border border-violet-500/20 flex-1">
-                    <img src={imageUrl} alt="A bottom" className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                  </div>
-                </div>
-              </div>
-            ),
-          },
-          {
-            id: "B",
-            label: "Pattern B — Diagonale",
-            content: (
-              <div className="flex gap-1 justify-center">
-                {/* Sinistra diagonale — w ~60% h-screen */}
-                <div className="overflow-hidden rounded-lg border border-violet-500/20 relative flex-shrink-0"
-                  style={{ width: "48%", aspectRatio: "1/2" }}>
-                  <img src={imageUrl} alt="B sx" className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                  <div className="absolute inset-0 bg-black pointer-events-none"
-                    style={{ clipPath: "polygon(75% 0, 100% 0, 100% 100%, 62% 100%)" }} />
-                  <p className="absolute bottom-1 left-1 font-montserrat text-[0.45rem] text-zinc-400">Sinistra</p>
-                </div>
-                {/* Destra diagonale — w ~60% h-screen */}
-                <div className="overflow-hidden rounded-lg border border-violet-500/20 relative flex-shrink-0"
-                  style={{ width: "48%", aspectRatio: "1/2" }}>
-                  <img src={imageUrl} alt="B dx" className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                  <div className="absolute inset-0 bg-black pointer-events-none"
-                    style={{ clipPath: "polygon(0 0, 38% 0, 25% 100%, 0 100%)" }} />
-                  <p className="absolute bottom-1 right-1 font-montserrat text-[0.45rem] text-zinc-400">Destra</p>
-                </div>
-              </div>
-            ),
-          },
-          {
-            id: "C",
-            label: "Pattern C — Tre colonne",
-            content: (
-              <div className="flex gap-1 justify-center">
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="overflow-hidden rounded-lg border border-violet-500/20"
-                    style={{ width: "30%", aspectRatio: "1/3" }}>
-                    <img src={imageUrl} alt={`C ${i}`} className="w-full h-full object-cover" style={imgStyle} draggable={false} />
-                  </div>
-                ))}
-              </div>
-            ),
-          },
-        ].map(({ id, label, content }) => (
+        {patterns.map(({ id, label, content }) => (
           <PatternAccordion key={id} label={label} content={content} />
         ))}
       </div>
 
-      {/* Pulsanti preset */}
       <div className="grid grid-cols-3 gap-1.5">
         {[
           { label: "↖ Alto sx", x: 25, y: 25 },
@@ -181,8 +222,7 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
           { label: "↓ Basso", x: 50, y: 80 },
           { label: "↘ Basso dx", x: 75, y: 75 },
         ].map((preset) => (
-          <button key={preset.label} type="button"
-            onClick={() => onChange(preset.x, preset.y)}
+          <button key={preset.label} type="button" onClick={() => onChange(preset.x, preset.y)}
             className={`rounded-lg px-2 py-1.5 font-montserrat text-[0.55rem] transition
               ${posX === preset.x && posY === preset.y
                 ? "bg-violet-500/40 border border-violet-400/60 text-violet-200"
@@ -206,6 +246,8 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
   const [coverImage, setCoverImage] = useState(initialData?.cover_image || "");
   const [coverPosX, setCoverPosX] = useState(initialData?.cover_position_x ?? 50);
   const [coverPosY, setCoverPosY] = useState(initialData?.cover_position_y ?? 50);
+  const [coverPosXMobile, setCoverPosXMobile] = useState(initialData?.cover_position_x_mobile ?? 50);
+  const [coverPosYMobile, setCoverPosYMobile] = useState(initialData?.cover_position_y_mobile ?? 50);
   const [videoTeaserUrl, setVideoTeaserUrl] = useState(initialData?.video_teaser_url || "");
   const [videoFullUrl, setVideoFullUrl] = useState(initialData?.video_full_url || "");
   const [videoPlatform, setVideoPlatform] = useState(initialData?.video_platform || "vimeo");
@@ -217,11 +259,11 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
   const [images, setImages] = useState(initialData?.project_images || []);
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [uploadingGalleryVideo, setUploadingGalleryVideo] = useState(false);
+  const [desktopPickerOpen, setDesktopPickerOpen] = useState(false);
+  const [mobilePickerOpen, setMobilePickerOpen] = useState(false);
 
-  const handlePositionChange = useCallback((x, y) => {
-    setCoverPosX(x);
-    setCoverPosY(y);
-  }, []);
+  const handlePositionChange = useCallback((x, y) => { setCoverPosX(x); setCoverPosY(y); }, []);
+  const handlePositionChangeMobile = useCallback((x, y) => { setCoverPosXMobile(x); setCoverPosYMobile(y); }, []);
 
   async function handleCoverUpload(e) {
     const file = e.target.files[0];
@@ -299,6 +341,8 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       cover_image: coverImage,
       cover_position_x: coverPosX,
       cover_position_y: coverPosY,
+      cover_position_x_mobile: coverPosXMobile,
+      cover_position_y_mobile: coverPosYMobile,
       video_teaser_url: videoTeaserUrl,
       video_full_url: videoFullUrl,
       video_platform: videoPlatform,
@@ -313,14 +357,12 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       {/* ── INFO BASE ── */}
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4">
         <h3 className="font-antonio text-base text-violet-300">Informazioni base</h3>
-
         <div className="space-y-1.5">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Titolo *</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required
             placeholder="Nome del progetto"
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60" />
         </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Categoria</label>
@@ -332,38 +374,26 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           </div>
           <div className="space-y-1.5">
             <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Anno</label>
-            <input type="text" value={year} onChange={(e) => setYear(e.target.value)}
-              placeholder="2024"
+            <input type="text" value={year} onChange={(e) => setYear(e.target.value)} placeholder="2024"
               className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white outline-none transition focus:border-violet-400/60" />
           </div>
         </div>
-
         <div className="space-y-1.5">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Location</label>
-          <input type="text" value={location} onChange={(e) => setLocation(e.target.value)}
-            placeholder="Roma, Milano..."
+          <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Roma, Milano..."
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white outline-none transition focus:border-violet-400/60" />
         </div>
-
         <div className="space-y-1.5">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Anteprima</label>
           <textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} rows={2}
             placeholder="Breve descrizione mostrata nell'anteprima della pagina portfolio"
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none" />
         </div>
-
         <div className="space-y-1.5">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Descrizione completa</label>
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4}
             placeholder="Descrizione dettagliata del progetto..."
             className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 resize-none" />
-        </div>
-
-        <div className="space-y-1.5">
-          <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Tags (separati da virgola)</label>
-          <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)}
-            placeholder="Corporate, Spot, Montaggio"
-            className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60" />
         </div>
       </div>
 
@@ -371,14 +401,12 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4">
         <h3 className="font-antonio text-base text-violet-300">Media</h3>
 
-        {/* Cover image */}
         <div className="space-y-2">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Immagine di copertina</label>
           {coverImage && (
             <div className="relative h-36 overflow-hidden rounded-xl">
-              <img src={coverImage} alt="Cover"
-                className="h-full w-full object-cover"
-                style={{ objectPosition: `${coverPosX}% ${coverPosY}%` }} />
+              <img src={coverImage} alt="Cover" className="h-full w-full"
+                style={{ objectFit: "cover", objectPosition: `${coverPosX}% ${coverPosY}%` }} />
               <button type="button" onClick={() => setCoverImage("")}
                 className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white hover:bg-red-900/80 transition">
                 <i className="fa-solid fa-xmark text-xs" />
@@ -387,29 +415,68 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           )}
           <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingCover ? "opacity-50 pointer-events-none" : ""}`}>
             <i className={`fa-solid ${uploadingCover ? "fa-spinner animate-spin" : "fa-image"} text-violet-400 text-sm`} />
-            <span className="font-montserrat text-xs text-zinc-400">
-              {uploadingCover ? "Caricamento..." : "Carica immagine copertina"}
-            </span>
+            <span className="font-montserrat text-xs text-zinc-400">{uploadingCover ? "Caricamento..." : "Carica immagine copertina"}</span>
             <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" />
           </label>
         </div>
 
-        {/* Position picker — solo se c'è un'immagine */}
         {coverImage && (
-          <CoverPositionPicker
-            imageUrl={coverImage}
-            posX={coverPosX}
-            posY={coverPosY}
-            onChange={handlePositionChange}
-          />
+          <div className="space-y-2">
+            {/* Desktop accordion */}
+            <div className="rounded-xl border border-violet-500/20 overflow-hidden">
+              <button type="button" onClick={() => setDesktopPickerOpen(!desktopPickerOpen)}
+                className="w-full flex items-center justify-between px-4 py-3 bg-violet-900/10 hover:bg-violet-900/20 transition">
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-desktop text-violet-400 text-xs" />
+                  <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-violet-300">Posizione Desktop</span>
+                </div>
+                <i className={`fa-solid fa-chevron-down text-violet-400 text-xs transition-transform duration-300 ${desktopPickerOpen ? "rotate-180" : ""}`} />
+              </button>
+              {desktopPickerOpen && (
+                <div className="p-4 bg-violet-900/5">
+                  <CoverPositionPicker
+                    imageUrl={coverImage}
+                    posX={coverPosX}
+                    posY={coverPosY}
+                    onChange={handlePositionChange}
+                    label="Trascina il mirino — layout orizzontale"
+                    isMobile={false}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Mobile accordion */}
+            <div className="rounded-xl border border-indigo-500/20 overflow-hidden">
+              <button type="button" onClick={() => setMobilePickerOpen(!mobilePickerOpen)}
+                className="w-full flex items-center justify-between px-4 py-3 bg-indigo-900/10 hover:bg-indigo-900/20 transition">
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-mobile-screen text-indigo-400 text-xs" />
+                  <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-indigo-300">Posizione Mobile</span>
+                </div>
+                <i className={`fa-solid fa-chevron-down text-indigo-400 text-xs transition-transform duration-300 ${mobilePickerOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mobilePickerOpen && (
+                <div className="p-4 bg-indigo-900/5">
+                  <CoverPositionPicker
+                    imageUrl={coverImage}
+                    posX={coverPosXMobile}
+                    posY={coverPosYMobile}
+                    onChange={handlePositionChangeMobile}
+                    label="Trascina il mirino — layout verticale"
+                    isMobile={true}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         )}
 
-        {/* Video teaser */}
         <div className="space-y-2">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Video teaser (Anteprima)</label>
           {videoTeaserUrl && (
             <div className="relative">
-              <video src={videoTeaserUrl} className="w-full h-24 object-cover rounded-xl" muted />
+              <video src={videoTeaserUrl} className="w-full h-24 rounded-xl" style={{ objectFit: "cover" }} muted />
               <button type="button" onClick={() => setVideoTeaserUrl("")}
                 className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white hover:bg-red-900/80 transition">
                 <i className="fa-solid fa-xmark text-xs" />
@@ -418,14 +485,11 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           )}
           <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingTeaser ? "opacity-50 pointer-events-none" : ""}`}>
             <i className={`fa-solid ${uploadingTeaser ? "fa-spinner animate-spin" : "fa-video"} text-violet-400 text-sm`} />
-            <span className="font-montserrat text-xs text-zinc-400">
-              {uploadingTeaser ? "Caricamento..." : "Carica video teaser (max 30s consigliato)"}
-            </span>
+            <span className="font-montserrat text-xs text-zinc-400">{uploadingTeaser ? "Caricamento..." : "Carica video teaser (max 30s consigliato)"}</span>
             <input type="file" accept="video/*" onChange={handleTeaserUpload} className="hidden" />
           </label>
         </div>
 
-        {/* Video completo URL */}
         <div className="space-y-2">
           <label className="font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400">Link video completo</label>
           <div className="flex gap-2">
@@ -434,8 +498,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               <option value="vimeo">Vimeo</option>
               <option value="youtube">YouTube</option>
             </select>
-            <input type="url" value={videoFullUrl} onChange={(e) => setVideoFullUrl(e.target.value)}
-              placeholder="https://vimeo.com/..."
+            <input type="url" value={videoFullUrl} onChange={(e) => setVideoFullUrl(e.target.value)} placeholder="https://vimeo.com/..."
               className="flex-1 rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60" />
           </div>
         </div>
@@ -444,21 +507,20 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       {/* ── GALLERIA ── */}
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4">
         <h3 className="font-antonio text-base text-violet-300">Galleria</h3>
-
         {images.length > 0 && (
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
             {images.map((item, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-xl group">
                 {item.type === "video" ? (
                   <>
-                    <video src={item.url} className="h-full w-full object-cover" muted playsInline />
+                    <video src={item.url} className="h-full w-full" style={{ objectFit: "cover" }} muted playsInline />
                     <div className="absolute top-1.5 left-1.5 rounded-md bg-black/70 px-1.5 py-0.5 flex items-center gap-1">
                       <i className="fa-solid fa-film text-violet-400 text-[0.5rem]" />
                       <span className="font-montserrat text-[0.45rem] uppercase tracking-wider text-zinc-300">Video</span>
                     </div>
                   </>
                 ) : (
-                  <img src={item.url} alt={`Gallery ${i}`} className="h-full w-full object-cover" />
+                  <img src={item.url} alt={`Gallery ${i}`} className="h-full w-full" style={{ objectFit: "cover" }} />
                 )}
                 <button type="button" onClick={() => removeGalleryItem(i)}
                   className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition">
@@ -468,20 +530,14 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
             ))}
           </div>
         )}
-
         <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGallery ? "opacity-50 pointer-events-none" : ""}`}>
           <i className={`fa-solid ${uploadingGallery ? "fa-spinner animate-spin" : "fa-images"} text-violet-400 text-sm`} />
-          <span className="font-montserrat text-xs text-zinc-400">
-            {uploadingGallery ? "Caricamento..." : "Aggiungi immagini"}
-          </span>
+          <span className="font-montserrat text-xs text-zinc-400">{uploadingGallery ? "Caricamento..." : "Aggiungi immagini"}</span>
           <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
         </label>
-
         <label className={`flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50 ${uploadingGalleryVideo ? "opacity-50 pointer-events-none" : ""}`}>
           <i className={`fa-solid ${uploadingGalleryVideo ? "fa-spinner animate-spin" : "fa-film"} text-violet-400 text-sm`} />
-          <span className="font-montserrat text-xs text-zinc-400">
-            {uploadingGalleryVideo ? "Caricamento..." : "Aggiungi video"}
-          </span>
+          <span className="font-montserrat text-xs text-zinc-400">{uploadingGalleryVideo ? "Caricamento..." : "Aggiungi video"}</span>
           <input type="file" accept="video/*" multiple onChange={handleGalleryVideoUpload} className="hidden" />
         </label>
       </div>
@@ -496,7 +552,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
             </div>
             <span className="font-montserrat text-xs text-zinc-300">{published ? "Pubblicato" : "Bozza"}</span>
           </label>
-
           <label className="flex items-center gap-3 cursor-pointer">
             <div onClick={() => setFeatured(!featured)}
               className={`relative h-6 w-11 rounded-full transition-colors ${featured ? "bg-amber-500" : "bg-zinc-700"}`}>
@@ -505,7 +560,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
             <span className="font-montserrat text-xs text-zinc-300">Progetto in evidenza</span>
           </label>
         </div>
-
         <button type="submit" disabled={saving || !title}
           className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed">
           {saving ? (

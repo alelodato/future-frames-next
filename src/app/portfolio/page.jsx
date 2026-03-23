@@ -10,10 +10,12 @@ import PortfolioModal from "@/components/PortfolioModal";
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── Project Card ─────────────────────────────────────────────
-function ProjectCard({ project, className = "" }) {
-  console.log(project.title, project.cover_position_x, project.cover_position_y);
+function ProjectCard({ project, className = "", mobile = false }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef(null);
+
+  const posX = mobile ? (project.cover_position_x_mobile ?? 50) : (project.cover_position_x ?? 50);
+  const posY = mobile ? (project.cover_position_y_mobile ?? 50) : (project.cover_position_y ?? 50);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -28,11 +30,8 @@ function ProjectCard({ project, className = "" }) {
       <img
         src={project.cover_image || "/images/introimg1.webp"}
         alt={project.title}
-        className={`absolute inset-0 h-full w-full object-cover cover-pos transition-transform duration-700 ${hovered ? "scale-[1.07]" : "scale-100"}`}
-        style={{
-          "--pos-x": `${project.cover_position_x ?? 50}%`,
-          "--pos-y": `${project.cover_position_y ?? 50}%`,
-        }}
+        className={`absolute inset-0 h-full w-full transition-transform duration-700 ${hovered ? "scale-[1.07]" : "scale-100"}`}
+        style={{ objectFit: "cover", objectPosition: `${posX}% ${posY}%` }}
       />
       {project.video_teaser_url && (
         <video ref={videoRef} src={project.video_teaser_url} muted loop playsInline
@@ -40,8 +39,6 @@ function ProjectCard({ project, className = "" }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
       <div className={`absolute inset-0 bg-black/25 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-0"}`} />
-
-      {/* Badge categoria */}
       <div className="absolute top-4 left-4 z-10">
         <span className={`font-montserrat text-[0.52rem] uppercase tracking-[0.3em] px-3 py-1.5 rounded-full border backdrop-blur-sm transition-all duration-300 ${hovered ? "border-violet-400/60 bg-violet-900/60 text-violet-200" : "border-white/20 bg-black/30 text-zinc-300"}`}>
           {project.category}
@@ -54,8 +51,6 @@ function ProjectCard({ project, className = "" }) {
           </span>
         </div>
       )}
-
-      {/* Info bottom */}
       <div className="absolute bottom-0 inset-x-0 p-5 z-10">
         <div className="flex items-center gap-2 mb-1">
           {project.year && <span className="font-montserrat text-[0.55rem] text-zinc-500">{project.year}</span>}
@@ -71,7 +66,6 @@ function ProjectCard({ project, className = "" }) {
           </span>
         </div>
       </div>
-
       <div className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-700 ${hovered ? "w-full" : "w-0"}`} />
     </Link>
   );
@@ -123,7 +117,6 @@ function PatternB({ projects }) {
 
   return (
     <div className="flex-shrink-0 w-screen h-screen relative">
-      {/* Progetto 1 — sinistra con clip diagonale */}
       {p1 && (
         <Link href={`/portfolio/${p1.slug}`}
           className="absolute inset-0 group cursor-pointer"
@@ -131,7 +124,8 @@ function PatternB({ projects }) {
           onMouseEnter={() => setHovered1(true)}
           onMouseLeave={() => setHovered1(false)}>
           <img src={p1.cover_image || "/images/introimg1.webp"} alt={p1.title}
-            className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ${hovered1 ? "scale-[1.06]" : "scale-100"}`} />
+            className={`absolute inset-0 h-full w-full transition-transform duration-700 ${hovered1 ? "scale-[1.06]" : "scale-100"}`}
+            style={{ objectFit: "cover", objectPosition: `${p1.cover_position_x ?? 50}% ${p1.cover_position_y ?? 50}%` }} />
           {p1.video_teaser_url && (
             <video ref={video1Ref} src={p1.video_teaser_url} muted loop playsInline
               className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${hovered1 ? "opacity-100" : "opacity-0"}`} />
@@ -153,7 +147,6 @@ function PatternB({ projects }) {
         </Link>
       )}
 
-      {/* Progetto 2 — destra con clip diagonale inverso */}
       {p2 && (
         <Link href={`/portfolio/${p2.slug}`}
           className="absolute inset-0 group cursor-pointer"
@@ -161,7 +154,8 @@ function PatternB({ projects }) {
           onMouseEnter={() => setHovered2(true)}
           onMouseLeave={() => setHovered2(false)}>
           <img src={p2.cover_image || "/images/introimg1.webp"} alt={p2.title}
-            className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ${hovered2 ? "scale-[1.06]" : "scale-100"}`} />
+            className={`absolute inset-0 h-full w-full transition-transform duration-700 ${hovered2 ? "scale-[1.06]" : "scale-100"}`}
+            style={{ objectFit: "cover", objectPosition: `${p2.cover_position_x ?? 50}% ${p2.cover_position_y ?? 50}%` }} />
           {p2.video_teaser_url && (
             <video ref={video2Ref} src={p2.video_teaser_url} muted loop playsInline
               className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${hovered2 ? "opacity-100" : "opacity-0"}`} />
@@ -251,8 +245,37 @@ function HorizontalPortfolio({ projects }) {
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefresh: () => {
+            document.querySelectorAll("[data-cover-x]").forEach((img) => {
+              const x = img.getAttribute("data-cover-x");
+              const y = img.getAttribute("data-cover-y");
+              img.style.objectPosition = x + "% " + y + "%";
+            });
+          },
         },
       });
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        onUpdate: () => {
+          document.querySelectorAll("[data-cover-x]").forEach((img) => {
+            const x = img.getAttribute("data-cover-x");
+            const y = img.getAttribute("data-cover-y");
+            if (img.style.objectPosition !== x + "% " + y + "%") {
+              img.style.objectPosition = x + "% " + y + "%";
+            }
+          });
+        },
+      });
+
+      setTimeout(() => {
+        document.querySelectorAll("[data-cover-x]").forEach((img) => {
+          const x = img.getAttribute("data-cover-x");
+          const y = img.getAttribute("data-cover-y");
+          img.style.objectPosition = x + "% " + y + "%";
+        });
+      }, 100);
 
       return () => ScrollTrigger.getAll().forEach((t) => t.kill());
     });
@@ -329,22 +352,21 @@ function MobilePatternA({ projects }) {
   const [p1, p2, p3] = projects;
   return (
     <div className="flex flex-col gap-0.5">
-      <ProjectCard project={p1} className="w-full h-[80vw]" />
+      <ProjectCard project={p1} className="w-full h-[80vw]" mobile={true} />
       <div className="flex gap-0.5">
-        {p2 && <ProjectCard project={p2} className="flex-1 h-[100vw]" />}
-        {p3 && <ProjectCard project={p3} className="flex-1 h-[100vw]" />}
+        {p2 && <ProjectCard project={p2} className="flex-1 h-[100vw]" mobile={true} />}
+        {p3 && <ProjectCard project={p3} className="flex-1 h-[100vw]" mobile={true} />}
       </div>
     </div>
   );
 }
 
-// Pattern B: due affiancati alti
 function MobilePatternB({ projects }) {
   const [p1, p2] = projects;
   return (
     <div className="flex flex-col gap-0.5">
-      {p1 && <ProjectCard project={p1} className="w-full h-[50vw]" />}
-      {p2 && <ProjectCard project={p2} className="w-full h-[50vw]" />}
+      {p1 && <ProjectCard project={p1} className="w-full h-[50vw]" mobile={true} />}
+      {p2 && <ProjectCard project={p2} className="w-full h-[50vw]" mobile={true} />}
     </div>
   );
 }
@@ -421,7 +443,7 @@ export default function Portfolio() {
     const supabase = createSupabaseBrowser();
     const { data } = await supabase
       .from("projects")
-      .select("id, slug, title, category, year, location, excerpt, cover_image, cover_position_x, cover_position_y, video_teaser_url, featured")
+      .select("id, slug, title, category, year, location, excerpt, cover_image, cover_position_x, cover_position_y, cover_position_x_mobile, cover_position_y_mobile, video_teaser_url, featured")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
