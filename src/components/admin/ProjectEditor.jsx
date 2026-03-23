@@ -543,8 +543,10 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       </div>
 
       {/* ── FOOTER ── */}
-      <div className="flex items-center justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 px-5 py-4">
-        <div className="flex items-center gap-6">
+      <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 px-4 sm:px-5 py-4 space-y-4 sm:space-y-0">
+
+        {/* Toggle switches */}
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <label className="flex items-center gap-3 cursor-pointer">
             <div onClick={() => setPublished(!published)}
               className={`relative h-6 w-11 rounded-full transition-colors ${published ? "bg-violet-500" : "bg-zinc-700"}`}>
@@ -557,17 +559,20 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               className={`relative h-6 w-11 rounded-full transition-colors ${featured ? "bg-amber-500" : "bg-zinc-700"}`}>
               <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${featured ? "translate-x-5" : "translate-x-0.5"}`} />
             </div>
-            <span className="font-montserrat text-xs text-zinc-300">Progetto in evidenza</span>
+            <span className="font-montserrat text-xs text-zinc-300">In evidenza</span>
           </label>
         </div>
+
+        {/* Bottone salva — full width su mobile */}
         <button type="submit" disabled={saving || !title}
-          className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-6 py-3 sm:py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed">
           {saving ? (
             <><i className="fa-solid fa-spinner animate-spin text-xs" />Salvataggio...</>
           ) : (
             <><i className="fa-solid fa-floppy-disk text-xs" />Salva progetto</>
           )}
         </button>
+
       </div>
 
     </form>
