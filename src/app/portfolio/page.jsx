@@ -475,11 +475,10 @@ export default function Portfolio() {
           style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.12) 0%, transparent 70%)" }} />
         <div className="relative z-10 text-center px-4 space-y-6">
           <h2 className="font-antonio text-5xl md:text-7xl text-white leading-none">
-            Pronto a raccontare
-            <span className="block text-violet-300">la tua storia?</span>
+            Vuoi vedere tutti i nostri lavori?
           </h2>
           <p className="font-montserrat text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
-            Rendi la tua idea il nostro prossimo progetto.
+            Scarica il portfolio completo in PDF.
           </p>
           <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
           <button
