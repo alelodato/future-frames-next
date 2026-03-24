@@ -83,7 +83,7 @@ export default function About() {
         </FadeReveal>
 
         {/* Desktop/tablet */}
-        <div className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-start mb-16">
+        <div className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-stretch mb-16">
           <div className="space-y-2">
             {["Non facciamo solo", "foto e video.", "Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
               <FadeReveal key={i} delay={i * 0.08}>
@@ -94,10 +94,14 @@ export default function About() {
               </FadeReveal>
             ))}
           </div>
-          <FadeReveal delay={0.3} className="flex-shrink-0 flex flex-col gap-4 pt-1">
-            <div style={{ aspectRatio: "3/4" }}>
-              <img src="/images/eventi.webp" alt="Future Frames Logo"
-                className="w-[200px] lg:w-[400px] h-auto object-contain opacity-80 transition duration-700 hover:scale-[1.03]" />
+
+          <FadeReveal delay={0.3} className="flex-shrink-0">
+            <div className="h-full w-[200px] lg:w-[320px] rounded-xl overflow-hidden">
+              <img
+                src="/images/eventi.webp"
+                alt="Future Frames"
+                className="w-full h-full object-cover opacity-80 transition duration-700 hover:scale-[1.03]"
+              />
             </div>
           </FadeReveal>
         </div>
