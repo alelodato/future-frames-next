@@ -17,9 +17,7 @@ export default function Footer() {
             <p className="font-montserrat text-xs text-zinc-300 leading-relaxed">
               Agenzia creativa specializzata in{" "}
               <span className="text-violet-300">fotografia</span> e{" "}
-              <span className="text-violet-300">videomaking</span> per eventi,
-              aziende e brand che vogliono raccontarsi con uno sguardo
-              cinematografico.
+              <span className="text-violet-300">videomaking</span>.
             </p>
           </div>
 
@@ -34,7 +32,13 @@ export default function Footer() {
                   href="/about"
                   className="hover:text-violet-300 transition-colors"
                 >
-                  Chi siamo
+                  About
+                </Link>
+                <Link
+                  href="/servizi"
+                  className="hover:text-violet-300 transition-colors"
+                >
+                  Servizi
                 </Link>
                 <Link
                   href="/portfolio"
@@ -43,10 +47,10 @@ export default function Footer() {
                   Portfolio
                 </Link>
                 <Link
-                  href="/servizi"
+                  href="/blog"
                   className="hover:text-violet-300 transition-colors"
                 >
-                  Servizi
+                  Blog
                 </Link>
                 <Link
                   href="/contact"

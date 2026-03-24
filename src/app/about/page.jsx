@@ -411,7 +411,7 @@ export default function About() {
             <span className="text-violet-300">in mente?</span>
           </h2>
           <p className="font-montserrat text-sm text-zinc-300 max-w-sm mx-auto">
-            Raccontacelo. Ogni collaborazione nasce da una conversazione.
+            Raccontacelo. Trasformiamo le tue idee in immagini che restano nel tempo.
           </p>
           <Link href="/contact"
             className="inline-flex items-center justify-center rounded-full bg-violet-400 px-8 py-3 text-xs font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.8)]">
