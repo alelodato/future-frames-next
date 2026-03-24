@@ -189,24 +189,73 @@ export default function Blog() {
     <section className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {/* ── HERO ── */}
-      <div className="relative overflow-hidden py-32 md:py-40 text-center">
-        <div className="absolute inset-0" />
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-72 w-[600px] rounded-full bg-violet-600/15 blur-3xl" />
+      <div className="relative overflow-hidden py-28 md:py-40 text-center">
 
-        <div className="relative mx-auto max-w-3xl px-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-900/30 px-3 py-1 backdrop-blur-sm mb-5">
-            <div className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-            <p className="font-montserrat text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-violet-300">
-              Future Frames Blog
+        {/* Glow multipli */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-80 w-[700px] rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-1/4 h-56 w-56 rounded-full bg-fuchsia-600/10 blur-3xl" />
+        <div className="pointer-events-none absolute top-1/2 right-1/4 h-48 w-48 rounded-full bg-indigo-600/10 blur-3xl" />
+
+        {/* Griglia decorativa */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.025]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+
+        {/* Cerchi orbitanti */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div className="h-[500px] w-[500px] sm:h-[700px] sm:w-[700px] rounded-full border border-violet-500/8 animate-spin"
+            style={{ animationDuration: "25s" }} />
+          <div className="absolute h-[380px] w-[380px] sm:h-[540px] sm:w-[540px] rounded-full border border-violet-400/6 animate-spin"
+            style={{ animationDuration: "18s", animationDirection: "reverse" }} />
+          <div className="absolute h-[260px] w-[260px] sm:h-[360px] sm:w-[360px] rounded-full border border-violet-300/5 animate-spin"
+            style={{ animationDuration: "12s" }} />
+        </div>
+
+        {/* Particelle decorative */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute top-[20%] left-[15%] h-1 w-1 rounded-full bg-violet-400/40 animate-pulse" style={{ animationDelay: "0s" }} />
+          <div className="absolute top-[35%] right-[20%] h-1.5 w-1.5 rounded-full bg-violet-300/30 animate-pulse" style={{ animationDelay: "0.8s" }} />
+          <div className="absolute bottom-[30%] left-[25%] h-1 w-1 rounded-full bg-fuchsia-400/40 animate-pulse" style={{ animationDelay: "1.4s" }} />
+          <div className="absolute top-[60%] right-[12%] h-1 w-1 rounded-full bg-indigo-300/30 animate-pulse" style={{ animationDelay: "0.4s" }} />
+          <div className="absolute top-[15%] right-[35%] h-0.5 w-0.5 rounded-full bg-violet-400/50 animate-pulse" style={{ animationDelay: "1.8s" }} />
+          {/* Linee diagonali decorative */}
+          <div className="absolute top-[25%] left-[8%] h-px w-12 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent rotate-45" />
+          <div className="absolute bottom-[35%] right-[8%] h-px w-16 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent -rotate-45" />
+        </div>
+
+        {/* Contenuto */}
+        <div className="relative mx-auto max-w-4xl px-4">
+
+          {/* Label */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-8 bg-violet-500/50" />
+            <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-400">
+              Il blog di Future Frames
             </p>
+            <div className="h-px w-8 bg-violet-500/50" />
           </div>
-          <h1 className="font-antonio text-4xl sm:text-5xl md:text-[3.2rem] leading-tight text-white">
-            Storie, Consigli
-            <span className="block text-violet-300">& Dietro le Quinte</span>
+
+          {/* Titolo */}
+          <h1 className="font-antonio leading-[0.95] text-white mb-6">
+            <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+              Storie, Consigli
+            </span>
+            <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-violet-300 italic mt-1">
+              & Dietro le Quinte
+            </span>
           </h1>
-          <p className="mt-4 font-montserrat text-sm sm:text-base leading-relaxed text-zinc-400 max-w-xl mx-auto">
+
+          {/* Linea decorativa */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-violet-500/50" />
+            <div className="h-1 w-1 rounded-full bg-violet-400/60" />
+            <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-violet-500/50" />
+          </div>
+
+          {/* Sottotitolo */}
+          <p className="font-montserrat text-sm sm:text-base leading-relaxed text-zinc-400 max-w-xl mx-auto">
             Riflessioni sul mestiere, approfondimenti tecnici e racconti dai nostri set.
           </p>
+
         </div>
       </div>
 
