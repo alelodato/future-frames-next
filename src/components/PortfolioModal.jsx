@@ -113,7 +113,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
                         Scarica il portfolio
                         <span className="block text-violet-300">completo.</span>
                     </h2>
-                    <p className="font-montserrat text-[0.65rem] text-zinc-400 mt-1.5 leading-relaxed max-w-sm">
+                    <p className="font-montserrat text-[0.65rem] text-zinc-400 mt-1.5 leading-relaxed">
                         Inserisci i tuoi dati per accedere a tutti i nostri progetti, inclusi quelli non pubblicati sul sito.
                     </p>
                 </div>
