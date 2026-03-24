@@ -26,6 +26,16 @@
   }
 }
 
+@keyframes scrollLight {
+  0% {
+    top: -50%;
+  }
+
+  100% {
+    top: 150%;
+  }
+}
+
 /* ── CSS Variables ── */
 :root {
   --violet-electric: #A020F0;
