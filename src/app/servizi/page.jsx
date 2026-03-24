@@ -533,14 +533,14 @@ export default function Servizi() {
             </div>
 
             <div className="flex items-center gap-5 mb-8">
-              <a href="#servizi"
+              <a href="#portfolio"
                 className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition">
-                Scopri i servizi
+                Scopri il portfolio
                 <i className="fa-solid fa-arrow-right text-[0.6rem]" />
               </a>
-              <a href="#portfolio"
+              <a href="#contact"
                 className="font-montserrat text-xs uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition">
-                Portfolio →
+                Contattaci →
               </a>
             </div>
 
