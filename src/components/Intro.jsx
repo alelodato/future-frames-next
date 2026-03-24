@@ -301,30 +301,32 @@ export default function Intro() {
 
               {/* Griglia cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {services.map((s) => (
-                  <Link key={s.id} href={`/servizi#${s.id}`}>
-                    <article className="group relative h-52 sm:h-56 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)] transition duration-300 hover:border-violet-500/30 hover:shadow-[0_20px_55px_rgba(89,28,135,0.3)]">
-                      <img
-                        src={s.img}
-                        alt={s.title}
-                        className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-500 group-hover:scale-[1.05] group-hover:opacity-75"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                      {/* Freccia hover */}
-                      <div className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-black/40 opacity-0 backdrop-blur-sm transition duration-300 group-hover:opacity-100">
-                        <i className="fa-solid fa-arrow-right text-[0.6rem] text-violet-300" />
-                      </div>
-                      <div className="relative flex h-full flex-col justify-end p-4">
-                        <h4 className="font-antonio text-lg tracking-[0.18em] uppercase text-white mb-1">
-                          {s.title}
-                        </h4>
-                        <p className="font-montserrat text-xs text-zinc-300 leading-snug">
-                          {s.text}
-                        </p>
-                      </div>
-                    </article>
-                  </Link>
+                {services.map((s, i) => (
+                  <div key={s.id}
+                    className={services.length === 5 && i === 4 ? "sm:col-span-2 md:col-span-1" : ""}>
+                    <Link href={`/servizi#${s.id}`} className="block h-full">
+                      <article className="group relative h-52 sm:h-56 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)] transition duration-300 hover:border-violet-500/30 hover:shadow-[0_20px_55px_rgba(89,28,135,0.3)]">
+                        <img
+                          src={s.img}
+                          alt={s.title}
+                          className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-500 group-hover:scale-[1.05] group-hover:opacity-75"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                        <div className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-black/40 opacity-0 backdrop-blur-sm transition duration-300 group-hover:opacity-100">
+                          <i className="fa-solid fa-arrow-right text-[0.6rem] text-violet-300" />
+                        </div>
+                        <div className="relative flex h-full flex-col justify-end p-4">
+                          <h4 className="font-antonio text-lg tracking-[0.18em] uppercase text-white mb-1">
+                            {s.title}
+                          </h4>
+                          <p className="font-montserrat text-xs text-zinc-300 leading-snug">
+                            {s.text}
+                          </p>
+                        </div>
+                      </article>
+                    </Link>
+                  </div>
                 ))}
               </div>
 
@@ -336,8 +338,8 @@ export default function Intro() {
                 <i className="fa-solid fa-circle-arrow-right" />
               </Link>
             </section>
-            {/* VIDEO TEASER PORTFOLIO — separato dai servizi */}
-            <section aria-label="Anteprima portfolio" className="space-y-5" data-aos="fade-up">
+            {/* VIDEO TEASER PORTFOLIO */}
+            <section aria-label="Anteprima portfolio" className="space-y-1" data-aos="fade-up">
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
                 <div className="flex items-center gap-2">
@@ -388,14 +390,22 @@ export default function Intro() {
                   </div>
                 </Link>
               </div>
+
+              {/* CTA scarica portfolio — attaccata al video */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 px-1">
+                <div>
+                  <p className="font-montserrat text-xs text-zinc-300">Vuoi vedere tutti i nostri lavori?</p>
+                  <p className="font-montserrat text-[0.65rem] text-zinc-500">Scarica il portfolio completo in PDF.</p>
+                </div>
+                <button onClick={() => setModalOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer flex-shrink-0">
+                  <i className="fa-solid fa-download text-xs" />
+                  Scarica il portfolio
+                </button>
+              </div>
             </section>
+
             <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-            <button
-              onClick={() => setModalOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70 cursor-pointer">
-              <i className="fa-solid fa-download text-xs" />
-              Scarica il portfolio completo
-            </button>
             {/* BLOG */}
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
@@ -597,13 +607,19 @@ export default function Intro() {
                   <Link
                     href="/about"
                     aria-label="Vai alla pagina About"
-                    className="relative flex h-[420px] md:h-[520px] items-end justify-end overflow-hidden"
+                    className="relative flex h-[420px] md:h-[560px] lg:h-[520px] items-end justify-end overflow-hidden"
                   >
                     {/* Glow */}
                     <div className="pointer-events-none absolute top-10 right-10 h-72 w-72 rounded-full bg-gradient-to-br from-violet-600/30 via-fuchsia-500/15 to-sky-500/10 blur-3xl" />
 
                     {/* Gloria */}
-                    <div className="absolute top-8 left-8 md:left-12 z-10 w-[170px] md:w-[195px] h-[300px] md:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] transition duration-500 hover:scale-[1.02]">
+                    <div className="absolute top-8 left-6 md:left-8 z-10
+    w-[155px] h-[270px]
+    md:w-[170px] md:h-[310px]
+    lg:w-[195px] lg:h-[360px]
+    rounded-3xl overflow-hidden border border-white/10
+    shadow-[0_25px_70px_rgba(0,0,0,0.85)]
+    transition duration-500 hover:scale-[1.02]">
                       <img
                         src="/images/gloria2.jpeg"
                         alt="Gloria Margarino"
@@ -616,7 +632,13 @@ export default function Intro() {
                     </div>
 
                     {/* Ivan */}
-                    <div className="absolute bottom-8 right-8 md:right-12 z-20 w-[170px] md:w-[195px] h-[300px] md:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.92)] transition duration-700 hover:scale-[1.04]">
+                    <div className="absolute bottom-8 right-6 md:right-8 z-20
+    w-[155px] h-[270px]
+    md:w-[170px] md:h-[310px]
+    lg:w-[195px] lg:h-[360px]
+    rounded-3xl overflow-hidden border border-white/10
+    shadow-[0_25px_70px_rgba(0,0,0,0.92)]
+    transition duration-700 hover:scale-[1.04]">
                       <img
                         src="/images/ivan.jpeg"
                         alt="Ivan Scrofani"

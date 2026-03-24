@@ -15,10 +15,18 @@ export default function PortfolioModal({ isOpen, onClose }) {
     }, [isOpen, onClose]);
 
     useEffect(() => {
-        document.documentElement.style.overflow = isOpen ? "hidden" : "";
-        document.body.setAttribute("data-modal", isOpen ? "open" : "");
+        if (isOpen) {
+            document.documentElement.style.overflow = "hidden";
+            document.body.style.overflow = "hidden";
+            document.body.setAttribute("data-modal", "open");
+        } else {
+            document.documentElement.style.overflow = "";
+            document.body.style.overflow = "";
+            document.body.removeAttribute("data-modal");
+        }
         return () => {
             document.documentElement.style.overflow = "";
+            document.body.style.overflow = "";
             document.body.removeAttribute("data-modal");
         };
     }, [isOpen]);
@@ -31,7 +39,6 @@ export default function PortfolioModal({ isOpen, onClose }) {
         e.preventDefault();
         setSending(true);
         setError("");
-
         try {
             const res = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
@@ -41,22 +48,15 @@ export default function PortfolioModal({ isOpen, onClose }) {
                     subject: "Richiesta Portfolio Completo — Future Frames",
                     from_name: form.nome,
                     email: form.email,
-                    message: `
-Nome: ${form.nome}
-Email: ${form.email}
-Telefono: ${form.telefono || "Non fornito"}
-Azienda/Professione: ${form.azienda || "Non fornita"}
-          `.trim(),
+                    message: `Nome: ${form.nome}\nEmail: ${form.email}\nTelefono: ${form.telefono || "Non fornito"}\nAzienda/Professione: ${form.azienda || "Non fornita"}`,
                 }),
             });
-
             const data = await res.json();
-
             if (data.success) {
                 setSent(true);
                 const link = document.createElement("a");
-                link.href = "/docs/portfolio-futureframes.pdf";
-                link.download = "Portfolio-FutureFrames.pdf";
+                link.href = "/documents/future-frames-portfolio.pdf";
+                link.download = "future-frames-portfolio.pdf";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -66,25 +66,25 @@ Azienda/Professione: ${form.azienda || "Non fornita"}
         } catch {
             setError("Errore di connessione. Riprova.");
         }
-
         setSending(false);
     }
 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-            <div className="inset-0 bg-black/90 backdrop-blur-md" onClick={onClose} />
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
+            {/* Backdrop */}
+            <div className="fixed inset-0 bg-black/90 backdrop-blur-md" onClick={onClose} />
 
-            {/* Modal */}
-            <div className="relative w-full max-w-sm md:max-w-2xl rounded-3xl border border-violet-500/20 bg-gradient-to-br from-[#0d0b2a] via-[#0a0820] to-black shadow-[0_0_80px_rgba(124,58,237,0.3)] overflow-hidden">
+            {/* Modal — scrollabile internamente su mobile */}
+            <div className="relative z-10 w-full max-w-sm md:max-w-2xl max-h-[90dvh] flex flex-col rounded-3xl border border-violet-500/20 bg-gradient-to-br from-[#0d0b2a] via-[#0a0820] to-black shadow-[0_0_80px_rgba(124,58,237,0.3)] overflow-hidden">
 
                 {/* Glow */}
                 <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-violet-600/15 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-fuchsia-600/10 blur-3xl" />
 
-                {/* Header */}
-                <div className="relative px-6 md:px-8 pt-6 pb-4 border-b border-zinc-800/60">
+                {/* Header — fisso */}
+                <div className="relative flex-shrink-0 px-6 md:px-8 pt-6 pb-4 border-b border-zinc-800/60">
                     <button onClick={onClose}
                         className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/60 text-zinc-400 hover:text-white hover:border-zinc-500 transition">
                         <i className="fa-solid fa-xmark text-xs" />
@@ -97,87 +97,47 @@ Azienda/Professione: ${form.azienda || "Non fornita"}
                         <p className="font-montserrat text-[0.5rem] uppercase tracking-[0.4em] text-violet-400">Portfolio Completo</p>
                     </div>
 
-                    <div className="md:flex md:items-end md:justify-between">
-                        <div>
-                            <h2 className="font-antonio text-xl md:text-2xl text-white leading-tight">
-                                Scarica il portfolio
-                                <span className="block text-violet-300">completo.</span>
-                            </h2>
-                            <p className="font-montserrat text-[0.65rem] text-zinc-400 mt-1.5 leading-relaxed max-w-sm">
-                                Inserisci i tuoi dati per accedere a tutti i nostri progetti, inclusi quelli non pubblicati sul sito.
-                            </p>
-                        </div>
-                    </div>
+                    <h2 className="font-antonio text-xl md:text-2xl text-white leading-tight">
+                        Scarica il portfolio
+                        <span className="block text-violet-300">completo.</span>
+                    </h2>
+                    <p className="font-montserrat text-[0.65rem] text-zinc-400 mt-1.5 leading-relaxed max-w-sm">
+                        Inserisci i tuoi dati per accedere a tutti i nostri progetti, inclusi quelli non pubblicati sul sito.
+                    </p>
                 </div>
 
-                {/* Body */}
-                <div className="relative px-6 md:px-8 py-5">
+                {/* Body — scrollabile */}
+                <div className="relative flex-1 overflow-y-auto px-6 md:px-8 py-5">
                     {!sent ? (
                         <form onSubmit={handleSubmit} className="space-y-4">
-
-                            {/* Griglia 2 colonne su desktop */}
                             <div className="grid md:grid-cols-2 gap-3">
-
-                                {/* Nome */}
                                 <div className="space-y-1">
                                     <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-violet-400">
                                         Nome <span className="text-violet-400">*</span>
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="nome"
-                                        value={form.nome}
-                                        onChange={handleChange}
-                                        required
+                                    <input type="text" name="nome" value={form.nome} onChange={handleChange} required
                                         placeholder="Il tuo nome"
-                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20"
-                                    />
+                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20" />
                                 </div>
-
-                                {/* Email */}
                                 <div className="space-y-1">
                                     <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-violet-400">
                                         Email <span className="text-violet-400">*</span>
                                     </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={form.email}
-                                        onChange={handleChange}
-                                        required
+                                    <input type="email" name="email" value={form.email} onChange={handleChange} required
                                         placeholder="La tua email"
-                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20"
-                                    />
+                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20" />
                                 </div>
-
-                                {/* Telefono */}
                                 <div className="space-y-1">
-                                    <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-zinc-500">
-                                        Telefono
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        name="telefono"
-                                        value={form.telefono}
-                                        onChange={handleChange}
+                                    <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-zinc-500">Telefono</label>
+                                    <input type="tel" name="telefono" value={form.telefono} onChange={handleChange}
                                         placeholder="+39 000 000 0000"
-                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20"
-                                    />
+                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20" />
                                 </div>
-
-                                {/* Azienda */}
                                 <div className="space-y-1">
-                                    <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-zinc-500">
-                                        Azienda / Professione
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="azienda"
-                                        value={form.azienda}
-                                        onChange={handleChange}
+                                    <label className="font-montserrat text-[0.58rem] uppercase tracking-[0.2em] text-zinc-500">Azienda / Professione</label>
+                                    <input type="text" name="azienda" value={form.azienda} onChange={handleChange}
                                         placeholder="La tua azienda o professione"
-                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20"
-                                    />
+                                        className="w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-3 py-2 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60 focus:bg-violet-900/20" />
                                 </div>
                             </div>
 
@@ -187,24 +147,20 @@ Azienda/Professione: ${form.azienda || "Non fornita"}
                                 </div>
                             )}
 
-                            <button
-                                type="submit"
-                                disabled={sending}
+                            <button type="submit" disabled={sending}
                                 className="w-full rounded-full bg-violet-400 py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.6)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)] disabled:opacity-50 disabled:cursor-not-allowed">
                                 {sending ? (
                                     <span className="flex items-center justify-center gap-2">
-                                        <i className="fa-solid fa-spinner animate-spin text-xs" />
-                                        Invio in corso...
+                                        <i className="fa-solid fa-spinner animate-spin text-xs" />Invio in corso...
                                     </span>
                                 ) : (
                                     <span className="flex items-center justify-center gap-2">
-                                        <i className="fa-solid fa-download text-xs" />
-                                        Scarica il portfolio
+                                        <i className="fa-solid fa-download text-xs" />Scarica il portfolio
                                     </span>
                                 )}
                             </button>
 
-                            <p className="font-montserrat text-[0.52rem] text-zinc-600 text-center">
+                            <p className="font-montserrat text-[0.52rem] text-zinc-600 text-center pb-2">
                                 I tuoi dati non verranno condivisi con terze parti.
                             </p>
                         </form>
@@ -217,7 +173,7 @@ Azienda/Professione: ${form.azienda || "Non fornita"}
                                 <h3 className="font-antonio text-xl text-white">Download avviato!</h3>
                                 <p className="font-montserrat text-xs text-zinc-400 mt-2 leading-relaxed">
                                     Il portfolio è in download. Se non parte automaticamente,{" "}
-                                    <a href="/docs/portfolio-futureframes.pdf" download
+                                    <a href="/documents/future-frames-portfolio.pdf" download
                                         className="text-violet-400 hover:text-violet-300 underline transition">
                                         clicca qui
                                     </a>.
