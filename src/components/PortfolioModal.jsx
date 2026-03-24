@@ -16,17 +16,29 @@ export default function PortfolioModal({ isOpen, onClose }) {
 
     useEffect(() => {
         if (isOpen) {
+            const scrollY = window.scrollY;
             document.documentElement.style.overflow = "hidden";
             document.body.style.overflow = "hidden";
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = "100%";
             document.body.setAttribute("data-modal", "open");
         } else {
+            const scrollY = document.body.style.top;
             document.documentElement.style.overflow = "";
             document.body.style.overflow = "";
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.width = "";
             document.body.removeAttribute("data-modal");
+            if (scrollY) window.scrollTo(0, parseInt(scrollY || "0") * -1);
         }
         return () => {
             document.documentElement.style.overflow = "";
             document.body.style.overflow = "";
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.width = "";
             document.body.removeAttribute("data-modal");
         };
     }, [isOpen]);
