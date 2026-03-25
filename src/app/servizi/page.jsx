@@ -260,7 +260,7 @@ function StickyServices() {
 // ─── MOBILE: verticale semplice ───────────────────────────────
 function MobileServices() {
   return (
-    <div className="md:hidden px-5 py-16 space-y-20">
+    <div className="md:hidden px-5 py-8 space-y-20">
       {services.map((s) => (
         <section key={s.id} id={`${s.id}-mobile`} className="space-y-6">
           {/* Label */}
@@ -412,7 +412,7 @@ export default function Servizi() {
     <div className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {/* ── HERO ── */}
-      <div className="relative h-[100svh] min-h-[600px] overflow-hidden mb-24">
+      <div className="relative h-[100svh] min-h-[600px] overflow-hidden md:mb-24">
 
         {/* Sfondi glow */}
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-violet-700/35 blur-3xl" />
@@ -423,62 +423,57 @@ export default function Servizi() {
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
 
         {/* ── MOBILE ── */}
-        <div className="md:hidden relative z-10 flex h-full flex-col justify-between px-5 pt-24 pb-10">
+        <div className="md:hidden relative z-10 flex flex-col px-5 pt-28 pb-10 gap-10">
 
-          {/* Top: label + titolo + sottotitolo */}
           <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-6 bg-violet-500 flex-shrink-0" />
-              <p className="font-montserrat text-[0.5rem] uppercase tracking-[0.4em] text-violet-400">
+              <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">
                 Fotografia & Videomaking
               </p>
             </div>
 
-            <h1 className="leading-[0.95] mb-5">
-              <span className="block font-antonio text-[2.8rem] text-white">
+            <h1 className="leading-[1.1] mb-6">
+              <span className="block font-antonio text-[3rem] text-white">
                 Creatività,
               </span>
-              <span className="block font-antonio text-[2.2rem] text-zinc-400 italic ml-3">
+              <span className="block font-antonio text-[2.3rem] text-zinc-400 italic ml-3">
                 Qualità Professionale
               </span>
-              <span className="block font-antonio text-[2.8rem] text-violet-300">
+              <span className="block font-antonio text-[3rem] text-violet-300">
                 e Affidabilità.
               </span>
             </h1>
 
-            <p className="font-montserrat text-[0.72rem] leading-relaxed text-zinc-400 max-w-[85%]">
+            <p className="font-montserrat text-[0.8rem] leading-relaxed text-zinc-400 max-w-[90%]">
               Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
               con uno sguardo cinematografico e cura per ogni dettaglio.
             </p>
           </div>
 
-          {/* Bottom: CTA + pills + scroll */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
 
-            {/* CTA */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               <a href="#servizi"
-                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-5 py-2.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-white transition">
+                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-3 font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-white transition">
                 Scopri i servizi
-                <i className="fa-solid fa-arrow-right text-[0.55rem]" />
+                <i className="fa-solid fa-arrow-right text-[0.6rem]" />
               </a>
               <a href="#portfolio"
-                className="font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition">
+                className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition">
                 Portfolio →
               </a>
             </div>
 
-            {/* Pills */}
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {services.map((s) => (
                 <a key={s.id} href={`#${s.id}`}
-                  className="rounded-full border border-zinc-800 px-3 py-1 font-montserrat text-[0.55rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
+                  className="rounded-full border border-zinc-800 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
                   {s.label}
                 </a>
               ))}
             </div>
 
-            {/* Scroll indicator */}
             <button
               type="button"
               onClick={() => {
@@ -496,7 +491,7 @@ export default function Servizi() {
                     animation: "scrollLight 1.5s ease-in-out infinite",
                   }} />
               </div>
-              <span className="font-montserrat text-[0.5rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
+              <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
             </button>
           </div>
         </div>
