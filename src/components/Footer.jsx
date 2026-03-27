@@ -8,16 +8,16 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
           {/* Logo + claim */}
           <div className="space-y-3 max-w-sm">
-            <Link
-              href="/"
-              className="font-orbitron font-bold tracking-[0.3em] text-[#A020F0] text-xs md:text-sm drop-shadow-[0_0_14px_rgba(160,32,240,0.85)] uppercase"
-            >
+            <Link href="/">
               <img src="/images/logo-gradient.png" alt="Future Frames Logo" className="h-20 w-auto py-4" />
             </Link>
             <p className="font-montserrat text-xs text-zinc-300 leading-relaxed">
               Agenzia creativa specializzata in{" "}
               <span className="text-violet-300">fotografia</span> e{" "}
               <span className="text-violet-300">videomaking</span>.
+            </p>
+            <p className="font-montserrat text-[0.6rem] text-zinc-600">
+              P. IVA: —
             </p>
           </div>
 
@@ -28,36 +28,11 @@ export default function Footer() {
                 Navigazione
               </h4>
               <nav className="flex flex-col gap-1.5 font-montserrat text-zinc-300">
-                <Link
-                  href="/about"
-                  className="hover:text-violet-300 transition-colors"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/servizi"
-                  className="hover:text-violet-300 transition-colors"
-                >
-                  Servizi
-                </Link>
-                <Link
-                  href="/portfolio"
-                  className="hover:text-violet-300 transition-colors"
-                >
-                  Portfolio
-                </Link>
-                <Link
-                  href="/blog"
-                  className="hover:text-violet-300 transition-colors"
-                >
-                  Blog
-                </Link>
-                <Link
-                  href="/contact"
-                  className="hover:text-violet-300 transition-colors"
-                >
-                  Contattaci
-                </Link>
+                <Link href="/about" className="hover:text-violet-300 transition-colors">About</Link>
+                <Link href="/servizi" className="hover:text-violet-300 transition-colors">Servizi</Link>
+                <Link href="/portfolio" className="hover:text-violet-300 transition-colors">Portfolio</Link>
+                <Link href="/blog" className="hover:text-violet-300 transition-colors">Blog</Link>
+                <Link href="/contact" className="hover:text-violet-300 transition-colors">Contattaci</Link>
               </nav>
             </div>
 
@@ -67,16 +42,12 @@ export default function Footer() {
               </h4>
               <div className="font-montserrat text-zinc-300 space-y-1.5">
                 <p>Pomezia · RM</p>
-                <a
-                  href="mailto:indirizzo email"
-                  className="hover:text-violet-300 transition-colors block"
-                >
-                  indirizzo email
+                <a href="mailto:futureframes.info@gmail.com"
+                  className="hover:text-violet-300 transition-colors block">
+                  futureframes.info@gmail.com
                 </a>
-                <a
-                  href="tel:+390000000000"
-                  className="hover:text-violet-300 transition-colors block"
-                >
+                <a href="tel:+390000000000"
+                  className="hover:text-violet-300 transition-colors block">
                   +39 000 000 0000
                 </a>
               </div>
@@ -87,23 +58,17 @@ export default function Footer() {
                 Social
               </h4>
               <div className="flex flex-wrap gap-2 font-montserrat text-zinc-300">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition"
-                >
+                <a href="#"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
                   <i className="fa-brands fa-instagram text-violet-300" />
                   Instagram
                 </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition"
-                >
+                <a href="#"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
                   Social 2
                 </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition"
-                >
+                <a href="#"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
                   Social 3
                 </a>
               </div>
@@ -113,13 +78,23 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="mt-8 border-t border-zinc-800/70 pt-4 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="font-montserrat text-[11px] text-zinc-500">
+              © {new Date().getFullYear()} Future Frames. Tutti i diritti riservati.
+            </p>
+            <span className="hidden sm:inline text-zinc-700">·</span>
+            <Link href="/privacy"
+              className="font-montserrat text-[11px] text-zinc-500 hover:text-violet-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="hidden sm:inline text-zinc-700">·</span>
+            <Link href="/cookie"
+              className="font-montserrat text-[11px] text-zinc-500 hover:text-violet-400 transition-colors">
+              Cookie Policy
+            </Link>
+          </div>
           <p className="font-montserrat text-[11px] text-zinc-500">
-            © {new Date().getFullYear()} Future Frames. Tutti i diritti
-            riservati.
-          </p>
-          <p className="font-montserrat text-[11px] text-zinc-500">
-            Sito Web By{" "}
-            <span className="text-violet-300">Alessio Lodato</span>
+            Sito Web By <span className="text-violet-300">Alessio Lodato</span>
           </p>
         </div>
       </div>

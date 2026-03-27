@@ -5,6 +5,8 @@ import ConditionalLayout from "@/components/ConditionalLayout";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollToTopButton from "@/components/ScrollToTopBtn";
 import AOSInit from "@/components/AOSInit";
+import { CookieConsentProvider } from "@/components/CookieConsentProvider";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata = {
   title: "Future Frames – Fotografia e Videomaking Professionale",
@@ -46,7 +48,12 @@ export default function RootLayout({ children }) {
         <AOSInit />
         <ScrollToTop />
         <ScrollToTopButton />
-        <ConditionalLayout>{children}</ConditionalLayout>
+        <ConditionalLayout>
+          <CookieConsentProvider>
+            {children}
+            <CookieBanner />
+          </CookieConsentProvider>
+        </ConditionalLayout>
       </body>
     </html>
   );

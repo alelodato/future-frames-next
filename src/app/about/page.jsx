@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import MappaConConsent from "@/components/MappaConConsent";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -396,9 +397,7 @@ export default function About() {
             </FadeReveal>
             <FadeReveal delay={0.1}>
               <div className="overflow-hidden rounded-2xl border border-violet-500/15 min-h-[300px] shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
-                <iframe title="Mappa Pomezia" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                  className="h-full w-full min-h-[300px] border-0 grayscale contrast-110 opacity-60 transition duration-500 hover:grayscale-0 hover:opacity-100"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7469.59805370534!2d12.494142676655008!3d41.669457171703194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132599a4cfbcba4b%3A0xdee4c5c2d3b0f27b!2s00071%20Pomezia%20RM!5e0!3m2!1sit!2sit!4v1733589000000!5m2!1sit!2si" />
+                <MappaConConsent />
               </div>
             </FadeReveal>
           </div>
