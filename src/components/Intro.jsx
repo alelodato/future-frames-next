@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import PortfolioModal from "@/components/PortfolioModal";
+import MappaConConsent from "./MappaConConsent";
 
 function ContactForm() {
   const [name, setName] = useState("");
@@ -856,14 +857,7 @@ export default function Intro() {
                 {/* Mappa + info */}
                 <div className="space-y-4">
                   <div className="overflow-hidden rounded-2xl border border-violet-500/20 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                    <iframe
-                      title="Future Frames — Pomezia, Roma"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47696.4!2d12.5050!3d41.6700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13258b0e6b3f7f5f%3A0x4073a08f5ba1c24c!2sPomezia%20RM!5e0!3m2!1sit!2sit!4v1700000000000"
-                      width="100%" height="280"
-                      style={{ border: 0, display: "block" }}
-                      allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                      className="grayscale contrast-110 opacity-80 transition duration-500 hover:grayscale-0 hover:opacity-100"
-                    />
+                    <MappaConConsent />
                   </div>
 
                   <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 sm:p-6 shadow-[0_12px_40px_rgba(0,0,0,0.6)] space-y-4">
