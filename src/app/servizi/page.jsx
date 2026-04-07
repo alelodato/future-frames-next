@@ -520,7 +520,6 @@ export default function Servizi() {
             </h1>
 
             <div className="flex items-start gap-3 mb-8 max-w-sm">
-              <span className="font-montserrat text-[0.5rem] text-zinc-600 pt-1 flex-shrink-0">01</span>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
                 Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
                 con uno sguardo cinematografico e cura per ogni dettaglio.
@@ -615,12 +614,6 @@ export default function Servizi() {
       {/* ── SERVIZI ── */}
       <StickyServices />
       <MobileServices />
-
-      {/* ── VIDEO RECENSIONE ── */}
-      <VideoReview />
-
-      {/* ── CTA ── */}
-      <FinalCTA />
     </div>
   );
 }
