@@ -340,8 +340,8 @@ export default function Servizi() {
                 <span className="block font-antonio text-[3rem] text-violet-300">e Affidabilità.</span>
               </h1>
               <p className="font-montserrat text-[0.8rem] leading-relaxed text-zinc-400 max-w-[90%]">
-                Accompagniamo ogni passaggio, dalla prima ripresa al risultato finale,
-                con uno sguardo cinematografico e cura per ogni dettaglio.
+                Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
+                Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
               </p>
             </div>
 
