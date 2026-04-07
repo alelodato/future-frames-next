@@ -347,12 +347,12 @@ export default function Servizi() {
 
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-5">
-                <a href="#videolezioni-mobile"
+                <a href="/portfolio"
                   className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-3 font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-white transition">
                   Scopri il portfolio
                   <i className="fa-solid fa-arrow-right text-[0.6rem]" />
                 </a>
-                <a href="#portfolio"
+                <a href="/contact"
                   className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition">
                   Contattaci →
                 </a>
