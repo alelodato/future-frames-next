@@ -253,7 +253,7 @@ function MobileServices() {
         <section key={s.id} id={`${s.id}-mobile`} className="space-y-6">
           <div className="flex items-center gap-3">
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
-            <div className="h-px w-6 bg-zinc-800" />
+            <div className="h-px w-6 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             <i className={`${s.icon} text-violet-400/60 text-xs`} />
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">{s.label}</span>
           </div>
@@ -272,7 +272,7 @@ function MobileServices() {
             )}
           </div>
 
-          <div className="space-y-4 border-l border-zinc-800 pl-5">
+          <div className="space-y-4 border-l border-violet-500/30 pl-5">
             {s.body && <p className="font-montserrat text-sm leading-relaxed text-zinc-400">{s.body}</p>}
             {s.list && s.list.length > 0 && (
               <ul className="space-y-2">
@@ -361,7 +361,7 @@ export default function Servizi() {
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none" style={{ WebkitOverflowScrolling: "touch" }}>
                 {services.map((s) => (
                   <a key={s.id} href={`#${s.id}-mobile`}
-                    className="flex-shrink-0 rounded-full border border-zinc-800 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
+                    className="flex-shrink-0 rounded-full border border-violet-500/30 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
                     {s.label}
                   </a>
                 ))}
