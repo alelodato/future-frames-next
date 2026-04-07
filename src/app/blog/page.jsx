@@ -253,7 +253,7 @@ export default function Blog() {
 
           {/* Sottotitolo */}
           <p className="font-montserrat text-sm sm:text-base leading-relaxed text-zinc-400 max-w-xl mx-auto">
-            Riflessioni sul mestiere, approfondimenti tecnici e racconti dai nostri set.
+            Riflessioni sul mestiere, approfondimenti tecnici e racconti dal set.
           </p>
 
         </div>

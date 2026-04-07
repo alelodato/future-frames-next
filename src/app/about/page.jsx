@@ -10,10 +10,10 @@ import MappaConConsent from "@/components/MappaConConsent";
 gsap.registerPlugin(ScrollTrigger);
 
 const values = [
-  { icon: "fa-solid fa-eye", title: "Creatività", text: "Trovare sempre l'inquadratura giusta e il taglio narrativo più efficace, progetto dopo progetto." },
-  { icon: "fa-solid fa-handshake", title: "Affidabilità", text: "Dalla pianificazione alle consegne, con comunicazione chiara e rispetto delle scadenze." },
-  { icon: "fa-solid fa-gem", title: "Qualità", text: "In ogni fase: riprese, color grading, montaggio e consegna finale del materiale." },
-  { icon: "fa-solid fa-comments", title: "Ascolto", text: "Ogni progetto nasce dal dialogo con il cliente. La tua visione è il nostro punto di partenza." },
+  { icon: "fa-solid fa-eye", title: "Creatività", text: "Ogni progetto viene sviluppato con una direzione visiva precisa, coerente con l’identità del cliente." },
+  { icon: "fa-solid fa-handshake", title: "Affidabilità", text: "Organizzazione chiara, rispetto delle tempistiche e gestione ordinata di ogni fase del lavoro." },
+  { icon: "fa-solid fa-gem", title: "Qualità", text: "Dalla ripresa al montaggio, ogni fase è gestita con attenzione a luce, dettagli e resa finale dei contenuti." },
+  { icon: "fa-solid fa-comments", title: "Ascolto", text: "Ogni progetto parte da un confronto concreto, per tradurre esigenze e obiettivi in contenuti efficaci." },
 ];
 
 // ─── Linea decorativa con glow ───────────────────────────────
@@ -86,7 +86,7 @@ export default function About() {
         {/* Desktop/tablet */}
         <div className="hidden md:grid md:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-stretch mb-16">
           <div className="space-y-2">
-            {["Non facciamo solo", "foto e video.", "Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
+            {["Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
               <FadeReveal key={i} delay={i * 0.08}>
                 <p className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
                   style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)" }}>
@@ -138,7 +138,7 @@ export default function About() {
             </p>
           </div>
           <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-500 md:pt-[calc(1rem+48px)]">
-            Il nostro approccio è semplice: ascoltiamo prima di fotografare, capiamo prima di girare. Ogni progetto nasce da una conversazione e si chiude con immagini che parlano da sole.
+            Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
           </p>
         </FadeReveal>
       </section>
@@ -185,18 +185,19 @@ export default function About() {
           <div className="space-y-8 pt-4 md:pt-12">
             <FadeReveal>
               <h2 className="font-antonio text-4xl md:text-5xl lg:text-6xl text-white leading-none">
-                Gloria<br /><span className="text-zinc-500">Margarino</span>
+                Gloria<br /><span className="text-[#790d50]">Margarino</span>
               </h2>
             </FadeReveal>
             <FadeReveal delay={0.1}><GlowLine className="w-full" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
-                Gloria è il cuore visivo di Future Frames. Cura la fotografia e le riprese sul set con un approccio che unisce sensibilità estetica, attenzione alla luce e naturalezza nelle espressioni.
+                Gloria è il cuore visivo di Future Frames.
+                Lavora sui progetti in prima linea, mantenendo sempre una linea visiva coerente.
               </p>
             </FadeReveal>
             <FadeReveal delay={0.2}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
-                Dagli eventi privati ai progetti aziendali, fino ai corti cinematografici, il suo obiettivo è raccontare persone e momenti reali senza perdere eleganza e coerenza visiva. Ogni scatto è una scelta, non una casualità.
+                Dagli eventi privati ai progetti aziendali, fino ai corti cinematografici, il suo obiettivo è costruire immagini solide, riconoscibili e in linea con il contesto in cui vengono utilizzate.
               </p>
             </FadeReveal>
             <FadeReveal delay={0.3}>
@@ -246,26 +247,14 @@ export default function About() {
           <div className="space-y-8 pt-4 md:pt-12 order-2 md:order-1">
             <FadeReveal>
               <h2 className="font-antonio text-4xl md:text-5xl lg:text-6xl text-white leading-none">
-                Ivan<br /><span className="text-zinc-500">Scrofani</span>
+                Ivan<br /><span className="text-[#31a0a6]">Scrofani</span>
               </h2>
             </FadeReveal>
             <FadeReveal delay={0.1}><GlowLine className="w-full" /></FadeReveal>
             <FadeReveal delay={0.15}>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
-                Ivan dà ritmo e struttura alle storie. In fase di montaggio unisce immagini, suono e musica per creare narrazioni fluide, dinamiche e coerenti con l&apos;identità del cliente.
+                Ivan affianca lo sviluppo dei progetti e la gestione operativa, contribuendo all’organizzazione del lavoro e al rapporto con i clienti, così da garantire continuità, chiarezza e una gestione fluida in ogni fase.
               </p>
-            </FadeReveal>
-            <FadeReveal delay={0.2}>
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
-                Dai social content ai video corporate, fino agli spot più cinematografici, lavora perché ogni frame abbia un ruolo preciso e un impatto chiaro. Il montaggio non è tecnica, è scrittura.
-              </p>
-            </FadeReveal>
-            <FadeReveal delay={0.25}>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {["Montaggio", "Color grading", "Motion graphics", "Corporate", "Spot"].map((tag) => (
-                  <span key={tag} className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-indigo-400/60 border-b border-indigo-500/30 pb-0.5">{tag}</span>
-                ))}
-              </div>
             </FadeReveal>
           </div>
 

@@ -306,7 +306,7 @@ function HorizontalPortfolio({ projects }) {
               PORTFOLIO
             </h1>
             <p className="mt-4 font-montserrat text-sm md:text-base text-zinc-400 tracking-[0.15em]">
-              Storie raccontate attraverso il movimento
+              Storie che prendono forma nel movimento
             </p>
             {/*<div className="mt-8 flex items-center justify-center gap-6">
               <div className="text-center">
@@ -405,7 +405,7 @@ function MobilePortfolio({ projects }) {
             <div className="h-px w-12 bg-violet-400/60" />
           </div>
           <h1 className="font-antonio text-[5rem] leading-none text-white tracking-tight">PORTFOLIO</h1>
-          <p className="mt-4 font-montserrat text-sm text-zinc-400 tracking-[0.15em]">Storie raccontate attraverso il movimento</p>
+          <p className="mt-4 font-montserrat text-sm text-zinc-400 tracking-[0.15em]">Storie che prendono forma nel movimento</p>
         </div>
 
         {/* Scroll indicator verticale */}
