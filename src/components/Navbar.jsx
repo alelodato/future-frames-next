@@ -74,7 +74,7 @@ export default function Navbar() {
             <img
               src="/images/logo-gradient.png"
               alt="Future Frames"
-              className="h-12 sm:h-14 md:h-15 w-auto transition-all duration-300
+              className="h-16 sm:h-16 md:h-22 mt-4 w-auto transition-all duration-300
                 drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]
                 group-hover:drop-shadow-[0_0_16px_rgba(167,139,250,0.9)]
                 group-hover:brightness-110"

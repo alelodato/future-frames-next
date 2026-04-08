@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Logo + claim */}
           <div className="space-y-3 max-w-sm">
             <Link href="/">
-              <img src="/images/logo-gradient.png" alt="Future Frames Logo" className="h-20 w-auto py-4" />
+              <img src="/images/logo-gradient.png" alt="Future Frames Logo" className="h-24 w-auto py-4" />
             </Link>
             <p className="font-montserrat text-xs text-zinc-300 leading-relaxed">
               Agenzia creativa specializzata in{" "}
