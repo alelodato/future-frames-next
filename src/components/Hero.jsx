@@ -73,7 +73,7 @@ export default function Hero() {
             ref={logoScrittaRef}
             src="/images/ff-scritta.png"
             alt="Future Frames"
-            className="h-40 w-auto object-contain"
+            className="h-20 w-auto object-contain"
             style={{ filter: "drop-shadow(0 0 12px rgba(160,32,240,0.5))" }}
           />
         </div>
