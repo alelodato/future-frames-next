@@ -317,21 +317,6 @@ export default function Servizi() {
                 </a>
               ))}
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                const next = document.getElementById("videolezioni-mobile");
-                if (next) next.scrollIntoView({ behavior: "smooth" });
-                else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-              }}
-              className="flex items-center gap-3 bg-transparent border-none p-0 opacity-40 hover:opacity-70 transition-opacity w-fit">
-              <div className="relative h-8 w-px overflow-hidden">
-                <div className="absolute inset-0 bg-zinc-700" />
-                <div className="absolute w-full"
-                  style={{ height: "50%", background: "linear-gradient(to bottom, transparent, #a78bfa, transparent)", animation: "scrollLight 1.5s ease-in-out infinite" }} />
-              </div>
-              <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
-            </button>
           </div>
         </div>
 
@@ -449,22 +434,6 @@ export default function Servizi() {
         </div>
 
         <div className="hidden xl:block absolute left-6 top-1/2 -translate-y-1/2 h-28 w-px bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
-
-        <button
-          type="button"
-          onClick={() => {
-            const next = document.getElementById("videolezioni");
-            if (next) next.scrollIntoView({ behavior: "smooth" });
-            else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-          }}
-          className="hidden xl:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0">
-          <div className="relative h-10 w-px overflow-hidden">
-            <div className="absolute inset-0 bg-zinc-700" />
-            <div className="absolute w-full"
-              style={{ height: "50%", background: "linear-gradient(to bottom, transparent, #a78bfa, transparent)", animation: "scrollLight 1.5s ease-in-out infinite" }} />
-          </div>
-          <span className="font-montserrat text-[0.5rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
-        </button>
       </div>
 
       <style jsx>{`
