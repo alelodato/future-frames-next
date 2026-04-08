@@ -107,6 +107,7 @@ const services = [
   },
 ];
 
+// ─── STICKY SERVICES (xl+) ────────────────────────────────────
 function StickyServices() {
   const containerRef = useRef(null);
   const mediaRefs = useRef([]);
@@ -119,20 +120,17 @@ function StickyServices() {
         if (i === 0) { gsap.set(el, { opacity: 1, scale: 1 }); return; }
         gsap.set(el, { opacity: 0, scale: 1.04 });
       });
-
       textRefs.current.forEach((el, i) => {
         if (!el) return;
         if (i === 0) { gsap.set(el, { opacity: 1, y: 0 }); return; }
         gsap.set(el, { opacity: 0, y: 32 });
       });
-
       services.forEach((_, i) => {
         const textEl = textRefs.current[i];
         const mediaEl = mediaRefs.current[i];
         const prevTextEl = textRefs.current[i - 1];
         const prevMediaEl = mediaRefs.current[i - 1];
         if (!textEl || i === 0) return;
-
         ScrollTrigger.create({
           trigger: textEl,
           start: "top 55%",
@@ -152,13 +150,12 @@ function StickyServices() {
         });
       });
     }, containerRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} className="hidden md:grid grid-cols-2 relative">
-      <div className="py-24 px-12 lg:px-16 space-y-0">
+    <div ref={containerRef} className="hidden xl:grid grid-cols-2 relative">
+      <div className="py-24 px-16 space-y-0">
         {services.map((s, i) => (
           <div
             key={s.id}
@@ -168,33 +165,18 @@ function StickyServices() {
           >
             <div className="flex items-center gap-3">
               <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
-              <div className="h-px w-8 bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
+              <div className="h-px w-8 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
               <i className={`${s.icon} text-violet-400/60 text-xs`} />
               <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">{s.label}</span>
             </div>
-
             <div>
-              <h2 className="font-antonio text-4xl lg:text-5xl text-white leading-tight">{s.title}</h2>
-              <h2 className="font-antonio text-4xl lg:text-5xl text-violet-300 leading-tight">{s.subtitle}</h2>
+              <h2 className="font-antonio text-4xl xl:text-5xl text-white leading-tight">{s.title}</h2>
+              <h2 className="font-antonio text-4xl xl:text-5xl text-violet-300 leading-tight">{s.subtitle}</h2>
             </div>
-
-            <div className="h-px w-16 bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
-
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             {s.body && (
               <p className="font-montserrat text-sm leading-relaxed text-zinc-400 max-w-sm">{s.body}</p>
             )}
-
-            {s.list && s.list.length > 0 && (
-              <ul className="space-y-3">
-                {s.list.map((item) => (
-                  <li key={item} className="flex items-start gap-3 font-montserrat text-sm text-zinc-300">
-                    <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            )}
-
             <Link href="/contact"
               className="inline-flex self-start items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70">
               Richiedi un preventivo
@@ -203,9 +185,8 @@ function StickyServices() {
           </div>
         ))}
       </div>
-
       <div className="relative">
-        <div className="sticky top-0 h-screen flex items-center justify-center px-8 lg:px-12">
+        <div className="sticky top-0 h-screen flex items-center justify-center px-12">
           <div className="relative w-full" style={{ height: "70vh", maxHeight: "680px" }}>
             <div className="pointer-events-none absolute inset-0 rounded-3xl"
               style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(139,92,246,0.18) 0%, transparent 70%)" }} />
@@ -237,42 +218,32 @@ function StickyServices() {
 
 function MobileServices() {
   return (
-    <div className="md:hidden px-5 py-8 space-y-20">
+    <div className="xl:hidden px-5 md:px-8 py-8 space-y-16">
       {services.map((s) => (
-        <section key={s.id} id={`${s.id}-mobile`} className="space-y-6">
+        <section key={s.id} id={`${s.id}-mobile`} className="space-y-5">
           <div className="flex items-center gap-3">
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
             <div className="h-px w-6 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             <i className={`${s.icon} text-violet-400/60 text-xs`} />
             <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-violet-500/60">{s.label}</span>
           </div>
-
           <div>
-            <h2 className="font-antonio text-3xl text-white leading-tight">{s.title}</h2>
-            <h2 className="font-antonio text-3xl text-violet-300 leading-tight">{s.subtitle}</h2>
+            <h2 className="font-antonio text-3xl md:text-4xl text-white leading-tight">{s.title}</h2>
+            <h2 className="font-antonio text-3xl md:text-4xl text-violet-300 leading-tight">{s.subtitle}</h2>
           </div>
-
-          <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
-            style={{ height: "240px" }}>
-            {s.media.type === "video" ? (
-              <video src={s.media.src} autoPlay muted loop playsInline className="h-full w-full object-cover" />
-            ) : (
-              <img src={s.media.src} alt={s.media.alt} className="h-full w-full object-cover" loading="lazy" />
-            )}
+          <div className="flex justify-center">
+            <div className="relative overflow-hidden rounded-2xl border border-violet-500/15 w-full md:max-w-lg"
+              style={{ height: "260px", boxShadow: "0 0 30px rgba(139,92,246,0.08)" }}>
+              {s.media.type === "video" ? (
+                <video src={s.media.src} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+              ) : (
+                <img src={s.media.src} alt={s.media.alt} className="h-full w-full object-cover" loading="lazy" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            </div>
           </div>
-
           <div className="space-y-4 border-l border-violet-500/30 pl-5">
             {s.body && <p className="font-montserrat text-sm leading-relaxed text-zinc-400">{s.body}</p>}
-            {s.list && s.list.length > 0 && (
-              <ul className="space-y-2">
-                {s.list.map((item) => (
-                  <li key={item} className="flex items-start gap-3 font-montserrat text-xs text-zinc-300">
-                    <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            )}
             <Link href="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-5 py-2 font-montserrat text-xs uppercase tracking-[0.2em] text-violet-300 transition hover:bg-violet-900/30">
               Richiedi un preventivo
@@ -297,168 +268,187 @@ export default function Servizi() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02010b] text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
+    <div className="min-h-screen text-white" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
-      <div className="relative h-[100svh] min-h-[600px] overflow-hidden md:mb-24">
+      {/* ── HERO ── */}
+      <div className="relative min-h-[100svh] md:min-h-0 xl:min-h-[100svh] xl:mb-24">
 
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-violet-700/35 blur-3xl" />
         <div className="pointer-events-none absolute bottom-1/4 right-0 h-48 w-48 rounded-full bg-fuchsia-600/15 blur-3xl" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
 
-        {/* ── HERO ── */}
-        <div className="relative h-[100svh] min-h-[600px] overflow-hidden md:mb-24">
-
-          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-violet-700/35 blur-3xl" />
-          <div className="pointer-events-none absolute bottom-1/4 right-0 h-48 w-48 rounded-full bg-fuchsia-600/15 blur-3xl" />
-          <div className="pointer-events-none absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
-
-          {/* MOBILE */}
-          <div className="lg:hidden relative z-10 flex flex-col px-5 pt-28 pb-10 gap-10">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-px w-6 bg-violet-500 flex-shrink-0" />
-                <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">
-                  Fotografia & Videomaking
-                </p>
+        {/* ── MOBILE (< md) ── */}
+        <div className="md:hidden relative z-10 flex flex-col px-5 pt-28 pb-10 gap-10">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px w-6 bg-violet-500 flex-shrink-0" />
+              <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">
+                Fotografia & Videomaking
+              </p>
+            </div>
+            <h1 className="leading-[1.1] mb-6">
+              <span className="block font-antonio text-[3rem] text-white">Creatività,</span>
+              <span className="block font-antonio text-[2.3rem] text-zinc-400 italic ml-3">Qualità Professionale</span>
+              <span className="block font-antonio text-[3rem] text-violet-300">e Affidabilità.</span>
+            </h1>
+            <p className="font-montserrat text-[0.8rem] leading-relaxed text-zinc-400 max-w-[90%]">
+              Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
+              Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
+            </p>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div className="flex items-center gap-5">
+              <a href="/portfolio"
+                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-3 font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-white transition">
+                Scopri il portfolio
+                <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+              </a>
+              <a href="/contact"
+                className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition">
+                Contattaci →
+              </a>
+            </div>
+            <div className="flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style={{ WebkitOverflowScrolling: "touch" }}>
+              {services.map((s) => (
+                <a key={s.id} href={`#${s.id}-mobile`}
+                  className="flex-shrink-0 rounded-full border border-violet-500/30 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
+                  {s.label}
+                </a>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const next = document.getElementById("videolezioni-mobile");
+                if (next) next.scrollIntoView({ behavior: "smooth" });
+                else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+              }}
+              className="flex items-center gap-3 bg-transparent border-none p-0 opacity-40 hover:opacity-70 transition-opacity w-fit">
+              <div className="relative h-8 w-px overflow-hidden">
+                <div className="absolute inset-0 bg-zinc-700" />
+                <div className="absolute w-full"
+                  style={{ height: "50%", background: "linear-gradient(to bottom, transparent, #a78bfa, transparent)", animation: "scrollLight 1.5s ease-in-out infinite" }} />
               </div>
-              <h1 className="leading-[1.1] mb-6">
-                <span className="block font-antonio text-[3rem] text-white">Creatività,</span>
-                <span className="block font-antonio text-[2.3rem] text-zinc-400 italic ml-3">Qualità Professionale</span>
-                <span className="block font-antonio text-[3rem] text-violet-300">e Affidabilità.</span>
-              </h1>
-              <p className="font-montserrat text-[0.8rem] leading-relaxed text-zinc-400 max-w-[90%]">
+              <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
+            </button>
+          </div>
+        </div>
+
+        {/* ── TABLET md → xl (stesso layout) ── */}
+        <div className="hidden md:flex xl:hidden relative z-10 flex-col px-8 lg:px-12 pt-24 pb-12 gap-8">
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-px w-6 bg-violet-500 flex-shrink-0" />
+              <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-violet-400">
+                Fotografia & Videomaking
+              </p>
+            </div>
+            <h1 className="leading-[1.05]">
+              <span className="block font-antonio text-[3.2rem] lg:text-[4rem] text-white">Creatività,</span>
+              <span className="block font-antonio text-[2.6rem] lg:text-[3.2rem] text-zinc-400 italic ml-4">Qualità Professionale</span>
+              <span className="block font-antonio text-[3.2rem] lg:text-[4rem] text-violet-300">e Affidabilità.</span>
+            </h1>
+          </div>
+
+          <div className="flex gap-3 w-full lg:max-w-2xl" style={{ height: "200px" }}>
+            <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl">
+              <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl mt-6">
+              <img src="/images/servizi2.webp" alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl">
+              <img src="/images/servizi3.jpg" alt="" className="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 lg:max-w-2xl">
+            <p className="font-montserrat text-sm leading-relaxed text-zinc-400 max-w-lg">
+              Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
+              Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
+            </p>
+            <div className="flex items-center gap-5">
+              <a href="/portfolio"
+                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.15em] text-white transition">
+                Scopri il portfolio
+                <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+              </a>
+              <a href="/contact"
+                className="font-montserrat text-xs uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition">
+                Contattaci →
+              </a>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {services.map((s) => (
+                <a key={s.id} href={`#${s.id}-mobile`}
+                  className="rounded-full border border-violet-500/30 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── DESKTOP (xl+) ── */}
+        <div className="hidden xl:flex relative z-10 h-full min-h-[100svh] items-center px-16 max-w-7xl mx-auto gap-12">
+          <div className="flex-1 flex flex-col justify-center min-w-0 max-w-lg">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px w-8 bg-violet-500 flex-shrink-0" />
+              <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.45em] text-violet-400">
+                Fotografia & Videomaking
+              </p>
+            </div>
+            <h1 className="leading-none mb-6">
+              <span className="block font-antonio text-5xl xl:text-6xl text-white">Creatività,</span>
+              <span className="block font-antonio text-4xl xl:text-5xl text-zinc-400 font-light italic ml-6">Qualità Professionale</span>
+              <span className="block font-antonio text-5xl xl:text-6xl text-violet-300">e Affidabilità.</span>
+            </h1>
+            <div className="mb-8 max-w-sm">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
                 Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
                 Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
               </p>
             </div>
-
-            <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-5">
-                <a href="/portfolio"
-                  className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-3 font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-white transition">
-                  Scopri il portfolio
-                  <i className="fa-solid fa-arrow-right text-[0.6rem]" />
-                </a>
-                <a href="/contact"
-                  className="font-montserrat text-[0.65rem] uppercase tracking-[0.15em] text-zinc-500 hover:text-white transition">
-                  Contattaci →
-                </a>
-              </div>
-
-              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none" style={{ WebkitOverflowScrolling: "touch" }}>
-                {services.map((s) => (
-                  <a key={s.id} href={`#${s.id}-mobile`}
-                    className="flex-shrink-0 rounded-full border border-violet-500/30 px-4 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.1em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  const next = document.getElementById("videolezioni-mobile");
-                  if (next) next.scrollIntoView({ behavior: "smooth" });
-                  else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-                }}
-                className="flex items-center gap-3 bg-transparent border-none p-0 opacity-40 hover:opacity-70 transition-opacity w-fit">
-                <div className="relative h-8 w-px overflow-hidden">
-                  <div className="absolute inset-0 bg-zinc-700" />
-                  <div className="absolute w-full"
-                    style={{ height: "50%", background: "linear-gradient(to bottom, transparent, #a78bfa, transparent)", animation: "scrollLight 1.5s ease-in-out infinite" }} />
-                </div>
-                <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
-              </button>
+            <div className="flex items-center gap-5">
+              <a href="/portfolio"
+                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition">
+                Scopri il portfolio
+                <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+              </a>
+              <a href="/contact"
+                className="font-montserrat text-xs uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition">
+                Contattaci →
+              </a>
             </div>
           </div>
 
-          {/* DESKTOP */}
-          <div className="hidden lg:flex relative z-10 h-full items-center px-8 lg:px-16 max-w-7xl mx-auto gap-8">
-            <div className="flex-1 flex flex-col justify-center min-w-0 max-w-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-px w-8 bg-violet-500 flex-shrink-0" />
-                <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.45em] text-violet-400">
-                  Fotografia & Videomaking
-                </p>
-              </div>
-
-              <h1 className="leading-none mb-6"><span className="block font-antonio text-4xl xl:text-6xl text-white">Creatività,</span>
-                <span className="block font-antonio text-3xl xl:text-5xl text-zinc-400 font-light italic ml-6">Qualità Professionale</span>
-                <span className="block font-antonio text-4xl xl:text-6xl text-violet-300">e Affidabilità.</span>
-              </h1>
-
-              <div className="mb-8 max-w-sm">
-                <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
-                  Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
-                  Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-5 mb-8">
-                <a href="#portfolio"
-                  className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition">
-                  Scopri il portfolio
-                  <i className="fa-solid fa-arrow-right text-[0.6rem]" />
-                </a>
-                <a href="#contact"
-                  className="font-montserrat text-xs uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition">
-                  Contattaci →
-                </a>
-              </div>
-            </div>
-
-            {/* Immagini flottanti */}
-            <div className="flex flex-1 items-center justify-center relative h-full max-w-sm lg:max-w-none">
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="h-[320px] w-[320px] lg:h-[420px] lg:w-[420px] rounded-full border border-violet-500/10 animate-spin"
-                  style={{ animationDuration: "20s" }} />
-                <div className="absolute h-[260px] w-[260px] lg:h-[340px] lg:w-[340px] rounded-full border border-violet-500/8 animate-spin"
-                  style={{ animationDuration: "15s", animationDirection: "reverse" }} />
-              </div>
-
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-44 h-64 lg:w-56 lg:h-80 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[-3deg]"
-                style={{ boxShadow: "0 0 40px rgba(139,92,246,0.15)" }}>
+          <div className="flex flex-1 items-center justify-end gap-4 h-full py-16">
+            <div className="flex flex-col justify-start flex-1 max-w-[220px] xl:max-w-[260px]" style={{ height: "70vh" }}>
+              <div className="relative w-full rounded-2xl overflow-hidden border border-violet-500/15"
+                style={{ height: "75%", boxShadow: "0 0 40px rgba(139,92,246,0.12)" }}>
                 <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
-
-              <div className="absolute right-4 top-[18%] w-36 h-48 lg:w-44 lg:h-56 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[4deg]"
-                style={{ boxShadow: "0 0 30px rgba(139,92,246,0.1)" }}>
+            </div>
+            <div className="flex flex-col justify-center flex-1 max-w-[220px] xl:max-w-[260px]" style={{ height: "70vh" }}>
+              <div className="relative w-full rounded-2xl overflow-hidden border border-violet-500/15"
+                style={{ height: "85%", boxShadow: "0 0 40px rgba(139,92,246,0.12)" }}>
                 <img src="/images/servizi2.webp" alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
-
-              <div className="absolute right-16 bottom-[15%] w-44 h-36 lg:w-52 lg:h-44 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[-1deg]"
-                style={{ boxShadow: "0 0 30px rgba(139,92,246,0.1)" }}>
+            </div>
+            <div className="flex flex-col justify-end flex-1 max-w-[220px] xl:max-w-[260px]" style={{ height: "70vh" }}>
+              <div className="relative w-full rounded-2xl overflow-hidden border border-violet-500/15"
+                style={{ height: "70%", boxShadow: "0 0 40px rgba(139,92,246,0.12)" }}>
                 <img src="/images/servizi3.jpg" alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
             </div>
           </div>
-
-          <div className="hidden lg:block absolute left-6 top-1/2 -translate-y-1/2 h-28 w-px bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
-
-          <button
-            type="button"
-            onClick={() => {
-              const next = document.getElementById("videolezioni");
-              if (next) next.scrollIntoView({ behavior: "smooth" });
-              else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-            }}
-            className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0">
-            <div className="relative h-10 w-px overflow-hidden">
-              <div className="absolute inset-0 bg-zinc-700" />
-              <div className="absolute w-full"
-                style={{ height: "50%", background: "linear-gradient(to bottom, transparent, #a78bfa, transparent)", animation: "scrollLight 1.5s ease-in-out infinite" }} />
-            </div>
-            <span className="font-montserrat text-[0.5rem] uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
-          </button>
-
         </div>
 
-        <div className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 h-28 w-px bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
+        <div className="hidden xl:block absolute left-6 top-1/2 -translate-y-1/2 h-28 w-px bg-gradient-to-b from-transparent via-violet-500/40 to-transparent" />
 
         <button
           type="button"
@@ -467,7 +457,7 @@ export default function Servizi() {
             if (next) next.scrollIntoView({ behavior: "smooth" });
             else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
           }}
-          className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0">
+          className="hidden xl:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0">
           <div className="relative h-10 w-px overflow-hidden">
             <div className="absolute inset-0 bg-zinc-700" />
             <div className="absolute w-full"

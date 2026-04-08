@@ -200,7 +200,7 @@ export default function Intro() {
                     {/* Testo descrittivo — più diretto e con personalità */}
                     <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-400 mb-8">
                       Future Frames è un’agenzia creativa specializzata in <span className="text-zinc-200">Fotografia</span> e{" "}
-                      <span className="text-zinc-200">videomaking </span> professionale.
+                      <span className="text-zinc-200">Videomaking </span> professionale.
                       <br />
                       Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
                     </p>
@@ -208,9 +208,9 @@ export default function Intro() {
                     {/* Stats */}
                     <div className="flex gap-8 mb-10 border-t border-zinc-800 pt-8">
                       {[
-                        { num: "—", label: "Progetti completati" },
-                        { num: "—", label: "Anni di esperienza" },
-                        { num: "—", label: "Clienti soddisfatti" },
+                        { num: "+100", label: "Progetti completati" },
+                        { num: "+10", label: "Anni di esperienza" },
+                        { num: "+150", label: "Clienti soddisfatti" },
                       ].map((s) => (
                         <div key={s.label}>
                           <p className="font-antonio text-2xl text-violet-300">{s.num}</p>

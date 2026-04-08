@@ -328,7 +328,6 @@ function HorizontalPortfolio({ projects }) {
               <div className="h-px w-8 bg-zinc-700 relative overflow-hidden">
                 <div className="absolute inset-0 bg-violet-400" style={{ animation: "slideRight 1.6s ease-in-out infinite" }} />
               </div>
-              <i className="fa-solid fa-arrow-right text-zinc-500 text-xs animate-pulse" />
             </div>
           </div>
           <style>{`@keyframes slideRight { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }`}</style>
@@ -467,9 +466,6 @@ export default function Portfolio() {
 
       {/* ── CTA FINALE ── */}
       <section className="relative h-[70vh] overflow-hidden flex items-center justify-center">
-        <video src="/videos/ToyotaXReply.mp4" autoPlay muted loop playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-          style={{ filter: "saturate(0.4)" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
         <div className="pointer-events-none absolute inset-0"
           style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.12) 0%, transparent 70%)" }} />
