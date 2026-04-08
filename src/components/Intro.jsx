@@ -124,25 +124,31 @@ const services = [
   },
   {
     id: "aziende",
-    img: "/images/azienda.webp",
+    img: "/images/e-commerce.jpg",
     title: "AZIENDE",
-    text: "Raccontiamo la tua azienda con immagini che non si limitano a mostrare, ma comunicano valore.",
+    text: "E-Commerce, healthcare, moda e wellness. Raccontiamo la tua azienda con immagini che non si limitano a mostrare, ma comunicano valore.",
   },
   {
     id: "podcast",
-    img: "/images/sfondo.jpg",
+    img: "/images/podcast.webp",
     title: "PODCAST",
     text: "Servizi foto e video per interviste, registrazioni e contenuti audiovisivi.",
   },
   {
     id: "food",
-    img: "/images/introimg6.webp",
+    img: "/images/food.jpg",
     title: "FOOD",
     text: "Shooting fotografico e video per ristoranti, chef e aziende del settore.",
   },
   {
+    id: "spot pubblicitari",
+    img: "/images/spot.webp",
+    title: "SPOT PUBBLICITARI",
+    text: "Video pensati per comunicare, con un approccio cinematografico.",
+  },
+  {
     id: "montaggio",
-    img: "/images/montaggio.webp",
+    img: "/images/montaggio2.png",
     title: "MONTAGGIO",
     text: "Servizio di post-produzione e editing professionale.",
   },
@@ -362,7 +368,7 @@ export default function Intro() {
                   </p>
                 </div>
                 <Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
-                  Tutti i progetti <i className="fa-solid fa-circle-arrow-right" />
+                  I nostri progetti <i className="fa-solid fa-circle-arrow-right" />
                 </Link>
               </div>
 
@@ -475,7 +481,7 @@ export default function Intro() {
                 </Link>
               </div>
             </section>
-            {/* VIDEOLEZIONI */}
+            {/* VIDEOLEZIONI 
             <section aria-label="Videolezioni Future Frames" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
@@ -531,7 +537,8 @@ export default function Intro() {
                   </a>
                 </div>
               </div>
-            </section>
+            </section>*/}
+
 
             {/* ── TEAM ── */}
             <section
@@ -590,7 +597,7 @@ export default function Intro() {
                         </div>
                         <div>
                           <p className="font-antonio text-sm tracking-wide text-white">Ivan Scrofani</p>
-                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder & Video Editor</p>
+                          <p className="font-montserrat text-[0.65rem] text-violet-300 tracking-[0.15em] uppercase">Co-Founder & Account Manager</p>
                         </div>
                       </div>
                     </div>
@@ -836,7 +843,7 @@ export default function Intro() {
 
               <div>
                 <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
-                  Parliamo del tuo progetto
+                  Raccontaci il tuo progetto
                 </h3>
                 <p className="mt-1 font-montserrat text-xs text-zinc-400 max-w-2xl">
                   Ci troviamo a <span className="text-violet-300 font-semibold">Pomezia</span> e operiamo principalmente
