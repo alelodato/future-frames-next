@@ -15,7 +15,7 @@ const services = [
     subtitle: "organizzata e riutilizzabile.",
     body: "Progettiamo video lezioni per aziende che hanno necessità di formare team e dipendenti. Strutturiamo contenuti semplici da seguire e pronti per essere utilizzati nel tempo.",
     list: [],
-    media: { type: "image", src: "/images/sfondo.jpg", alt: "Videolezioni aziendali" },
+    media: { type: "image", src: "/images/videolezioni.webp", alt: "Videolezioni aziendali" },
   },
   {
     id: "eventi",
@@ -37,7 +37,7 @@ const services = [
     subtitle: "pronto per essere pubblicato.",
     body: "Dall'idea al set, fino al montaggio: gestiamo ogni fase per creare contenuti coerenti e distribuiti su più piattaforme.",
     list: [],
-    media: { type: "image", src: "/images/sfondo.jpg", alt: "Podcast" },
+    media: { type: "image", src: "/images/podcast.webp", alt: "Podcast" },
   },
   {
     id: "moda",
@@ -48,7 +48,7 @@ const services = [
     subtitle: "per brand e servizi.",
     body: "Produciamo contenuti per moda, centri estetici e spa, valorizzando prodotti, trattamenti e ambienti.",
     list: [],
-    media: { type: "image", src: "/images/servizi2.webp", alt: "Moda Beauty Wellness" },
+    media: { type: "image", src: "/images/centri-estetici.webp", alt: "Moda Beauty Wellness" },
   },
   {
     id: "healthcare",
@@ -59,7 +59,7 @@ const services = [
     subtitle: "in ambito sanitario.",
     body: "Realizziamo contenuti per studi e aziende medicali, traducendo informazioni complesse in video comprensibili.",
     list: [],
-    media: { type: "image", src: "/images/azienda.webp", alt: "Healthcare Pharma" },
+    media: { type: "image", src: "/images/settore-sanitario.webp", alt: "Healthcare Pharma" },
   },
   {
     id: "food",
@@ -70,7 +70,7 @@ const services = [
     subtitle: "valorizzano il prodotto.",
     body: "Costruiamo l'immagine visiva di ristoranti e brand food con contenuti pensati per social, menu e campagne.",
     list: [],
-    media: { type: "image", src: "/images/introimg6.webp", alt: "Food photography" },
+    media: { type: "image", src: "/images/food.jpg", alt: "Food photography" },
   },
   {
     id: "ecommerce",
@@ -81,7 +81,7 @@ const services = [
     subtitle: "precise e coerenti.",
     body: "Realizziamo contenuti prodotto in studio, con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
     list: [],
-    media: { type: "image", src: "/images/servizi1.webp", alt: "E-commerce Still Life" },
+    media: { type: "image", src: "/images/e-commerce.jpg", alt: "E-commerce Still Life" },
   },
   {
     id: "spot",
@@ -92,29 +92,18 @@ const services = [
     subtitle: "con un approccio cinematografico.",
     body: "Sviluppiamo spot partendo dal messaggio, fino alla realizzazione completa. Gestiamo produzioni strutturate con troupe, regia e organizzazione tecnica, per ottenere un risultato più curato e costruito.",
     list: [],
-    media: { type: "video", src: "/videos/ToyotaXReply.mp4", alt: "Spot pubblicitari" },
+    media: { type: "image", src: "/images/spot.webp", alt: "Spot pubblicitari" },
   },
   {
     id: "cinema",
     index: "09",
     icon: "fa-solid fa-film",
-    label: "Montaggio Cinema & TV",
+    label: "Montaggio Video Per Cinema & TV",
     title: "Montaggio narrativo",
     subtitle: "per produzioni strutturate.",
     body: "Collaboriamo con produzioni cinematografiche e televisive per documentari, cortometraggi e contenuti destinati alla distribuzione.",
     list: [],
     media: { type: "image", src: "/images/montaggio.webp", alt: "Montaggio Cinema TV" },
-  },
-  {
-    id: "postproduzione",
-    index: "10",
-    icon: "fa-solid fa-scissors",
-    label: "Post-produzione",
-    title: "Struttura e ritmo",
-    subtitle: "per ogni contenuto.",
-    body: "Gestiamo montaggio, color e finalizzazione anche su materiali forniti da terze parti, produzioni e agenzie.",
-    list: [],
-    media: { type: "image", src: "/images/sfondo.jpg", alt: "Post-produzione" },
   },
 ];
 
@@ -431,19 +420,19 @@ export default function Servizi() {
 
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-44 h-64 lg:w-56 lg:h-80 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[-3deg]"
                 style={{ boxShadow: "0 0 40px rgba(139,92,246,0.15)" }}>
-                <img src="/images/servizi2.webp" alt="" className="w-full h-full object-cover" />
+                <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
 
               <div className="absolute right-4 top-[18%] w-36 h-48 lg:w-44 lg:h-56 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[4deg]"
                 style={{ boxShadow: "0 0 30px rgba(139,92,246,0.1)" }}>
-                <img src="/images/azienda.webp" alt="" className="w-full h-full object-cover" />
+                <img src="/images/servizi2.webp" alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
 
               <div className="absolute right-16 bottom-[15%] w-44 h-36 lg:w-52 lg:h-44 rounded-2xl overflow-hidden border border-zinc-800/60 shadow-2xl rotate-[-1deg]"
                 style={{ boxShadow: "0 0 30px rgba(139,92,246,0.1)" }}>
-                <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
+                <img src="/images/servizi3.jpg" alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
             </div>

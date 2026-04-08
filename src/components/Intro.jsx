@@ -234,7 +234,7 @@ export default function Intro() {
                   {/* ── IMMAGINE ── */}
                   <div className="relative min-h-[360px] lg:min-h-0 overflow-hidden">
                     <img
-                      src="/images/introimg1.webp"
+                      src="/images/intro1.webp"
                       alt="Future Frames — behind the scenes"
                       className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 hover:scale-[1.04]"
                     />

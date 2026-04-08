@@ -47,14 +47,14 @@ export default function Hero() {
       {/* MOBILE VIDEO */}
       <video
         className="absolute top-1/2 left-1/2 h-full w-full object-cover -translate-x-1/2 -translate-y-1/2 lg:hidden"
-        src="/videos/showreel-accorciato.mp4"
+        src="/videos/showreel.mp4"
         autoPlay loop muted playsInline
       />
 
       {/* DESKTOP VIDEO */}
       <video
         className="hidden lg:block absolute top-1/2 left-1/2 h-full w-full object-cover -translate-x-1/2 -translate-y-1/2"
-        src="/videos/showreel-accorciato.mp4"
+        src="/videos/showreel.mp4"
         autoPlay loop muted playsInline
       />
 
