@@ -10,13 +10,15 @@ export default function Hero() {
   const ctaRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.5 });
-
+    // Nascondi tutto all'inizio
     gsap.set(logoFRef.current, { x: "-40vw", opacity: 0 });
     gsap.set(logoScrittaRef.current, { x: "40vw", opacity: 0 });
     gsap.set(ctaRef.current, { opacity: 0, y: 20 });
 
+    const tl = gsap.timeline({ delay: 1 }); // parte dopo 1 secondo
+
     tl
+      // logo dopo 1s
       .to(logoFRef.current, {
         x: 0,
         opacity: 1,
@@ -29,12 +31,13 @@ export default function Hero() {
         duration: 1.5,
         ease: "expo.out",
       }, "<")
+      // cta dopo altri ~1s (logo dura 1.5s, partiamo a 1s)
       .to(ctaRef.current, {
         opacity: 1,
         y: 0,
-        duration: 1.5,
+        duration: 1.2,
         ease: "expo.out",
-      }, "-=0.3");
+      }, "+=0.2");
 
     return () => tl.kill();
   }, []);
@@ -44,16 +47,9 @@ export default function Hero() {
       aria-label="Future Frames hero"
       className="relative h-[100dvh] w-full grid place-items-center overflow-hidden z-[2]"
     >
-      {/* MOBILE VIDEO */}
+      {/* VIDEO */}
       <video
-        className="absolute top-1/2 left-1/2 h-full w-full object-cover -translate-x-1/2 -translate-y-1/2 lg:hidden"
-        src="/videos/showreel.mp4"
-        autoPlay loop muted playsInline
-      />
-
-      {/* DESKTOP VIDEO */}
-      <video
-        className="hidden lg:block absolute top-1/2 left-1/2 h-full w-full object-cover -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-1/2 left-1/2 h-full w-full object-cover -translate-x-1/2 -translate-y-1/2"
         src="/videos/showreel.mp4"
         autoPlay loop muted playsInline
       />

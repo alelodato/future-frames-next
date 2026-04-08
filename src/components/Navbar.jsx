@@ -22,7 +22,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isHome) {
-      const timer = setTimeout(() => setNavReady(true), 5000);
+      const timer = setTimeout(() => setNavReady(true), 5500);
       return () => clearTimeout(timer);
     } else {
       setNavReady(true);
@@ -53,16 +53,16 @@ export default function Navbar() {
     <>
       <header
         className={`
-  fixed top-0 left-0 w-full z-[100]
-  transition-all duration-500
-  ${isContact
+          fixed top-0 left-0 w-full z-[100]
+          transition-all duration-500
+          ${isContact
             ? "backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
             : scrolled
               ? "backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
               : "bg-transparent"
           }
-  ${(!isHome || navReady) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-`}
+          ${(!isHome || navReady) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
         style={scrolled || isContact ? {
           background: "linear-gradient(to right, rgba(5,2,15,0.95) 0%, rgba(30,5,60,0.95) 40%, rgba(50, 6, 64, 0.925) 70%, rgba(100,5,60,0.92) 100%)"
         } : {}}
@@ -75,9 +75,9 @@ export default function Navbar() {
               src="/images/logo-gradient.png"
               alt="Future Frames"
               className="h-12 sm:h-14 md:h-15 w-auto transition-all duration-300
-      drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]
-      group-hover:drop-shadow-[0_0_16px_rgba(167,139,250,0.9)]
-      group-hover:brightness-110"
+                drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]
+                group-hover:drop-shadow-[0_0_16px_rgba(167,139,250,0.9)]
+                group-hover:brightness-110"
             />
           </Link>
 
@@ -88,37 +88,32 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 className={`
-        relative font-montserrat font-semibold text-sm lg:text-md tracking-widest
-        transition-all duration-300 group
-        ${pathname === l.href
+                  relative font-montserrat font-semibold text-sm lg:text-md tracking-widest
+                  transition-all duration-300 group
+                  ${pathname === l.href
                     ? "text-violet-400"
                     : "text-white hover:text-violet-300"
                   }
-      `}
+                `}
               >
-                {/* Glow neon dietro il testo all'hover */}
                 <span
                   className={`
-          absolute inset-0 rounded-sm blur-md transition-opacity duration-300
-          bg-violet-500/30
-          ${pathname === l.href ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
-        `}
+                    absolute inset-0 rounded-sm blur-md transition-opacity duration-300
+                    bg-violet-500/30
+                    ${pathname === l.href ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+                  `}
                 />
-
-                {/* Testo con neon glow */}
                 <span
                   className={`
-          relative transition-all duration-300
-          ${pathname === l.href
+                    relative transition-all duration-300
+                    ${pathname === l.href
                       ? "[text-shadow:0_0_8px_rgba(167,139,250,0.9),0_0_20px_rgba(167,139,250,0.6),0_0_40px_rgba(167,139,250,0.3)]"
                       : "group-hover:[text-shadow:0_0_8px_rgba(167,139,250,0.9),0_0_20px_rgba(167,139,250,0.6),0_0_40px_rgba(167,139,250,0.3)]"
                     }
-        `}
+                  `}
                 >
                   {l.label}
                 </span>
-
-                {/* Underline attivo */}
                 {pathname === l.href && (
                   <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-violet-500 to-fuchsia-500 shadow-[0_0_6px_rgba(167,139,250,0.8)]" />
                 )}
@@ -145,11 +140,9 @@ export default function Navbar() {
           ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
       >
-        {/* Glow */}
         <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-violet-600/15 blur-3xl" />
         <div className="pointer-events-none absolute bottom-1/4 right-0 h-64 w-64 rounded-full bg-fuchsia-600/10 blur-3xl" />
 
-        {/* Header */}
         <div className="flex items-center justify-between px-6 h-[72px] flex-shrink-0">
           <Link href="/" onClick={close}>
             <img src="/images/logo-viola.png" alt="Future Frames" className="h-10 w-auto" />
@@ -160,7 +153,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Links */}
         <div className="flex flex-col justify-center flex-1 px-8 gap-1">
           {LINKS.map((l, i) => (
             <Link
@@ -188,7 +180,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Footer menu */}
         <div className="px-8 pb-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-px w-8 bg-violet-500/30" />
