@@ -94,6 +94,15 @@ export default function About() {
                 </p>
               </FadeReveal>
             ))}
+            {/* Intro testo */}
+            <FadeReveal className="pt-12 pb-24">
+              <div>
+                <GlowLine className="w-full mb-12" />
+                <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
+                  Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
+                </p>
+              </div>
+            </FadeReveal>
           </div>
 
           <FadeReveal delay={0.3} className="flex-shrink-0">
@@ -109,7 +118,7 @@ export default function About() {
 
         {/* Mobile */}
         <div className="md:hidden space-y-2 mb-8">
-          {["Non facciamo solo", "foto e video.", "Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
+          {["Raccontiamo storie", "con immagini", "che restano nel tempo."].map((line, i) => (
             <FadeReveal key={i} delay={i * 0.08}>
               <p className={`font-antonio leading-[1.05] ${i % 2 === 1 ? "text-violet-300" : "text-white"}`}
                 style={{ fontSize: "clamp(2.2rem, 10vw, 3.5rem)" }}>
@@ -128,18 +137,13 @@ export default function About() {
               style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />
           </div>
         </FadeReveal>
-
         {/* Intro testo */}
-        <FadeReveal className="grid md:grid-cols-2 gap-8 md:gap-16 pt-12 pb-24">
+        <FadeReveal>
           <div>
-            <GlowLine className="w-full mb-12" />
             <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-              Future Frames nasce a Pomezia, alle porte di Roma, dall'incontro tra due sensibilità complementari. Gloria dietro l'obiettivo, Ivan in fase di montaggio: insieme formano un'unica visione creativa.
+              Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
             </p>
           </div>
-          <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-500 md:pt-[calc(1rem+48px)]">
-            Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
-          </p>
         </FadeReveal>
       </section>
 
