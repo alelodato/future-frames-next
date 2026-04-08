@@ -306,35 +306,48 @@ export default function Intro() {
                 </Link>
               </div>
 
-              {/* Griglia cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {/* Griglia cards — desktop */}
+              <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 gap-4">
                 {services.map((s, i) => (
                   <div key={s.id}
                     className={services.length === 5 && i === 4 ? "sm:col-span-2 md:col-span-1" : ""}>
                     <Link href={`/servizi#${s.id}`} className="block h-full">
                       <article className="group relative h-52 sm:h-56 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)] transition duration-300 hover:border-violet-500/30 hover:shadow-[0_20px_55px_rgba(89,28,135,0.3)]">
-                        <img
-                          src={s.img}
-                          alt={s.title}
-                          className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-500 group-hover:scale-[1.05] group-hover:opacity-75"
-                          loading="lazy"
-                        />
+                        <img src={s.img} alt={s.title}
+                          className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-500 group-hover:scale-[1.05] group-hover:opacity-75" loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                         <div className="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-black/40 opacity-0 backdrop-blur-sm transition duration-300 group-hover:opacity-100">
                           <i className="fa-solid fa-arrow-right text-[0.6rem] text-violet-300" />
                         </div>
                         <div className="relative flex h-full flex-col justify-end p-4">
-                          <h4 className="font-antonio text-lg tracking-[0.18em] uppercase text-white mb-1">
-                            {s.title}
-                          </h4>
-                          <p className="font-montserrat text-xs text-zinc-300 leading-snug">
-                            {s.text}
-                          </p>
+                          <h4 className="font-antonio text-lg tracking-[0.18em] uppercase text-white mb-1">{s.title}</h4>
+                          <p className="font-montserrat text-xs text-zinc-300 leading-snug">{s.text}</p>
                         </div>
                       </article>
                     </Link>
                   </div>
                 ))}
+              </div>
+
+              {/* Slideshow — mobile */}
+              <div className="sm:hidden relative">
+                <div id="services-slider"
+                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                  {services.map((s) => (
+                    <Link key={s.id} href={`/servizi#${s.id}`}
+                      className="flex-shrink-0 w-[80vw] snap-center block">
+                      <article className="group relative h-64 overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
+                        <img src={s.img} alt={s.title}
+                          className="absolute inset-0 h-full w-full object-cover opacity-55" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                        <div className="relative flex h-full flex-col justify-end p-5">
+                          <h4 className="font-antonio text-xl tracking-[0.18em] uppercase text-white mb-1">{s.title}</h4>
+                          <p className="font-montserrat text-xs text-zinc-300 leading-snug">{s.text}</p>
+                        </div>
+                      </article>
+                    </Link>
+                  ))}
+                </div>
               </div>
 
               <Link
@@ -346,7 +359,7 @@ export default function Intro() {
               </Link>
             </section>
             {/* VIDEO TEASER PORTFOLIO */}
-            <section aria-label="Anteprima portfolio" className="space-y-1" data-aos="fade-up">
+            <section aria-label="Anteprima portfolio" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
                 <div className="flex items-center gap-2">
@@ -437,21 +450,8 @@ export default function Intro() {
               </div>
 
               <div className="grid gap-5 md:grid-cols-[1fr_1.6fr] items-stretch">
-                <div className="flex flex-col justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-                  <div>
-                    <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
-                      Sul nostro blog condividiamo riflessioni sul mestiere, consigli pratici per valorizzare i contenuti visivi e racconti dietro le quinte dei nostri progetti.
-                    </p>
-                    <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-400">
-                      Da come scegliere il servizio fotografico giusto, a come raccontare un&apos;azienda attraverso le immagini: ogni articolo nasce dall&apos;esperienza sul campo.
-                    </p>
-                  </div>
-                  <Link href="/blog" className="mt-8 inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
-                    Leggi tutti gli articoli <i className="fa-solid fa-circle-arrow-right" />
-                  </Link>
-                </div>
-
-                <Link href="/blog/ultimo-articolo" className="group block">
+                {/* Su mobile: articolo prima, testo dopo */}
+                <Link href="/blog/ultimo-articolo" className="group block md:order-2">
                   <article className="relative h-full min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
                     <img src="/images/introimg1.webp" alt="Anteprima ultimo articolo"
                       className="absolute inset-0 h-full w-full object-cover opacity-50 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-65" loading="lazy" />
@@ -479,6 +479,20 @@ export default function Intro() {
                     </div>
                   </article>
                 </Link>
+
+                <div className="flex flex-col justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.6)] md:order-1">
+                  <div>
+                    <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
+                      Sul nostro blog condividiamo riflessioni sul mestiere, consigli pratici per valorizzare i contenuti visivi e racconti dietro le quinte dei nostri progetti.
+                    </p>
+                    <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-400">
+                      Da come scegliere il servizio fotografico giusto, a come raccontare un&apos;azienda attraverso le immagini: ogni articolo nasce dall&apos;esperienza sul campo.
+                    </p>
+                  </div>
+                  <Link href="/blog" className="mt-8 inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
+                    Leggi tutti gli articoli <i className="fa-solid fa-circle-arrow-right" />
+                  </Link>
+                </div>
               </div>
             </section>
             {/* VIDEOLEZIONI 
@@ -541,19 +555,12 @@ export default function Intro() {
 
 
             {/* ── TEAM ── */}
-            <section
-              className="relative pb-20"
-              aria-label="Team Future Frames"
-              data-aos="fade-up"
-            >
-              {/* Separatore */}
+            <section className="relative pb-20" aria-label="Team Future Frames" data-aos="fade-up">
               <div className="flex items-center gap-4 mb-10">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
                 <div className="flex items-center gap-2">
                   <i className="fa-solid fa-users text-violet-400 text-xs" />
-                  <span className="font-montserrat text-[0.65rem] uppercase tracking-[0.3em] text-violet-400">
-                    Chi siamo
-                  </span>
+                  <span className="font-montserrat text-[0.65rem] uppercase tracking-[0.3em] text-violet-400">Chi siamo</span>
                 </div>
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
               </div>
@@ -561,18 +568,15 @@ export default function Intro() {
               <div className="overflow-hidden rounded-3xl border border-violet-500/20 bg-violet-900/10 backdrop-blur-sm shadow-[0_0_45px_rgba(124,58,237,0.15)]">
                 <div className="grid items-center gap-0 md:grid-cols-2">
 
-                  {/* COLONNA SINISTRA — TESTO */}
+                  {/* TESTO — su mobile viene prima */}
                   <div className="px-8 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-16 space-y-6">
                     <div>
-                      <p className="font-montserrat text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-violet-300">
-                        Il team
-                      </p>
+                      <p className="font-montserrat text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-violet-300">Il team</p>
                       <h3 className="mt-3 font-antonio text-2xl sm:text-3xl md:text-[2rem] leading-tight text-white">
                         Due professionisti,
                         <span className="block text-violet-300">una visione condivisa.</span>
                       </h3>
                     </div>
-
                     <p className="font-montserrat text-sm leading-relaxed text-zinc-300 max-w-md">
                       <strong className="text-white">Gloria Margarino</strong>, fotografa e videomaker, e{" "}
                       <strong className="text-white">Ivan Scrofani</strong>, video editor, guidano Future Frames
@@ -580,7 +584,23 @@ export default function Intro() {
                       cliente e dalla cura per i dettagli.
                     </p>
 
-                    {/* Mini cards team */}
+                    {/* Immagini — solo mobile, dopo il testo intro */}
+                    <div className="md:hidden relative h-[320px]">
+                      <div className="absolute left-0 top-0 w-[45%] h-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
+                        <img src="/images/gloria2.jpeg" alt="Gloria Margarino" className="w-full h-full object-cover" loading="lazy" />
+                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
+                          <p className="font-antonio text-[0.7rem] tracking-wide text-white">Gloria</p>
+                        </div>
+                      </div>
+                      <div className="absolute right-0 bottom-0 w-[45%] h-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.92)]">
+                        <img src="/images/ivan.jpeg" alt="Ivan Scrofani" className="w-full h-full object-cover" loading="lazy" />
+                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
+                          <p className="font-antonio text-[0.7rem] tracking-wide text-white">Ivan</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mini cards */}
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-3 rounded-2xl border border-violet-500/15 bg-white/[0.03] px-4 py-3">
                         <div className="h-9 w-9 flex-shrink-0 overflow-hidden rounded-xl border border-violet-400/20">
@@ -602,67 +622,34 @@ export default function Intro() {
                       </div>
                     </div>
 
-                    <Link
-                      href="/about"
-                      className="inline-flex items-center gap-2 rounded-full border border-violet-300/60 bg-transparent px-5 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-violet-100/90 shadow-[0_0_18px_rgba(129,140,248,0.4)] transition hover:bg-white/5"
-                    >
+                    <Link href="/about"
+                      className="inline-flex items-center gap-2 rounded-full border border-violet-300/60 bg-transparent px-5 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-violet-100/90 shadow-[0_0_18px_rgba(129,140,248,0.4)] transition hover:bg-white/5">
                       Conosci il nostro team
                       <i className="fa-solid fa-circle-arrow-right" />
                     </Link>
                   </div>
 
-                  {/* COLONNA DESTRA — IMMAGINI */}
-                  <Link
-                    href="/about"
-                    aria-label="Vai alla pagina About"
-                    className="relative flex h-[420px] md:h-[560px] lg:h-[520px] items-end justify-end overflow-hidden"
-                  >
-                    {/* Glow */}
+                  {/* IMMAGINI — solo desktop */}
+                  <Link href="/about" aria-label="Vai alla pagina About"
+                    className="hidden md:relative md:flex h-[420px] md:h-[560px] lg:h-[520px] items-end justify-end overflow-hidden">
                     <div className="pointer-events-none absolute top-10 right-10 h-72 w-72 rounded-full bg-gradient-to-br from-violet-600/30 via-fuchsia-500/15 to-sky-500/10 blur-3xl" />
 
-                    {/* Gloria */}
-                    <div className="absolute top-8 left-6 md:left-8 z-10
-    w-[155px] h-[270px]
-    md:w-[170px] md:h-[310px]
-    lg:w-[195px] lg:h-[360px]
-    rounded-3xl overflow-hidden border border-white/10
-    shadow-[0_25px_70px_rgba(0,0,0,0.85)]
-    transition duration-500 hover:scale-[1.02]">
-                      <img
-                        src="/images/gloria2.jpeg"
-                        alt="Gloria Margarino"
-                        className="w-full h-full object-cover transition duration-700 hover:scale-[1.04]"
-                        loading="lazy"
-                      />
+                    <div className="absolute top-8 left-6 md:left-8 z-10 w-[155px] h-[270px] md:w-[170px] md:h-[310px] lg:w-[195px] lg:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] transition duration-500 hover:scale-[1.02]">
+                      <img src="/images/gloria2.jpeg" alt="Gloria Margarino" className="w-full h-full object-cover transition duration-700 hover:scale-[1.04]" loading="lazy" />
                       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
                         <p className="font-antonio text-[0.7rem] tracking-wide text-white">Gloria</p>
                       </div>
                     </div>
 
-                    {/* Ivan */}
-                    <div className="absolute bottom-8 right-6 md:right-8 z-20
-    w-[155px] h-[270px]
-    md:w-[170px] md:h-[310px]
-    lg:w-[195px] lg:h-[360px]
-    rounded-3xl overflow-hidden border border-white/10
-    shadow-[0_25px_70px_rgba(0,0,0,0.92)]
-    transition duration-700 hover:scale-[1.04]">
-                      <img
-                        src="/images/ivan.jpeg"
-                        alt="Ivan Scrofani"
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                    <div className="absolute bottom-8 right-6 md:right-8 z-20 w-[155px] h-[270px] md:w-[170px] md:h-[310px] lg:w-[195px] lg:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.92)] transition duration-700 hover:scale-[1.04]">
+                      <img src="/images/ivan.jpeg" alt="Ivan Scrofani" className="w-full h-full object-cover" loading="lazy" />
                       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
                         <p className="font-antonio text-[0.7rem] tracking-wide text-white">Ivan</p>
                       </div>
                     </div>
 
-                    {/* Badge */}
                     <div className="absolute top-4 right-4 z-30 rounded-full border border-violet-400/40 bg-black/60 px-3 py-1.5 backdrop-blur-sm">
-                      <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-violet-300">
-                        Scopri di più →
-                      </span>
+                      <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.2em] text-violet-300">Scopri di più →</span>
                     </div>
                   </Link>
 

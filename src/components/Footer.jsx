@@ -65,11 +65,7 @@ export default function Footer() {
                 </a>
                 <a href="#"
                   className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
-                  Social 2
-                </a>
-                <a href="#"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
-                  Social 3
+                  Linkedin
                 </a>
               </div>
             </div>
