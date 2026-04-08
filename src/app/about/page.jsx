@@ -229,9 +229,9 @@ export default function About() {
 
       {/* ── SEPARATORE CITAZIONE ── */}
       <FadeReveal>
-        <div className="py-16 px-6 md:px-12">
+        <div className="py-6 px-6 md:px-12">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <p className="font-antonio text-2xl md:text-4xl lg:text-6xl text-zinc-300 leading-snug italic">
+            <p className="font-antonio text-4xl md:text-4xl lg:text-6xl text-zinc-300 leading-snug italic">
               "Ogni frame è una scelta. Noi scegliamo con cura."
             </p>
             <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-indigo-400/60">Future Frames</p>

@@ -1,8 +1,10 @@
 import Link from "next/link";
+import GlowLine from "./GlowLine";
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-zinc-800/70">
+    <footer className="bg-black">
+      <GlowLine />
       <div className="max-w-7xl mx-auto px-5 py-10 md:py-12">
         {/* Top */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
