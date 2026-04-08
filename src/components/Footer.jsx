@@ -48,7 +48,7 @@ export default function Footer() {
                 </a>
                 <a href="tel:+390000000000"
                   className="hover:text-violet-300 transition-colors block">
-                  +39 000 000 0000
+                  +39 393 139 5785
                 </a>
               </div>
             </div>
