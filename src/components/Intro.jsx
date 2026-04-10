@@ -120,37 +120,37 @@ const services = [
     id: "eventi",
     img: "/images/eventi.webp",
     title: "EVENTI",
-    text: "Fotografia e video per eventi privati e aziendali.",
+    text: "Contenuti foto e video per eventi aziendali, presentazioni, meeting e progetti legati al mondo culturale, editoriale e cinematografico.",
   },
   {
     id: "aziende",
     img: "/images/aziende.webp",
     title: "AZIENDE",
-    text: "E-Commerce, healthcare, moda e wellness. Raccontiamo la tua azienda con immagini che non si limitano a mostrare, ma comunicano valore.",
+    text: "Contenuti visivi per aziende, progettati per comunicare identità, prodotti e servizi in modo chiaro e coerente.",
   },
   {
     id: "podcast",
     img: "/images/podcast.webp",
     title: "PODCAST",
-    text: "Servizi foto e video per interviste, registrazioni e contenuti audiovisivi.",
+    text: "Produzione completa di podcast video, dalla definizione del format alla registrazione e post-produzione.",
   },
   {
     id: "food",
     img: "/images/food.jpg",
     title: "FOOD",
-    text: "Shooting fotografico e video per ristoranti, chef e aziende del settore.",
+    text: "Contenuti foto e video per ristoranti e brand food, pensati per valorizzare il prodotto, piatti e identità visiva.",
   },
   {
     id: "spot pubblicitari",
     img: "/images/spot.webp",
     title: "SPOT PUBBLICITARI",
-    text: "Video pensati per comunicare, con un approccio cinematografico.",
+    text: "Video pubblicitari sviluppati dal concept alla realizzazione, con un approccio cinematografico.",
   },
   {
     id: "montaggio",
     img: "/images/montaggio2.png",
     title: "MONTAGGIO",
-    text: "Servizio di post-produzione e editing professionale.",
+    text: "Servizi di montaggio e post-produzione per progetti video, inclusi contenuti per cinema, TV e produzioni esterne.",
   },
 ];
 
