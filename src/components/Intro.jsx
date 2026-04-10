@@ -136,7 +136,7 @@ const services = [
   },
   {
     id: "food",
-    img: "/images/food.jpg",
+    img: "/images/calamaro.webp",
     title: "FOOD & BEVERAGE",
     text: "Contenuti foto e video per ristoranti e brand food, pensati per valorizzare il prodotto, piatti e identità visiva.",
   },
