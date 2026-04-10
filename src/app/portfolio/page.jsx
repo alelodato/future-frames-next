@@ -193,6 +193,16 @@ function PatternC({ projects }) {
   );
 }
 
+// ─── PATTERN D: 1 progetto full screen ───────────────────────
+function PatternD({ projects }) {
+  const [p1] = projects;
+  return (
+    <div className="flex-shrink-0 w-screen h-screen flex">
+      {p1 && <ProjectCard project={p1} className="w-full h-full" />}
+    </div>
+  );
+}
+
 // ─── Layout engine ─────────────────────────────────────────────
 function buildPanels(projects) {
   const panels = [];
@@ -201,6 +211,15 @@ function buildPanels(projects) {
   let si = 0;
 
   while (i < projects.length) {
+    const remaining = projects.length - i;
+
+    // Se rimane esattamente 1 progetto, usare PatternD fullscreen
+    if (remaining === 1) {
+      panels.push({ type: "D", projects: projects.slice(i, i + 1) });
+      i += 1;
+      break;
+    }
+
     const type = sequence[si % sequence.length];
     if (type === "A") {
       panels.push({ type: "A", projects: projects.slice(i, i + 3) });
@@ -284,7 +303,7 @@ function HorizontalPortfolio({ projects }) {
   }, [projects]);
 
   return (
-    <div ref={sectionRef} className="relative hidden md:block overflow-hidden bg-black">
+    <div ref={sectionRef} className="relative hidden md:block overflow-hidden">
       <div ref={trackRef} className="flex will-change-transform"
         style={{ width: `${(panels.length + 1) * 100}vw` }}>
 
@@ -338,6 +357,7 @@ function HorizontalPortfolio({ projects }) {
           if (panel.type === "A") return <PatternA key={i} projects={panel.projects} />;
           if (panel.type === "B") return <PatternB key={i} projects={panel.projects} />;
           if (panel.type === "C") return <PatternC key={i} projects={panel.projects} />;
+          if (panel.type === "D") return <PatternD key={i} projects={panel.projects} />;
           return null;
         })}
       </div>
@@ -451,7 +471,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className=" text-white min-h-screen" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
 
       {loading ? (
         <div className="flex items-center justify-center h-screen">
@@ -466,9 +486,8 @@ export default function Portfolio() {
 
       {/* ── CTA FINALE ── */}
       <section className="relative h-[70vh] overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
-        <div className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.12) 0%, transparent 70%)" }} />
+        <div className="absolute inset-0" />
+        <div className="pointer-events-none absolute inset-0" />
         <div className="relative z-10 text-center px-4 space-y-6">
           <h2 className="font-antonio text-5xl md:text-7xl text-white leading-none">
             Vuoi vedere tutti i nostri lavori?
