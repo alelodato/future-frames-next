@@ -9,17 +9,34 @@ import { CookieConsentProvider } from "@/components/CookieConsentProvider";
 import CookieBanner from "@/components/CookieBanner";
 
 export const metadata = {
-  title: "Future Frames – Fotografia e Videomaking Professionale",
-  description:
-    "Agenzia creativa specializzata in fotografia e videomaking professionale. Raccontiamo persone, aziende ed eventi con un linguaggio visivo pulito, emotivo e contemporaneo.",
-  icons: {
-    icon: [
-      { url: '/images/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/images/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: '/images/apple-touch-icon.png',
+  metadataBase: new URL("https://futureframes.it"),
+  title: {
+    default: "Future Frames — Fotografia & Videomaking a Roma",
+    template: "%s — Future Frames",
   },
-  manifest: '/images/site.webmanifest',
+  description: "Agenzia creativa specializzata in fotografia e videomaking a Pomezia, Roma. Spot aziendali, eventi, podcast, food, fashion e post-produzione.",
+  keywords: ["fotografia Roma", "videomaking Roma", "agenzia video Pomezia", "spot aziendale", "fotografo eventi Roma", "video aziendale"],
+  authors: [{ name: "Future Frames" }],
+  creator: "Future Frames",
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    url: "https://futureframes.it",
+    siteName: "Future Frames",
+    title: "Future Frames — Fotografia & Videomaking a Roma",
+    description: "Agenzia creativa specializzata in fotografia e videomaking a Pomezia, Roma.",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Future Frames" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Future Frames — Fotografia & Videomaking a Roma",
+    description: "Agenzia creativa specializzata in fotografia e videomaking a Pomezia, Roma.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
