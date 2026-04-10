@@ -26,7 +26,7 @@ export default function Footer() {
           {/* Link rapidi */}
           <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-6 text-xs">
             <div className="space-y-3">
-              <h4 className="font-orbitron tracking-[0.18em] text-zinc-200 uppercase">
+              <h4 className="font-montserrat font-semibold tracking-[0.18em] text-zinc-200 uppercase">
                 Navigazione
               </h4>
               <nav className="flex flex-col gap-1.5 font-montserrat text-zinc-300">
@@ -39,7 +39,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-orbitron tracking-[0.18em] text-zinc-200 uppercase">
+              <h4 className="font-montserrat font-semibold tracking-[0.18em] text-zinc-200 uppercase">
                 Contatti
               </h4>
               <div className="font-montserrat text-zinc-300 space-y-1.5">
@@ -56,7 +56,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-orbitron tracking-[0.18em] text-zinc-200 uppercase">
+              <h4 className="font-montserrat font-semibold tracking-[0.18em] text-zinc-200 uppercase">
                 Social
               </h4>
               <div className="flex flex-wrap gap-2 font-montserrat text-zinc-300">
