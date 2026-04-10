@@ -60,7 +60,7 @@ export default function Footer() {
                 Social
               </h4>
               <div className="flex flex-wrap gap-2 font-montserrat text-zinc-300">
-                <a href="#"
+                <a href="https://www.instagram.com/futureframes_photoevideo?igsh=dGx5YWtrOHk2YjF5" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
                   <i className="fa-brands fa-instagram text-violet-300" />
                   Instagram
