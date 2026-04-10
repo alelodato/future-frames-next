@@ -335,7 +335,7 @@ export default function Servizi() {
 
           <div className="flex gap-3 w-full lg:max-w-2xl" style={{ height: "200px" }}>
             <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl">
-              <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
+              <img src="/images/pasta.webp" alt="" className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl mt-6">
               <img src="/images/candela.webp" alt="" className="w-full h-full object-cover object-center" />
@@ -409,7 +409,7 @@ export default function Servizi() {
             <div className="flex flex-col justify-start flex-1 max-w-[220px] xl:max-w-[260px]" style={{ height: "70vh" }}>
               <div className="relative w-full rounded-2xl overflow-hidden border border-violet-500/15"
                 style={{ height: "75%", boxShadow: "0 0 40px rgba(139,92,246,0.12)" }}>
-                <img src="/images/servizi1.webp" alt="" className="w-full h-full object-cover" />
+                <img src="/images/pasta.webp" alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
             </div>

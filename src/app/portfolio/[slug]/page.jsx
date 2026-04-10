@@ -172,11 +172,6 @@ export default function ProjectPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
 
-        {/* Numero decorativo */}
-        <div className="absolute top-8 right-8 font-antonio text-[10rem] leading-none text-white/4 select-none pointer-events-none hidden md:block">
-          {String(project.id).padStart(2, "0")}
-        </div>
-
         {/* Contenuto */}
         <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-14 max-w-4xl">
           <Link href="/portfolio"
