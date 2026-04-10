@@ -97,9 +97,11 @@ export default function About() {
             {/* Intro testo */}
             <FadeReveal className="pt-12 pb-24">
               <div>
-                <GlowLine className="w-full mb-12" />
-                <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
-                  Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
+                <GlowLine className="w-full mb-6" />
+                <p className="font-montserrat text-md lg:text-xl md:text-base leading-relaxed text-zinc-300">
+                  Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale.
+                  <br />
+                  Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
                 </p>
               </div>
             </FadeReveal>
@@ -140,7 +142,7 @@ export default function About() {
         {/* Intro testo */}
         <FadeReveal>
           <div>
-            <p className="font-montserrat text-sm md:text-base leading-relaxed text-zinc-300">
+            <p className="font-montserrat text-sm md:hidden leading-relaxed text-zinc-300">
               Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
             </p>
           </div>
@@ -194,13 +196,13 @@ export default function About() {
             </FadeReveal>
             <FadeReveal delay={0.1}><GlowLine className="w-full" /></FadeReveal>
             <FadeReveal delay={0.15}>
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-100">
                 Gloria è il cuore visivo di Future Frames.
                 Lavora sui progetti in prima linea, mantenendo sempre una linea visiva coerente.
               </p>
             </FadeReveal>
             <FadeReveal delay={0.2}>
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-500">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
                 Dagli eventi privati ai progetti aziendali, fino ai corti cinematografici, il suo obiettivo è costruire immagini solide, riconoscibili e in linea con il contesto in cui vengono utilizzate.
               </p>
             </FadeReveal>

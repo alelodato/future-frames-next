@@ -175,7 +175,7 @@ function StickyServices() {
             </div>
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             {s.body && (
-              <p className="font-montserrat text-l leading-relaxed text-white-400 max-w-sm">{s.body}</p>
+              <p className="font-montserrat text-l leading-relaxed text-zinc-200 max-w-sm">{s.body}</p>
             )}
             <Link href="/contact"
               className="inline-flex self-start items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70">
@@ -243,7 +243,7 @@ function MobileServices() {
             </div>
           </div>
           <div className="space-y-4 border-l border-violet-500/30 pl-5">
-            {s.body && <p className="font-montserrat text-sm leading-relaxed text-white-400">{s.body}</p>}
+            {s.body && <p className="font-montserrat text-sm leading-relaxed text-zinc-200">{s.body}</p>}
             <Link href="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 px-5 py-2 font-montserrat text-xs uppercase tracking-[0.2em] text-violet-300 transition hover:bg-violet-900/30">
               Richiedi un preventivo
@@ -292,7 +292,7 @@ export default function Servizi() {
               <span className="block font-antonio text-[2.3rem] text-zinc-400 italic ml-3">Qualità Professionale</span>
               <span className="block font-antonio text-[3rem] text-violet-300">e Affidabilità.</span>
             </h1>
-            <p className="font-montserrat text-[0.8rem] leading-relaxed text-white-400 max-w-[90%]">
+            <p className="font-montserrat text-[0.8rem] leading-relaxed text-zinc-200 max-w-[90%]">
               Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
               Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
             </p>
@@ -349,7 +349,7 @@ export default function Servizi() {
           </div>
 
           <div className="flex flex-col gap-4 lg:max-w-2xl">
-            <p className="font-montserrat text-sm leading-relaxed text-white-400 max-w-lg">
+            <p className="font-montserrat text-sm leading-relaxed text-zinc-200 max-w-lg">
               Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
               Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
             </p>
@@ -390,7 +390,7 @@ export default function Servizi() {
               <span className="block font-antonio text-5xl xl:text-6xl text-violet-300">e Affidabilità.</span>
             </h1>
             <div className="mb-8 max-w-sm">
-              <p className="font-montserrat text-md leading-relaxed text-white-400">
+              <p className="font-montserrat text-md leading-relaxed text-zinc-200">
                 Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
                 Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
               </p>
