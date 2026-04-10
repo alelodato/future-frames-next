@@ -204,9 +204,9 @@ export default function Intro() {
                     </div>
 
                     {/* Testo descrittivo — più diretto e con personalità */}
-                    <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-400 mb-8">
-                      Future Frames è un’agenzia creativa specializzata in <span className="text-zinc-200">Fotografia</span> e{" "}
-                      <span className="text-zinc-200">Videomaking </span> professionale.
+                    <p className="max-w-md font-montserrat text-sm leading-relaxed text-zinc-200 mb-8">
+                      Future Frames è un’agenzia creativa specializzata in <span className="text-violet-300">Fotografia</span> e{" "}
+                      <span className="text-violet-300">Videomaking </span> professionale.
                       <br />
                       Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
                     </p>
@@ -230,7 +230,7 @@ export default function Intro() {
                     {/* CTA */}
                     <div className="flex flex-wrap gap-3">
                       <Link href="/about"
-                        className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-[#050211] shadow-[0_0_26px_rgba(167,139,250,0.6)] transition hover:bg-violet-300 hover:shadow-[0_0_40px_rgba(167,139,250,0.9)]">
+                        className="inline-flex items-center gap-2 rounded-full border border-violet-300/60 bg-transparent px-5 py-2.5 text-xs font-montserrat font-semibold tracking-wide text-violet-100/90 shadow-[0_0_18px_rgba(129,140,248,0.4)] transition hover:bg-white/5">
                         Scopri di più
                         <i className="fa-solid fa-arrow-right text-[0.6rem]" />
                       </Link>
@@ -276,7 +276,7 @@ export default function Intro() {
                   <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
                     I Nostri Servizi
                   </h3>
-                  <p className="mt-1 font-montserrat text-xs text-zinc-400">
+                  <p className="mt-1 font-montserrat text-xs text-zinc-200">
                     Dalla fotografia al videomaking, ogni formato raccontato con cura.
                   </p>
                 </div>
@@ -359,7 +359,7 @@ export default function Intro() {
                   <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
                     Dal Nostro Portfolio
                   </h3>
-                  <p className="mt-1 font-montserrat text-xs text-zinc-400">
+                  <p className="mt-1 font-montserrat text-xs text-zinc-200">
                     I nostri lavori, raccontati attraverso immagini e movimento.
                   </p>
                 </div>
@@ -425,7 +425,7 @@ export default function Intro() {
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">Dal Blog</h3>
-                  <p className="mt-1 font-montserrat text-xs text-zinc-400">Storie, consigli e dietro le quinte dei nostri progetti.</p>
+                  <p className="mt-1 font-montserrat text-xs text-zinc-200">Storie, consigli e dietro le quinte dei nostri progetti.</p>
                 </div>
                 <Link href="/blog" className="hidden md:inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
                   Tutti gli articoli <i className="fa-solid fa-circle-arrow-right" />
@@ -465,10 +465,10 @@ export default function Intro() {
 
                 <div className="flex flex-col justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.6)] md:order-1">
                   <div>
-                    <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
+                    <p className="font-montserrat text-sm leading-relaxed text-zinc-200">
                       Sul nostro blog condividiamo riflessioni sul mestiere, consigli pratici per valorizzare i contenuti visivi e racconti dietro le quinte dei nostri progetti.
                     </p>
-                    <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-400">
+                    <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-300">
                       Da come scegliere il servizio fotografico giusto, a come raccontare un&apos;azienda attraverso le immagini: ogni articolo nasce dall&apos;esperienza sul campo.
                     </p>
                   </div>
@@ -563,7 +563,9 @@ export default function Intro() {
                     <p className="font-montserrat text-sm leading-relaxed text-zinc-300 max-w-md">
                       <strong className="text-white">Gloria Margarino</strong>, fotografa e videomaker, e{" "}
                       <strong className="text-white">Ivan Scrofani</strong>, account manager, guidano Future Frames
-                      unendo sensibilità visiva e montaggio narrativo. Ogni progetto nasce dal dialogo con il
+                      unendo sensibilità visiva e montaggio narrativo.
+                      <br />
+                      Ogni progetto nasce dal dialogo con il
                       cliente e dalla cura per i dettagli.
                     </p>
 
@@ -660,7 +662,7 @@ export default function Intro() {
                 <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
                   Dicono di noi
                 </h3>
-                <p className="mt-1 font-montserrat text-xs text-zinc-400">
+                <p className="mt-1 font-montserrat text-xs text-zinc-200">
                   Le parole dei nostri clienti sono la nostra migliore presentazione.
                 </p>
               </div>
@@ -786,7 +788,7 @@ export default function Intro() {
                       </div>
                       <span className="font-montserrat text-xs text-zinc-300 font-semibold">5.0</span>
                     </div>
-                    <p className="font-montserrat text-xs text-zinc-400">
+                    <p className="font-montserrat text-xs text-zinc-200">
                       Leggi tutte le recensioni dei nostri clienti su Trustpilot
                     </p>
                   </div>
@@ -815,7 +817,7 @@ export default function Intro() {
                 <h3 className="font-antonio text-xl md:text-2xl tracking-[0.15em] uppercase text-zinc-100">
                   Raccontaci il tuo progetto
                 </h3>
-                <p className="mt-1 font-montserrat text-xs text-zinc-400 max-w-2xl">
+                <p className="mt-1 font-montserrat text-xs text-zinc-300 max-w-2xl">
                   Ci troviamo a <span className="text-violet-300 font-semibold">Pomezia</span> e operiamo principalmente
                   nel territorio della provincia di Roma.
                   <br />
