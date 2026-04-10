@@ -110,7 +110,7 @@ export default function About() {
           <FadeReveal delay={0.3} className="flex-shrink-0">
             <div className="h-full w-[200px] lg:w-[320px] rounded-xl overflow-hidden">
               <img
-                src="/images/lambo.png"
+                src="/images/lambo.webp"
                 alt="Future Frames"
                 className="w-full h-full object-cover opacity-80 transition duration-700 hover:scale-[1.03]"
               />
