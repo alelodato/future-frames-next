@@ -234,7 +234,9 @@ export default function About() {
         <div className="py-6 px-6 md:px-12">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <p className="font-antonio text-4xl md:text-4xl lg:text-6xl text-zinc-300 leading-snug italic">
-              "Ogni frame è una scelta. Noi scegliamo con cura."
+              "Ogni frame è una scelta.
+              <br />
+              Noi scegliamo con cura."
             </p>
             <p className="font-montserrat text-[0.6rem] uppercase tracking-[0.4em] text-indigo-400/60">Future Frames</p>
           </div>
@@ -271,7 +273,7 @@ export default function About() {
                   className="w-full h-full object-cover object-[50%_25%] transition duration-700 hover:scale-[1.03]" />
               </div>
               <div className="absolute -bottom-4 -left-4 rounded-xl border border-violet-400/20 bg-[#02010b] px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.8)]">
-                <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.25em] text-violet-400">Video Editor</p>
+                <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.25em] text-violet-400">Account Manager</p>
               </div>
             </div>
           </FadeReveal>
@@ -293,7 +295,7 @@ export default function About() {
                     style={{ background: "linear-gradient(to right, #818cf8, #a855f7, transparent)", boxShadow: "0 0 6px rgba(129,140,248,0.4)" }} />
                   <i className={`${v.icon} text-violet-400/60 text-sm`} />
                   <h4 className="font-antonio text-xl text-white">{v.title}</h4>
-                  <p className="font-montserrat text-xs leading-relaxed text-zinc-500">{v.text}</p>
+                  <p className="font-montserrat text-xs leading-relaxed text-zinc-300">{v.text}</p>
                 </div>
               </FadeReveal>
             ))}
