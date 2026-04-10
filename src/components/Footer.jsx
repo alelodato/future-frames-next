@@ -67,6 +67,7 @@ export default function Footer() {
                 </a>
                 <a href="#"
                   className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 px-3 py-1 hover:bg-violet-500/10 text-[11px] transition">
+                  <i className="fa-brands fa-linkedin text-sm" />
                   Linkedin
                 </a>
               </div>
