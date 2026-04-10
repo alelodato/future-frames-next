@@ -161,7 +161,7 @@ function StickyServices() {
             key={s.id}
             id={s.id}
             ref={el => textRefs.current[i] = el}
-            className="min-h-screen flex flex-col justify-center py-16 space-y-8"
+            className="min-h-screen flex flex-col justify-center py-16 space-y-5"
           >
             <div className="flex items-center gap-3">
               <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.5em] text-zinc-600">{s.index}</span>
@@ -173,9 +173,9 @@ function StickyServices() {
               <h2 className="font-antonio text-4xl xl:text-5xl text-white leading-tight">{s.title}</h2>
               <h2 className="font-antonio text-4xl xl:text-5xl text-violet-300 leading-tight">{s.subtitle}</h2>
             </div>
-            <div className="h-px w-16 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             {s.body && (
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-400 max-w-sm">{s.body}</p>
+              <p className="font-montserrat text-l leading-relaxed text-white-400 max-w-sm">{s.body}</p>
             )}
             <Link href="/contact"
               className="inline-flex self-start items-center gap-2 rounded-full border border-violet-400/40 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.25em] text-violet-300 transition hover:bg-violet-900/30 hover:border-violet-400/70">
@@ -390,7 +390,7 @@ export default function Servizi() {
               <span className="block font-antonio text-5xl xl:text-6xl text-violet-300">e Affidabilità.</span>
             </h1>
             <div className="mb-8 max-w-sm">
-              <p className="font-montserrat text-sm leading-relaxed text-zinc-400">
+              <p className="font-montserrat text-md leading-relaxed text-white-400">
                 Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
                 Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
               </p>
