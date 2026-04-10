@@ -249,23 +249,6 @@ export default function Intro() {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#080618] via-[#080618]/30 to-transparent hidden lg:block" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#080618] via-[#080618]/20 to-transparent lg:hidden" />
                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-
-                    {/* Badge bottom */}
-                    <div className="absolute bottom-6 left-6 right-6 z-10">
-                      <div className="flex items-start gap-3 rounded-2xl border border-white/8 bg-black/65 px-4 py-4 backdrop-blur-md shadow-[0_16px_40px_rgba(0,0,0,0.8)] max-w-[260px]">
-                        <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-violet-400/25 bg-violet-900/40">
-                          <i className="fa-solid fa-film text-violet-400 text-[0.6rem]" />
-                        </div>
-                        <div>
-                          <p className="font-antonio text-sm text-white leading-tight">
-                            Ogni frame è una scelta.
-                          </p>
-                          <p className="font-montserrat text-[0.62rem] text-zinc-400 mt-0.5 leading-snug">
-                            Dalla luce al montaggio, niente è lasciato al caso.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                 </div>
@@ -579,7 +562,7 @@ export default function Intro() {
                     </div>
                     <p className="font-montserrat text-sm leading-relaxed text-zinc-300 max-w-md">
                       <strong className="text-white">Gloria Margarino</strong>, fotografa e videomaker, e{" "}
-                      <strong className="text-white">Ivan Scrofani</strong>, video editor, guidano Future Frames
+                      <strong className="text-white">Ivan Scrofani</strong>, account manager, guidano Future Frames
                       unendo sensibilità visiva e montaggio narrativo. Ogni progetto nasce dal dialogo con il
                       cliente e dalla cura per i dettagli.
                     </p>
