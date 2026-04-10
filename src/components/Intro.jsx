@@ -124,7 +124,7 @@ const services = [
   },
   {
     id: "aziende",
-    img: "/images/e-commerce.jpg",
+    img: "/images/borsa.png",
     title: "AZIENDE",
     text: "E-Commerce, healthcare, moda e wellness. Raccontiamo la tua azienda con immagini che non si limitano a mostrare, ma comunicano valore.",
   },
