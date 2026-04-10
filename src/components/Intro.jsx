@@ -370,19 +370,11 @@ export default function Intro() {
 
               <div className="relative overflow-hidden rounded-2xl border border-violet-500/40 bg-zinc-900/80 shadow-[0_20px_65px_rgba(89,28,135,0.4)]">
                 <video className="absolute inset-0 h-full w-full object-cover opacity-65"
-                  src="/videos/ToyotaXReply.mp4" autoPlay loop muted playsInline />
+                  src="/videos/selezione-lavori.mp4" autoPlay loop muted playsInline />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-black/30" />
                 <Link href="/portfolio">
-                  <div className="relative flex h-64 md:h-72 flex-col justify-between px-6 md:px-10 py-6 md:py-8">
+                  <div className="relative flex h-64 md:h-72 flex-col justify-between px-6 md:px-10 py-6 md:py-24">
                     <div>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-400/50 bg-violet-900/60 px-3 py-1 text-[0.6rem] font-montserrat uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm">
-                        <i className="fa-solid fa-play text-[0.5rem]" /> Spot aziendale
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.25em] text-violet-300 mb-2">
-                        Toyota × Reply
-                      </p>
                       <p className="font-antonio text-2xl md:text-3xl max-w-lg leading-snug text-white">
                         Una selezione dei nostri lavori in un unico flusso cinematografico.
                       </p>
