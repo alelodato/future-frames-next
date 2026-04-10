@@ -81,7 +81,7 @@ const services = [
     subtitle: "precise e coerenti.",
     body: "Realizziamo contenuti prodotti in studio e con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
     list: [],
-    media: { type: "image", src: "/images/e-commerce.jpg", alt: "E-commerce Still Life" },
+    media: { type: "image", src: "/images/e-commerce.webp", alt: "E-commerce Still Life" },
   },
   {
     id: "spot",
@@ -203,9 +203,6 @@ function StickyServices() {
                   <span className="font-montserrat text-[0.55rem] uppercase tracking-[0.4em] text-zinc-400 border border-zinc-700/60 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
                     {s.label}
                   </span>
-                </div>
-                <div className="absolute bottom-6 right-6">
-                  <span className="font-antonio text-6xl text-white/8 select-none">{s.index}</span>
                 </div>
               </div>
             ))}
