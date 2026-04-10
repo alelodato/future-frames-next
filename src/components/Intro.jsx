@@ -123,10 +123,10 @@ const services = [
     text: "Contenuti foto e video per eventi aziendali, presentazioni, meeting e progetti legati al mondo culturale, editoriale e cinematografico.",
   },
   {
-    id: "aziende",
-    img: "/images/aziende.webp",
-    title: "AZIENDE",
-    text: "Contenuti visivi per aziende, progettati per comunicare identità, prodotti e servizi in modo chiaro e coerente.",
+    id: "e-commerce",
+    img: "/images/borsa.webp",
+    title: "E-COMMERCE & STILL LIFE",
+    text: "Contenuti prodotti in studio e con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
   },
   {
     id: "podcast",
@@ -137,7 +137,7 @@ const services = [
   {
     id: "food",
     img: "/images/food.jpg",
-    title: "FOOD",
+    title: "FOOD & BEVERAGE",
     text: "Contenuti foto e video per ristoranti e brand food, pensati per valorizzare il prodotto, piatti e identità visiva.",
   },
   {
@@ -149,7 +149,7 @@ const services = [
   {
     id: "montaggio",
     img: "/images/montaggio2.png",
-    title: "MONTAGGIO",
+    title: "MONTAGGIO VIDEO",
     text: "Servizi di montaggio e post-produzione per progetti video, inclusi contenuti per cinema, TV e produzioni esterne.",
   },
 ];
