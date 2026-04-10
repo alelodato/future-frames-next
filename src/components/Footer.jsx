@@ -19,7 +19,7 @@ export default function Footer() {
               <span className="text-violet-300">videomaking</span>.
             </p>
             <p className="font-montserrat text-[0.6rem] text-zinc-600">
-              P. IVA: —
+              P.IVA: 17267201006
             </p>
           </div>
 
