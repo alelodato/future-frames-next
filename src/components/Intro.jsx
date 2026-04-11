@@ -4,6 +4,46 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import PortfolioModal from "@/components/PortfolioModal";
 import MappaConConsent from "./MappaConConsent";
+import { createSupabaseBrowser } from "@/lib/supabase-browser";
+
+const services = [
+  {
+    id: "eventi",
+    img: "/images/eventi.webp",
+    title: "EVENTI",
+    text: "Contenuti foto e video per eventi aziendali, presentazioni, meeting e progetti legati al mondo culturale, editoriale e cinematografico.",
+  },
+  {
+    id: "e-commerce",
+    img: "/images/borsa.webp",
+    title: "E-COMMERCE & STILL LIFE",
+    text: "Contenuti prodotti in studio e con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
+  },
+  {
+    id: "podcast",
+    img: "/images/podcast.webp",
+    title: "PODCAST",
+    text: "Produzione completa di podcast video, dalla definizione del format alla registrazione e post-produzione.",
+  },
+  {
+    id: "food",
+    img: "/images/calamaro.webp",
+    title: "FOOD & BEVERAGE",
+    text: "Contenuti foto e video per ristoranti e brand food, pensati per valorizzare il prodotto, piatti e identità visiva.",
+  },
+  {
+    id: "spot pubblicitari",
+    img: "/images/spot.webp",
+    title: "SPOT PUBBLICITARI",
+    text: "Video pubblicitari sviluppati dal concept alla realizzazione, con un approccio cinematografico.",
+  },
+  {
+    id: "montaggio",
+    img: "/images/montaggio2.png",
+    title: "MONTAGGIO VIDEO",
+    text: "Servizi di montaggio e post-produzione per progetti video, inclusi contenuti per cinema, TV e produzioni esterne.",
+  },
+];
 
 function ContactForm() {
   const [name, setName] = useState("");
@@ -113,50 +153,25 @@ ${messageTrim}
   );
 }
 
-
-
-const services = [
-  {
-    id: "eventi",
-    img: "/images/eventi.webp",
-    title: "EVENTI",
-    text: "Contenuti foto e video per eventi aziendali, presentazioni, meeting e progetti legati al mondo culturale, editoriale e cinematografico.",
-  },
-  {
-    id: "e-commerce",
-    img: "/images/borsa.webp",
-    title: "E-COMMERCE & STILL LIFE",
-    text: "Contenuti prodotti in studio e con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
-  },
-  {
-    id: "podcast",
-    img: "/images/podcast.webp",
-    title: "PODCAST",
-    text: "Produzione completa di podcast video, dalla definizione del format alla registrazione e post-produzione.",
-  },
-  {
-    id: "food",
-    img: "/images/calamaro.webp",
-    title: "FOOD & BEVERAGE",
-    text: "Contenuti foto e video per ristoranti e brand food, pensati per valorizzare il prodotto, piatti e identità visiva.",
-  },
-  {
-    id: "spot pubblicitari",
-    img: "/images/spot.webp",
-    title: "SPOT PUBBLICITARI",
-    text: "Video pubblicitari sviluppati dal concept alla realizzazione, con un approccio cinematografico.",
-  },
-  {
-    id: "montaggio",
-    img: "/images/montaggio2.png",
-    title: "MONTAGGIO VIDEO",
-    text: "Servizi di montaggio e post-produzione per progetti video, inclusi contenuti per cinema, TV e produzioni esterne.",
-  },
-];
-
 export default function Intro() {
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [latestArticle, setLatestArticle] = useState(null);
+
+  useEffect(() => {
+    async function fetchLatestArticle() {
+      const supabase = createSupabaseBrowser();
+      const { data } = await supabase
+        .from("articles")
+        .select("id, title, slug, excerpt, category, cover_image, read_time")
+        .eq("published", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+      if (data) setLatestArticle(data);
+    }
+    fetchLatestArticle();
+  }, []);
 
   return (
     <section
@@ -425,35 +440,47 @@ export default function Intro() {
               </div>
 
               <div className="grid gap-5 md:grid-cols-[1fr_1.6fr] items-stretch">
-                {/* Su mobile: articolo prima, testo dopo */}
-                <Link href="/blog/ultimo-articolo" className="group block md:order-2">
-                  <article className="relative h-full min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
-                    <img src="/images/introimg1.webp" alt="Anteprima ultimo articolo"
-                      className="absolute inset-0 h-full w-full object-cover opacity-50 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-65" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
-                    <div className="relative flex h-full flex-col justify-between p-5 sm:p-6">
-                      <div>
-                        <span className="inline-flex items-center rounded-full border border-violet-400/40 bg-violet-900/50 px-2.5 py-0.5 text-[0.6rem] font-montserrat uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm">
-                          Ultimo articolo
-                        </span>
+                {/* Articolo in evidenza */}
+                {latestArticle ? (
+                  <Link href={`/blog/${latestArticle.slug}`} className="group block md:order-2">
+                    <article className="relative h-full min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
+                      <img
+                        src={latestArticle.cover_image || "/images/intro1.webp"}
+                        alt={latestArticle.title}
+                        className="absolute inset-0 h-full w-full object-cover opacity-50 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-65"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
+                      <div className="relative flex h-full flex-col justify-between p-5 sm:p-6">
+                        <div>
+                          <span className="inline-flex items-center rounded-full border border-violet-400/40 bg-violet-900/50 px-2.5 py-0.5 text-[0.6rem] font-montserrat uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm">
+                            Ultimo articolo
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.25em] text-violet-300 mb-2">
+                            {latestArticle.category && `${latestArticle.category} · `}
+                            {latestArticle.read_time ? `${latestArticle.reading_time} min di lettura` : ""}
+                          </p>
+                          <h4 className="font-antonio text-xl md:text-2xl leading-snug text-white transition group-hover:text-violet-200">
+                            {latestArticle.title}
+                          </h4>
+                          {latestArticle.excerpt && (
+                            <p className="mt-2 font-montserrat text-xs text-zinc-300 leading-relaxed line-clamp-2">
+                              {latestArticle.excerpt}
+                            </p>
+                          )}
+                          <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-montserrat uppercase tracking-[0.18em] text-violet-400 transition group-hover:text-violet-300">
+                            Leggi l&apos;articolo <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.25em] text-violet-300 mb-2">
-                          Fotografia · 5 min di lettura
-                        </p>
-                        <h4 className="font-antonio text-xl md:text-2xl leading-snug text-white transition group-hover:text-violet-200">
-                          Come raccontare un matrimonio attraverso la luce naturale
-                        </h4>
-                        <p className="mt-2 font-montserrat text-xs text-zinc-300 leading-relaxed line-clamp-2">
-                          Un approfondimento su come utilizziamo la luce disponibile per creare immagini cinematografiche nelle cerimonie più intime.
-                        </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-montserrat uppercase tracking-[0.18em] text-violet-400 transition group-hover:text-violet-300">
-                          Leggi l&apos;articolo <i className="fa-solid fa-arrow-right text-[0.6rem]" />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                    </article>
+                  </Link>
+                ) : (
+                  /* Skeleton loading */
+                  <div className="md:order-2 relative min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 animate-pulse" />
+                )}
 
                 <div className="flex flex-col justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.6)] md:order-1">
                   <div>
