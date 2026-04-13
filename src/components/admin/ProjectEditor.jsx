@@ -138,11 +138,9 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange, label, isMobile =
       id: "A", label: "Pattern A — Grande + 2 affiancati",
       content: (
         <div className="space-y-1">
-          {/* Grande sopra — w-full h-[80vw] → ratio 5:4 */}
           <div className="overflow-hidden rounded-lg border border-violet-500/20 w-full" style={{ aspectRatio: "5/4" }}>
             <img src={imageUrl} alt="A grande" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
           </div>
-          {/* Due affiancati sotto — flex-1 h-[100vw] → ratio 1:2 */}
           <div className="flex gap-1">
             <div className="flex-1 overflow-hidden rounded-lg border border-violet-500/20" style={{ aspectRatio: "1/2" }}>
               <img src={imageUrl} alt="A sx" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
@@ -158,7 +156,6 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange, label, isMobile =
       id: "B", label: "Pattern B — Due impilati",
       content: (
         <div className="space-y-1">
-          {/* Due full-width impilati — w-full h-[50vw] → ratio 2:1 */}
           <div className="overflow-hidden rounded-lg border border-violet-500/20 w-full" style={{ aspectRatio: "2/1" }}>
             <img src={imageUrl} alt="B top" className="w-full h-full pointer-events-none" style={imgStyle} draggable={false} />
           </div>
@@ -212,15 +209,15 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange, label, isMobile =
 
       <div className="grid grid-cols-3 gap-1.5">
         {[
-          { label: "↖ Alto sx", x: 25, y: 25 },
+          { label: "↖️ Alto sx", x: 25, y: 25 },
           { label: "↑ Alto", x: 50, y: 20 },
-          { label: "↗ Alto dx", x: 75, y: 25 },
+          { label: "↗️ Alto dx", x: 75, y: 25 },
           { label: "← Sinistra", x: 20, y: 50 },
           { label: "⊙ Centro", x: 50, y: 50 },
           { label: "→ Destra", x: 80, y: 50 },
-          { label: "↙ Basso sx", x: 25, y: 75 },
+          { label: "↙️ Basso sx", x: 25, y: 75 },
           { label: "↓ Basso", x: 50, y: 80 },
-          { label: "↘ Basso dx", x: 75, y: 75 },
+          { label: "↘️ Basso dx", x: 75, y: 75 },
         ].map((preset) => (
           <button key={preset.label} type="button" onClick={() => onChange(preset.x, preset.y)}
             className={`rounded-lg px-2 py-1.5 font-montserrat text-[0.55rem] transition
@@ -251,6 +248,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
   const [videoTeaserUrl, setVideoTeaserUrl] = useState(initialData?.video_teaser_url || "");
   const [videoFullUrl, setVideoFullUrl] = useState(initialData?.video_full_url || "");
   const [videoPlatform, setVideoPlatform] = useState(initialData?.video_platform || "vimeo");
+  const [videoVertical, setVideoVertical] = useState(initialData?.video_vertical || false);
   const [tagsInput, setTagsInput] = useState((initialData?.tags || []).join(", "));
   const [featured, setFeatured] = useState(initialData?.featured || false);
   const [published, setPublished] = useState(initialData?.published || false);
@@ -346,6 +344,7 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       video_teaser_url: videoTeaserUrl,
       video_full_url: videoFullUrl,
       video_platform: videoPlatform,
+      video_vertical: videoVertical,
       tags, featured, published,
       _images: images,
     });
@@ -422,7 +421,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
 
         {coverImage && (
           <div className="space-y-2">
-            {/* Desktop accordion */}
             <div className="rounded-xl border border-violet-500/20 overflow-hidden">
               <button type="button" onClick={() => setDesktopPickerOpen(!desktopPickerOpen)}
                 className="w-full flex items-center justify-between px-4 py-3 bg-violet-900/10 hover:bg-violet-900/20 transition">
@@ -446,7 +444,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               )}
             </div>
 
-            {/* Mobile accordion */}
             <div className="rounded-xl border border-indigo-500/20 overflow-hidden">
               <button type="button" onClick={() => setMobilePickerOpen(!mobilePickerOpen)}
                 className="w-full flex items-center justify-between px-4 py-3 bg-indigo-900/10 hover:bg-indigo-900/20 transition">
@@ -545,9 +542,9 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
       {/* ── FOOTER ── */}
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 px-4 sm:px-5 py-4">
 
-        {/* Desktop: toggle sinistra + bottone destra */}
+        {/* Desktop */}
         <div className="hidden sm:flex items-center justify-between">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 flex-wrap">
             <label className="flex items-center gap-3 cursor-pointer">
               <div onClick={() => setPublished(!published)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${published ? "bg-violet-500" : "bg-zinc-700"}`}>
@@ -562,6 +559,13 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               </div>
               <span className="font-montserrat text-xs text-zinc-300">Progetto in evidenza</span>
             </label>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <div onClick={() => setVideoVertical(!videoVertical)}
+                className={`relative h-6 w-11 rounded-full transition-colors ${videoVertical ? "bg-fuchsia-500" : "bg-zinc-700"}`}>
+                <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${videoVertical ? "translate-x-5" : "translate-x-0.5"}`} />
+              </div>
+              <span className="font-montserrat text-xs text-zinc-300">Video verticale</span>
+            </label>
           </div>
           <button type="submit" disabled={saving || !title}
             className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -573,9 +577,9 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
           </button>
         </div>
 
-        {/* Mobile: toggle + bottone in colonna */}
+        {/* Mobile */}
         <div className="flex sm:hidden flex-col gap-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <label className="flex items-center gap-3 cursor-pointer">
               <div onClick={() => setPublished(!published)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${published ? "bg-violet-500" : "bg-zinc-700"}`}>
@@ -590,6 +594,13 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
               </div>
               <span className="font-montserrat text-xs text-zinc-300">In evidenza</span>
             </label>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <div onClick={() => setVideoVertical(!videoVertical)}
+                className={`relative h-6 w-11 rounded-full transition-colors ${videoVertical ? "bg-fuchsia-500" : "bg-zinc-700"}`}>
+                <div className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${videoVertical ? "translate-x-5" : "translate-x-0.5"}`} />
+              </div>
+              <span className="font-montserrat text-xs text-zinc-300">Video verticale</span>
+            </label>
           </div>
           <button type="submit" disabled={saving || !title}
             className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-6 py-3 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -600,7 +611,6 @@ export default function ProjectEditor({ initialData, onSave, saving }) {
             )}
           </button>
         </div>
-
       </div>
 
     </form>

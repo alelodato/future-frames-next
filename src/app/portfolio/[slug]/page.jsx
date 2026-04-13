@@ -53,30 +53,37 @@ function Lightbox({ images, startIndex, onClose }) {
   );
 }
 
-// ─── Video embed ──────────────────────────────────────────────
-function VideoEmbed({ url, platform }) {
+function VideoEmbed({ url, platform, vertical = false }) {
   if (!url) return null;
 
   let embedUrl = "";
   if (platform === "vimeo") {
     const id = url.match(/vimeo\.com\/(\d+)/)?.[1];
-    if (id) embedUrl = `https://player.vimeo.com/video/${id}?autoplay=0&title=0&byline=0&portrait=0`;
+    if (id) embedUrl = `https://player.vimeo.com/video/${id}?autoplay=0&title=0&byline=0&portrait=0&fullscreen=1`;
   } else if (platform === "youtube") {
     const id = url.match(/(?:v=|youtu\.be\/)([^&\s]+)/)?.[1];
-    if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+    if (id) embedUrl = `https://www.youtube.com/embed/${id}?fs=1`;
   }
 
   if (!embedUrl) return null;
 
+  // aspect ratio: 9/16 per verticali, 16/9 per orizzontali
+  const paddingTop = vertical ? "177.78%" : "56.25%";
+  const maxWidth = vertical ? "400px" : "100%";
+
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-black shadow-[0_20px_80px_rgba(0,0,0,0.8)]"
-      style={{ paddingTop: "56.25%" }}>
-      <iframe
-        src={embedUrl}
-        className="absolute inset-0 h-full w-full"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowFullScreen
-      />
+    <div className={vertical ? "flex justify-center w-full" : "w-full"}>
+      <div
+        className="relative overflow-hidden rounded-2xl bg-black shadow-[0_20px_80px_rgba(0,0,0,0.8)] w-full"
+        style={{ paddingTop, maxWidth }}
+      >
+        <iframe
+          src={embedUrl}
+          className="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
     </div>
   );
 }
@@ -223,7 +230,11 @@ export default function ProjectPage() {
 
             {/* Video embed */}
             {project.video_full_url && (
-              <VideoEmbed url={project.video_full_url} platform={project.video_platform} />
+              <VideoEmbed
+                url={project.video_full_url}
+                platform={project.video_platform}
+                vertical={project.video_vertical ?? false}
+              />
             )}
 
             {/* Descrizione */}
