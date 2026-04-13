@@ -143,7 +143,9 @@ export default function About() {
         <FadeReveal>
           <div>
             <p className="font-montserrat text-sm md:hidden leading-relaxed text-zinc-300">
-              Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale. Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
+              Future Frames è un’agenzia creativa specializzata in fotografia e filmmaking professionale.
+              <br />
+              Diamo forma ai tuoi momenti e alla tua identità, con immagini che comunicano e restano nel tempo.
             </p>
           </div>
         </FadeReveal>

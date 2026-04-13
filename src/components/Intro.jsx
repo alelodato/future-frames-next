@@ -416,7 +416,7 @@ export default function Intro() {
             </section>
 
             <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-            {/* BLOG */}
+            {/* BLOG 
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
@@ -438,65 +438,9 @@ export default function Intro() {
                   Tutti gli articoli <i className="fa-solid fa-circle-arrow-right" />
                 </Link>
               </div>
-
-              <div className="grid gap-5 md:grid-cols-[1fr_1.6fr] items-stretch">
-                {/* Articolo in evidenza */}
-                {latestArticle ? (
-                  <Link href={`/blog/${latestArticle.slug}`} className="group block md:order-2">
-                    <article className="relative h-full min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 shadow-[0_20px_55px_rgba(0,0,0,0.75)]">
-                      <img
-                        src={latestArticle.cover_image || "/images/intro1.webp"}
-                        alt={latestArticle.title}
-                        className="absolute inset-0 h-full w-full object-cover opacity-50 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-65"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
-                      <div className="relative flex h-full flex-col justify-between p-5 sm:p-6">
-                        <div>
-                          <span className="inline-flex items-center rounded-full border border-violet-400/40 bg-violet-900/50 px-2.5 py-0.5 text-[0.6rem] font-montserrat uppercase tracking-[0.2em] text-violet-300 backdrop-blur-sm">
-                            Ultimo articolo
-                          </span>
-                        </div>
-                        <div>
-                          <p className="font-montserrat text-[0.65rem] uppercase tracking-[0.25em] text-violet-300 mb-2">
-                            {latestArticle.category && `${latestArticle.category} · `}
-                            {latestArticle.read_time ? `${latestArticle.reading_time} min di lettura` : ""}
-                          </p>
-                          <h4 className="font-antonio text-xl md:text-2xl leading-snug text-white transition group-hover:text-violet-200">
-                            {latestArticle.title}
-                          </h4>
-                          {latestArticle.excerpt && (
-                            <p className="mt-2 font-montserrat text-xs text-zinc-300 leading-relaxed line-clamp-2">
-                              {latestArticle.excerpt}
-                            </p>
-                          )}
-                          <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-montserrat uppercase tracking-[0.18em] text-violet-400 transition group-hover:text-violet-300">
-                            Leggi l&apos;articolo <i className="fa-solid fa-arrow-right text-[0.6rem]" />
-                          </span>
-                        </div>
-                      </div>
-                    </article>
-                  </Link>
-                ) : (
-                  /* Skeleton loading */
-                  <div className="md:order-2 relative min-h-[260px] overflow-hidden rounded-2xl border border-white/8 bg-zinc-900/70 animate-pulse" />
-                )}
-
-                <div className="flex flex-col justify-between rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.6)] md:order-1">
-                  <div>
-                    <p className="font-montserrat text-sm leading-relaxed text-zinc-200">
-                      Sul nostro blog condividiamo riflessioni sul mestiere, consigli pratici per valorizzare i contenuti visivi e racconti dietro le quinte dei nostri progetti.
-                    </p>
-                    <p className="mt-4 font-montserrat text-sm leading-relaxed text-zinc-300">
-                      Da come scegliere il servizio fotografico giusto, a come raccontare un&apos;azienda attraverso le immagini: ogni articolo nasce dall&apos;esperienza sul campo.
-                    </p>
-                  </div>
-                  <Link href="/blog" className="mt-8 inline-flex items-center gap-2 text-xs font-montserrat uppercase tracking-[0.2em] text-violet-300 hover:text-violet-200 transition">
-                    Leggi tutti gli articoli <i className="fa-solid fa-circle-arrow-right" />
-                  </Link>
-                </div>
-              </div>
             </section>
+            */}
+
             {/* VIDEOLEZIONI 
             <section aria-label="Videolezioni Future Frames" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
