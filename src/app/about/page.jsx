@@ -133,7 +133,7 @@ export default function About() {
         {/* Immagine full bleed mobile */}
         <FadeReveal className="md:hidden -mx-6 mb-10">
           <div className="relative w-full overflow-hidden" style={{ height: "clamp(260px, 50vw, 420px)" }}>
-            <img src="/images/introimg4.webp" alt="Future Frames backstage"
+            <img src="/images/set.webp" alt="Future Frames backstage"
               className="w-full h-full object-cover" />
             <div className="absolute inset-0"
               style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />

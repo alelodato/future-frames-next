@@ -385,7 +385,7 @@ export default function Intro() {
 
               <div className="relative overflow-hidden rounded-2xl border border-violet-500/40 bg-zinc-900/80 shadow-[0_20px_65px_rgba(89,28,135,0.4)]">
                 <video className="absolute inset-0 h-full w-full object-cover opacity-65"
-                  src="/videos/selezione-lavori.mp4" autoPlay loop muted playsInline />
+                  src="/videos/selezione-lavori.mp4" autoPlay loop muted playsInline preload="none" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-black/30" />
                 <Link href="/portfolio">
                   <div className="relative flex h-64 md:h-72 flex-col justify-between px-6 md:px-10 py-6 md:py-24">
@@ -744,10 +744,11 @@ export default function Intro() {
       */}
                   <video
                     className="absolute inset-0 h-full w-full object-cover opacity-70"
-                    src="/videos/ToyotaXReply.mp4"
+                    src=""
                     loop
                     muted
                     playsInline
+                    preload="none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
