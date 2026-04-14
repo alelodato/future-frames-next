@@ -48,6 +48,19 @@
   --nav-h: 100px;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, transparent, #818cf8, #a855f7, #818cf8, transparent);
+  border-radius: 999px;
+}
+
 /* ── Neon helpers ── */
 .neon-white {
   color: var(--white);
