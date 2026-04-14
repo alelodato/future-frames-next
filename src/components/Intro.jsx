@@ -688,7 +688,7 @@ export default function Intro() {
       */}
                   <video
                     className="absolute inset-0 h-full w-full object-cover opacity-70"
-                    src=""
+                    src="food.mp4"
                     loop
                     muted
                     playsInline
@@ -782,8 +782,8 @@ export default function Intro() {
                   Raccontaci il tuo progetto
                 </h3>
                 <p className="mt-1 font-montserrat text-xs text-zinc-300 max-w-2xl">
-                  Ci troviamo a <span className="text-violet-300 font-semibold">Pomezia</span> e operiamo principalmente
-                  nel territorio della provincia di Roma.
+                  Operiamo principalmente
+                  nel territorio della provincia di <span className="text-violet-300 font-semibold">Roma</span>.
                   <br />
                   Disponibili a trasferte su accordo con il cliente.
                 </p>
@@ -805,13 +805,6 @@ export default function Intro() {
 
                   <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 sm:p-6 shadow-[0_12px_40px_rgba(0,0,0,0.6)] space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-violet-500/30 bg-violet-900/40">
-                        <i className="fa-solid fa-location-dot text-violet-400 text-xs" />
-                      </div>
-                      <div>
-                        <p className="font-montserrat text-[0.7rem] uppercase tracking-[0.2em] text-violet-300 mb-0.5">Sede</p>
-                        <p className="font-montserrat text-sm text-zinc-200">Pomezia (RM)</p>
-                      </div>
                     </div>
 
                     <div className="flex items-start gap-3">
@@ -822,6 +815,7 @@ export default function Intro() {
                         <p className="font-montserrat text-[0.7rem] uppercase tracking-[0.2em] text-violet-300 mb-0.5">Area operativa</p>
                         <p className="font-montserrat text-sm text-zinc-200">
                           Provincia di Roma e dintorni.{" "}
+                          <br />
                           <span className="text-zinc-400">Trasferte disponibili in accordo con il cliente.</span>
                         </p>
                       </div>

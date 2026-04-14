@@ -371,15 +371,16 @@ export default function About() {
           <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] items-stretch">
             <FadeReveal className="space-y-6">
               <h3 className="font-antonio text-3xl md:text-4xl text-white leading-tight">
-                Con base a Pomezia,
-                <span className="block text-violet-300">alle porte di Roma.</span>
+                Roma e dintorni,
+                <span className="block text-violet-300">con disponibilitá a trasferte.</span>
               </h3>
               <p className="font-montserrat text-sm leading-relaxed text-zinc-300">
-                Operiamo principalmente nell&apos;area metropolitana di Roma. Per progetti strutturati valutiamo trasferte in altre città italiane.
+                Operiamo principalmente nell&apos;area metropolitana di Roma.
+                <br />
+                Per progetti strutturati valutiamo trasferte in altre città italiane.
               </p>
               <div className="space-y-3 pt-2">
                 {[
-                  { icon: "fa-solid fa-location-dot", text: "Pomezia, Roma — Lazio" },
                   { icon: "fa-solid fa-map", text: "Provincia di Roma e dintorni" },
                   { icon: "fa-solid fa-car", text: "Trasferte su accordo" },
                 ].map((item) => (
