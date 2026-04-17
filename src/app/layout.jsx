@@ -39,7 +39,10 @@ export const metadata = {
   },
   verification: {
     google: "XtJ-ZLwCQXbhvQJTO5X2ZGklVT0Kuz6eb4GpCng6GHM"
-  }
+  },
+  icons: {
+    icons: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {
