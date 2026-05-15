@@ -81,7 +81,7 @@ const services = [
     subtitle: "precise e coerenti.",
     body: "Realizziamo contenuti prodotti in studio e con fondali, attraverso set controllati e soluzioni adatte a cataloghi ed e-commerce.",
     list: [],
-    media: { type: "image", src: "/images/e-commerce.webp", alt: "E-commerce Still Life" },
+    media: { type: "image", src: "/images/borsa.webp", alt: "E-commerce Still Life" },
   },
   {
     id: "spot",

@@ -305,7 +305,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── VIDEO RECENSIONE ── */}
+      {/* ── VIDEO RECENSIONE ── 
       <section className="py-24 px-6 md:px-12 max-w-5xl mx-auto space-y-12">
         <FadeReveal className="flex items-center gap-4">
           <GlowLine className="flex-1" />
@@ -360,6 +360,8 @@ export default function About() {
           </a>
         </FadeReveal>
       </section>
+      */}
+
 
       {/* ── DOVE LAVORIAMO ── */}
       <section className="py-24">
