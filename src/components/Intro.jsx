@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import PortfolioModal from "@/components/PortfolioModal";
+{/* import PortfolioModal from "@/components/PortfolioModal"; */ }
 import MappaConConsent from "./MappaConConsent";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
@@ -415,8 +415,9 @@ export default function Intro() {
               </div>
             </section>
 
-            <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+
             {/* BLOG 
+            <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
