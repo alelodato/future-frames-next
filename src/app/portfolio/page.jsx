@@ -5,7 +5,7 @@ import Link from "next/link";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import PortfolioModal from "@/components/PortfolioModal";
+{/* import PortfolioModal from "@/components/PortfolioModal"; */ }
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -454,7 +454,7 @@ function MobilePortfolio({ projects }) {
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
+  {/*const [modalOpen, setModalOpen] = useState(false);*/ }
 
   useEffect(() => { fetchProjects(); }, []);
 
@@ -484,7 +484,7 @@ export default function Portfolio() {
         </>
       )}
 
-      {/* ── CTA FINALE ── */}
+      {/* ── CTA FINALE ── 
       <section className="relative h-[70vh] overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0" />
         <div className="pointer-events-none absolute inset-0" />
@@ -504,6 +504,8 @@ export default function Portfolio() {
           </button>
         </div>
       </section>
+      */}
+
 
     </div>
   );

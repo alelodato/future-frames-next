@@ -401,7 +401,7 @@ export default function Intro() {
                 </Link>
               </div>
 
-              {/* CTA scarica portfolio — attaccata al video */}
+              {/* CTA scarica portfolio — attaccata al video 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 px-1">
                 <div>
                   <p className="font-montserrat text-xs text-zinc-300">Vuoi vedere tutti i nostri lavori?</p>
@@ -413,6 +413,8 @@ export default function Intro() {
                   Scarica il portfolio
                 </button>
               </div>
+              */}
+
             </section>
 
 
