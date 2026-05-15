@@ -154,16 +154,7 @@ export default function About() {
       {/* Immagine full bleed desktop */}
       <FadeReveal className="hidden md:block">
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(300px, 55vh, 600px)" }}>
-          {/* Sfumatura esterna — sopra e sotto */}
-          <div className="absolute inset-x-0 top-0 h-32 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, #000000 0%, transparent 100%)" }} />
-          <div className="absolute inset-x-0 bottom-0 h-32 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to top, #000000 0%, transparent 100%)" }} />
-          {/* Sfumatura esterna — lati */}
-          <div className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to right, #000000 0%, transparent 100%)" }} />
-          <div className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to left, #000000 0%, transparent 100%)" }} />
+
           <img src="/images/set.webp" alt="Future Frames backstage"
             className="w-full h-full object-cover" />
         </div>
