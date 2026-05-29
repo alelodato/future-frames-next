@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 {/* import PortfolioModal from "@/components/PortfolioModal"; */ }
 import MappaConConsent from "./MappaConConsent";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import CinemaVideo from "./CinemaVideo";
 
 const services = [
   {
@@ -182,6 +183,10 @@ export default function Intro() {
       <div className="relative">
         <div className="px-4 py-10 sm:py-16 space-y-20 sm:space-y-24 min-h-screen" style={{ background: "radial-gradient(ellipse at center, #000000 0%, #000000 8%, #1a0533 30%, #3d0b2d 50%, #1a0533 70%, #000000 88%, #000000 100%)" }}>
           <div className="relative mx-auto max-w-7xl px-0 sm:px-4 py-10 sm:py-16 space-y-16 sm:space-y-20">
+            {/* ── PRESENTAZIONE GLORIA ── */}
+            <section className="w-full py-8 md:py-16 px-5 md:px-20 lg:px-32 xl:px-48" data-aos="fade-up">
+              <CinemaVideo />
+            </section>
             {/* ── HERO CARD ── */}
             <div className="mx-auto max-w-7xl px-0 sm:px-4">
               <div className="overflow-hidden rounded-3xl border border-white/8 bg-[#080618] shadow-[0_0_80px_rgba(124,58,237,0.25)]">
@@ -538,7 +543,7 @@ export default function Intro() {
                     {/* Immagini — solo mobile, dopo il testo intro */}
                     <div className="md:hidden relative h-[320px]">
                       <div className="absolute left-0 top-0 w-[45%] h-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)]">
-                        <img src="/images/gloria2.jpeg" alt="Gloria Margarino" className="w-full h-full object-cover" loading="lazy" />
+                        <img src="/images/gloria.webp" alt="Gloria Margarino" className="w-full h-full object-cover" loading="lazy" />
                         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
                           <p className="font-antonio text-[0.7rem] tracking-wide text-white">Gloria</p>
                         </div>
@@ -555,7 +560,7 @@ export default function Intro() {
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-3 rounded-2xl border border-violet-500/15 bg-white/[0.03] px-4 py-3">
                         <div className="h-9 w-9 flex-shrink-0 overflow-hidden rounded-xl border border-violet-400/20">
-                          <img src="/images/gloria2.jpeg" alt="Gloria" className="h-full w-full object-cover" loading="lazy" />
+                          <img src="/images/gloria.webp" alt="Gloria" className="h-full w-full object-cover" loading="lazy" />
                         </div>
                         <div>
                           <p className="font-antonio text-sm tracking-wide text-white">Gloria Margarino</p>
@@ -586,7 +591,7 @@ export default function Intro() {
                     <div className="pointer-events-none absolute top-10 right-10 h-72 w-72 rounded-full bg-gradient-to-br from-violet-600/30 via-fuchsia-500/15 to-sky-500/10 blur-3xl" />
 
                     <div className="absolute top-8 left-6 md:left-8 z-10 w-[155px] h-[270px] md:w-[170px] md:h-[310px] lg:w-[195px] lg:h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] transition duration-500 hover:scale-[1.02]">
-                      <img src="/images/gloria2.jpeg" alt="Gloria Margarino" className="w-full h-full object-cover transition duration-700 hover:scale-[1.04]" loading="lazy" />
+                      <img src="/images/gloria.webp" alt="Gloria Margarino" className="w-full h-full object-cover transition duration-700 hover:scale-[1.04]" loading="lazy" />
                       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-3">
                         <p className="font-antonio text-[0.7rem] tracking-wide text-white">Gloria</p>
                       </div>

@@ -135,8 +135,6 @@ export default function About() {
           <div className="relative w-full overflow-hidden" style={{ height: "clamp(260px, 50vw, 420px)" }}>
             <img src="/images/set.webp" alt="Future Frames backstage"
               className="w-full h-full object-cover" />
-            <div className="absolute inset-0"
-              style={{ background: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%)" }} />
           </div>
         </FadeReveal>
         {/* Intro testo */}
@@ -172,7 +170,7 @@ export default function About() {
           <FadeReveal>
             <div className="relative">
               <div className="overflow-hidden rounded-2xl aspect-[3/4]">
-                <img src="/images/gloria2.jpeg" alt="Gloria Margarino"
+                <img src="/images/gloria.webp" alt="Gloria Margarino"
                   className="w-full h-full object-cover object-top transition duration-700 hover:scale-[1.03]" />
               </div>
               <div className="absolute -bottom-4 -right-4 rounded-xl border border-violet-400/20 bg-[#02010b] px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.8)]">
