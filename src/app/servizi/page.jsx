@@ -317,8 +317,8 @@ export default function Servizi() {
           </div>
         </div>
 
-        {/* ── TABLET md → xl (stesso layout) ── */}
-        <div className="hidden md:flex xl:hidden relative z-10 flex-col px-8 lg:px-12 pt-24 pb-12 gap-8">
+        {/* ── TABLET (md → lg) ── */}
+        <div className="hidden md:flex lg:hidden relative z-10 flex-col px-8 pt-24 pb-12 gap-8">
           <div>
             <div className="flex items-center gap-3 mb-5">
               <div className="h-px w-6 bg-violet-500 flex-shrink-0" />
@@ -327,13 +327,13 @@ export default function Servizi() {
               </p>
             </div>
             <h1 className="leading-[1.05]">
-              <span className="block font-antonio text-[3.2rem] lg:text-[4rem] text-white">Creatività,</span>
-              <span className="block font-antonio text-[2.6rem] lg:text-[3.2rem] text-zinc-400 italic ml-4">Qualità Professionale</span>
-              <span className="block font-antonio text-[3.2rem] lg:text-[4rem] text-violet-300">e Affidabilità.</span>
+              <span className="block font-antonio text-[3.2rem] text-white">Creatività,</span>
+              <span className="block font-antonio text-[2.6rem] text-zinc-400 italic ml-4">Qualità Professionale</span>
+              <span className="block font-antonio text-[3.2rem] text-violet-300">e Affidabilità.</span>
             </h1>
           </div>
 
-          <div className="flex gap-3 w-full lg:max-w-2xl" style={{ height: "200px" }}>
+          <div className="flex gap-3 w-full" style={{ height: "200px" }}>
             <div className="flex-1 rounded-2xl overflow-hidden border border-violet-500/20 shadow-xl">
               <img src="/images/pasta.webp" alt="" className="w-full h-full object-cover" />
             </div>
@@ -345,7 +345,7 @@ export default function Servizi() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 lg:max-w-2xl">
+          <div className="flex flex-col gap-4">
             <p className="font-montserrat text-sm leading-relaxed text-zinc-200 max-w-lg">
               Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
               Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
@@ -372,7 +372,49 @@ export default function Servizi() {
           </div>
         </div>
 
-        {/* ── DESKTOP (xl+) ── */}
+        {/* ── DESKTOP PICCOLO (lg → xl) — solo testo, no immagini ── */}
+        <div className="hidden lg:flex xl:hidden relative z-10 h-full min-h-[100svh] items-center px-12 max-w-4xl mx-auto">
+          <div className="flex flex-col justify-center w-full">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px w-8 bg-violet-500 flex-shrink-0" />
+              <p className="font-montserrat text-[0.55rem] uppercase tracking-[0.45em] text-violet-400">
+                Fotografia & Videomaking
+              </p>
+            </div>
+            <h1 className="leading-none mb-6">
+              <span className="block font-antonio text-6xl text-white">Creatività,</span>
+              <span className="block font-antonio text-5xl text-zinc-400 font-light italic ml-6">Qualità Professionale</span>
+              <span className="block font-antonio text-6xl text-violet-300">e Affidabilità.</span>
+            </h1>
+            <div className="mb-8 max-w-md">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-200">
+                Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
+                Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
+              </p>
+            </div>
+            <div className="flex items-center gap-5 mb-8">
+              <a href="/portfolio"
+                className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-500 px-6 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition">
+                Scopri il portfolio
+                <i className="fa-solid fa-arrow-right text-[0.6rem]" />
+              </a>
+              <a href="/contact"
+                className="font-montserrat text-xs uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition">
+                Contattaci →
+              </a>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {services.map((s) => (
+                <a key={s.id} href={`#${s.id}`}
+                  className="rounded-full border border-violet-500/30 px-3 py-1 font-montserrat text-[0.58rem] uppercase tracking-[0.15em] text-zinc-600 hover:border-violet-500/50 hover:text-violet-300 transition">
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── DESKTOP GRANDE (xl+) ── */}
         <div className="hidden xl:flex relative z-10 h-full min-h-[100svh] items-center px-16 max-w-7xl mx-auto gap-12">
           <div className="flex-1 flex flex-col justify-center min-w-0 max-w-lg">
             <div className="flex items-center gap-3 mb-6">
@@ -387,7 +429,7 @@ export default function Servizi() {
               <span className="block font-antonio text-5xl xl:text-6xl text-violet-300">e Affidabilità.</span>
             </h1>
             <div className="mb-8 max-w-sm">
-              <p className="font-montserrat text-md leading-relaxed text-zinc-200">
+              <p className="font-montserrat text-sm leading-relaxed text-zinc-200">
                 Future Frames sviluppa progetti visivi seguendo tutte le fasi operative, dalla progettazione alla consegna finale.
                 Un unico processo strutturato permette di mantenere coerenza, controllo e qualità su ogni contenuto realizzato.
               </p>
