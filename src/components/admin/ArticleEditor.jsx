@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
-import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import { Gallery, ImageBlock, uploadImageFile } from "./GalleryExtension";
 
 const categories = ["Fotografia", "Videomaking", "Dietro le quinte", "Consigli", "Progetti"];
 
@@ -26,6 +25,15 @@ function ToolbarButton({ onClick, active, title, children }) {
   );
 }
 
+// Garantisce che l'articolo finisca sempre con un paragrafo (per poter scrivere sotto)
+function ensureTrailingParagraph(editor) {
+  if (!editor) return;
+  const { doc } = editor.state;
+  if (doc.lastChild?.type.name !== "paragraph") {
+    editor.commands.insertContentAt(doc.content.size, { type: "paragraph" });
+  }
+}
+
 export default function ArticleEditor({ initialData, onSave, saving }) {
   const [title, setTitle] = useState(initialData?.title || "");
   const [excerpt, setExcerpt] = useState(initialData?.excerpt || "");
@@ -34,47 +42,158 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
   const [coverImage, setCoverImage] = useState(initialData?.cover_image || "");
   const [published, setPublished] = useState(initialData?.published || false);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingContentImage, setUploadingContentImage] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+
+  // Inserisce immagini (da drag & drop o incolla) nella posizione indicata
+  async function insertImagesAt(view, files, pos) {
+    const images = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    if (!images.length) return false;
+    setUploadingContentImage(true);
+    for (const file of images) {
+      const url = await uploadImageFile(file);
+      if (url) {
+        const node = view.state.schema.nodes.image.create({ src: url });
+        const insertPos = pos ?? view.state.selection.from;
+        view.dispatch(view.state.tr.insert(insertPos, node));
+      }
+    }
+    setUploadingContentImage(false);
+    return true;
+  }
 
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
-      Image,
+      StarterKit.configure({
+        dropcursor: { color: "#a78bfa", width: 3 },
+      }),
+      ImageBlock.configure({ HTMLAttributes: { loading: "lazy" } }),
       Link.configure({ openOnClick: false }),
       Placeholder.configure({ placeholder: "Scrivi il contenuto dell'articolo..." }),
+      Gallery,
     ],
     content: initialData?.content || "",
+    onCreate: ({ editor }) => ensureTrailingParagraph(editor),
     editorProps: {
       attributes: {
-        class: "prose prose-invert max-w-none min-h-[300px] focus:outline-none font-montserrat text-sm text-zinc-300 leading-relaxed",
+        class: "article-content min-h-[300px] focus:outline-none",
+      },
+      handlePaste(view, event) {
+        const files = event.clipboardData?.files;
+        if (files && files.length && Array.from(files).some((f) => f.type.startsWith("image/"))) {
+          event.preventDefault();
+          insertImagesAt(view, files, null);
+          return true;
+        }
+        return false;
+      },
+      handleDrop(view, event, slice, moved) {
+        const files = event.dataTransfer?.files;
+        if (moved || !files || !files.length) return false;
+        if (!Array.from(files).some((f) => f.type.startsWith("image/"))) return false;
+        event.preventDefault();
+        const coords = view.posAtCoords({ left: event.clientX, top: event.clientY });
+        insertImagesAt(view, files, coords?.pos ?? null);
+        return true;
       },
     },
   });
+
+  // ─── Scroll automatico durante il trascinamento ───
+  useEffect(() => {
+    if (!editor) return;
+
+    const EDGE = 140;      // distanza dal bordo (px) in cui parte lo scroll
+    const MAX_SPEED = 22;  // velocità massima (px per frame)
+    let rafId = null;
+    let mouseY = null;
+
+    function loop() {
+      if (mouseY !== null) {
+        const h = window.innerHeight;
+        let speed = 0;
+        if (mouseY < EDGE) speed = -MAX_SPEED * (1 - Math.max(mouseY, 0) / EDGE);
+        else if (mouseY > h - EDGE) speed = MAX_SPEED * (1 - Math.max(h - mouseY, 0) / EDGE);
+        if (speed !== 0) window.scrollBy(0, speed);
+      }
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function onDragOver(e) {
+      mouseY = e.clientY;
+      if (!rafId) rafId = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      mouseY = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    document.addEventListener("dragover", onDragOver);
+    document.addEventListener("dragend", stop);
+    document.addEventListener("drop", stop);
+
+    return () => {
+      stop();
+      document.removeEventListener("dragover", onDragOver);
+      document.removeEventListener("dragend", stop);
+      document.removeEventListener("drop", stop);
+    };
+  }, [editor]);
+
+  // Inserisce un blocco (immagine o galleria): se è selezionato un blocco, lo mette dopo
+  function insertBlock(nodeJSON) {
+    if (!editor) return;
+    const { selection } = editor.state;
+    if (selection.node) {
+      editor.chain().focus().insertContentAt(selection.to, nodeJSON).run();
+    } else {
+      editor.chain().focus().insertContent(nodeJSON).run();
+    }
+    ensureTrailingParagraph(editor);
+  }
 
   async function handleCoverUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
     setUploadingImage(true);
-    const supabase = createSupabaseBrowser();
-    const filename = `blog/${Date.now()}-${file.name}`;
-    const { data, error } = await supabase.storage.from("media").upload(filename, file);
-    if (!error) {
-      const { data: urlData } = supabase.storage.from("media").getPublicUrl(filename);
-      setCoverImage(urlData.publicUrl);
-    }
+    const url = await uploadImageFile(file);
+    if (url) setCoverImage(url);
     setUploadingImage(false);
+    e.target.value = "";
   }
 
   async function handleContentImageUpload(e) {
-    const file = e.target.files[0];
-    if (!file || !editor) return;
-    const supabase = createSupabaseBrowser();
-    const filename = `blog/${Date.now()}-${file.name}`;
-    const { error } = await supabase.storage.from("media").upload(filename, file);
-    if (!error) {
-      const { data: urlData } = supabase.storage.from("media").getPublicUrl(filename);
-      editor.chain().focus().setImage({ src: urlData.publicUrl }).run();
+    const files = e.target.files;
+    if (!files?.length || !editor) return;
+    setUploadingContentImage(true);
+    for (const file of Array.from(files)) {
+      const url = await uploadImageFile(file);
+      if (url) insertBlock({ type: "image", attrs: { src: url } });
     }
+    setUploadingContentImage(false);
+    e.target.value = "";
+  }
+
+  async function handleGalleryUpload(e) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length || !editor) return;
+    setUploadingGallery(true);
+    const urls = [];
+    for (const file of files) {
+      const url = await uploadImageFile(file);
+      if (url) urls.push(url);
+    }
+    if (urls.length) {
+      insertBlock({
+        type: "gallery",
+        attrs: { images: urls, columns: urls.length >= 3 ? 3 : 2 },
+      });
+    }
+    setUploadingGallery(false);
+    e.target.value = "";
   }
 
   function handleSubmit(e) {
@@ -89,6 +208,8 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
       published,
     });
   }
+
+  const isUploading = uploadingContentImage || uploadingGallery;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -182,7 +303,12 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
 
       {/* Editor contenuto */}
       <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-3">
-        <h3 className="font-antonio text-base text-violet-300">Contenuto</h3>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="font-antonio text-base text-violet-300">Contenuto</h3>
+          <p className="font-montserrat text-[0.6rem] text-zinc-500 text-right">
+            Invio = nuovo paragrafo · Trascina ⋮⋮ per spostare immagini e gallerie
+          </p>
+        </div>
 
         {/* Toolbar */}
         {editor && (
@@ -218,10 +344,28 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
               <i className="fa-solid fa-rotate-right text-xs" />
             </ToolbarButton>
 
-            {/* Upload immagine nel contenuto */}
-            <label className="flex h-8 w-8 items-center justify-center rounded-lg cursor-pointer text-zinc-400 hover:bg-violet-900/30 hover:text-violet-300 transition" title="Inserisci immagine">
-              <i className="fa-solid fa-image text-xs" />
-              <input type="file" accept="image/*" onChange={handleContentImageUpload} className="hidden" />
+            <div className="mx-1 h-5 w-px bg-violet-500/20" />
+
+            {/* Immagine singola */}
+            <label
+              className={`flex h-8 items-center gap-2 rounded-lg px-2.5 cursor-pointer text-zinc-400 hover:bg-violet-900/30 hover:text-violet-300 transition ${uploadingContentImage ? "opacity-60 pointer-events-none" : ""}`}
+              title="Inserisci immagine">
+              <i className={`fa-solid ${uploadingContentImage ? "fa-spinner animate-spin" : "fa-image"} text-xs`} />
+              <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.15em]">
+                {uploadingContentImage ? "Caricamento..." : "Immagine"}
+              </span>
+              <input type="file" accept="image/*" multiple onChange={handleContentImageUpload} className="hidden" />
+            </label>
+
+            {/* Galleria */}
+            <label
+              className={`flex h-8 items-center gap-2 rounded-lg px-2.5 cursor-pointer text-zinc-400 hover:bg-violet-900/30 hover:text-violet-300 transition ${uploadingGallery ? "opacity-60 pointer-events-none" : ""}`}
+              title="Inserisci galleria (immagini affiancate)">
+              <i className={`fa-solid ${uploadingGallery ? "fa-spinner animate-spin" : "fa-table-cells-large"} text-xs`} />
+              <span className="font-montserrat text-[0.6rem] uppercase tracking-[0.15em]">
+                {uploadingGallery ? "Caricamento..." : "Galleria"}
+              </span>
+              <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
             </label>
           </div>
         )}
@@ -248,7 +392,7 @@ export default function ArticleEditor({ initialData, onSave, saving }) {
 
         <button
           type="submit"
-          disabled={saving || !title}
+          disabled={saving || !title || isUploading}
           className="inline-flex items-center gap-2 rounded-full bg-violet-400 px-6 py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {saving ? (

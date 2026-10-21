@@ -68,11 +68,10 @@ function LikeButton({ articleId }) {
   return (
     <button
       onClick={toggleLike}
-      className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] transition ${
-        liked
+      className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-montserrat text-xs uppercase tracking-[0.2em] transition ${liked
           ? "border-red-400/50 bg-red-900/20 text-red-400 shadow-[0_0_20px_rgba(248,113,113,0.2)]"
           : "border-violet-500/30 bg-violet-900/10 text-violet-400 hover:bg-violet-900/30"
-      }`}
+        }`}
     >
       <i className={`fa-${liked ? "solid" : "regular"} fa-heart text-sm`} />
       {likes} {likes === 1 ? "like" : "likes"}
@@ -329,12 +328,7 @@ export default function ArticlePage() {
 
         {/* Testo articolo */}
         <div
-          className="prose prose-invert prose-violet max-w-none font-montserrat text-sm leading-relaxed text-zinc-300
-            prose-headings:font-antonio prose-headings:text-white
-            prose-h2:text-2xl prose-h3:text-xl
-            prose-a:text-violet-400 prose-a:no-underline hover:prose-a:text-violet-300
-            prose-blockquote:border-violet-500 prose-blockquote:text-zinc-400
-            prose-strong:text-white prose-img:rounded-2xl"
+          className="article-content"
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
 
