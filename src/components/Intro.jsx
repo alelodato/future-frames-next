@@ -423,7 +423,7 @@ export default function Intro() {
             </section>
 
 
-            {/* BLOG 
+            {/* BLOG */}
             <PortfolioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
             <section aria-label="Anteprima blog" className="space-y-5" data-aos="fade-up">
               <div className="flex items-center gap-4">
@@ -447,7 +447,6 @@ export default function Intro() {
                 </Link>
               </div>
             </section>
-            */}
 
             {/* VIDEOLEZIONI 
             <section aria-label="Videolezioni Future Frames" className="space-y-5" data-aos="fade-up">
