@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-{/* import PortfolioModal from "@/components/PortfolioModal"; */ }
+import PortfolioModal from "@/components/PortfolioModal";
 import MappaConConsent from "./MappaConConsent";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import CinemaVideo from "./CinemaVideo";
