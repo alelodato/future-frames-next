@@ -5,10 +5,15 @@ export async function POST() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return Response.json({ ok: false }, { status: 401 });
 
+    if (!process.env.FM_SITE_URL || !process.env.FM_REVALIDATE_SECRET) {
+        return Response.json({ ok: false, reason: "Variabili d'ambiente mancanti" }, { status: 500 });
+    }
+
     try {
         const response = await fetch(`${process.env.FM_SITE_URL}/api/revalidate`, {
             method: "POST",
             headers: { "x-revalidate-secret": process.env.FM_REVALIDATE_SECRET },
+            signal: AbortSignal.timeout(5000),
         });
         return Response.json({ ok: response.ok }, { status: response.ok ? 200 : 502 });
     } catch {

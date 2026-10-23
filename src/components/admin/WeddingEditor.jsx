@@ -2,21 +2,15 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import { fmSerif, fmCard, fmLabel, fmInput, fmUpload, fmButton } from "@/components/admin/fm-theme";
 
 const BUCKET = "media";
 const FOLDER = "future-memories";
 const MAX_SIDE = 2000;
 const QUALITY = 0.85;
 
-const cardClass =
-    "rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 p-5 space-y-4";
-const labelClass = "font-montserrat text-[0.65rem] uppercase tracking-[0.2em] text-violet-400";
-const inputClass =
-    "w-full rounded-xl border border-violet-500/25 bg-violet-900/10 px-4 py-2.5 font-montserrat text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-violet-400/60";
-const uploadClass =
-    "flex items-center gap-3 cursor-pointer rounded-xl border border-dashed border-violet-500/30 bg-violet-900/10 px-4 py-3 transition hover:border-violet-400/50";
 const thumbButtonClass =
-    "flex h-7 w-7 items-center justify-center rounded-md bg-black/70 text-zinc-200 transition hover:bg-violet-600/80 disabled:opacity-30 disabled:pointer-events-none";
+    "flex h-7 w-7 items-center justify-center bg-[#2A1E16]/80 text-[#F7F2EA] transition hover:bg-[#2A1E16] disabled:pointer-events-none disabled:opacity-30";
 
 // "Giulia & Marco" + "2026-06-14" → "giulia-marco-2026"
 function slugify(names, date) {
@@ -118,7 +112,7 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
         <div className="space-y-2">
             <div
                 ref={containerRef}
-                className="relative w-full overflow-hidden rounded-xl cursor-crosshair select-none border border-violet-500/25"
+                className="relative w-full cursor-crosshair select-none overflow-hidden border border-[#D9C8B2]"
                 style={{ aspectRatio: "6 / 5" }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -128,26 +122,26 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
                 <img
                     src={imageUrl}
                     alt="Posizione copertina"
-                    className="w-full h-full pointer-events-none"
+                    className="pointer-events-none h-full w-full"
                     style={{ objectFit: "cover", objectPosition: `${posX}% ${posY}%` }}
                     draggable={false}
                 />
-                <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-                <div className="absolute top-0 bottom-0 w-px bg-white/20 pointer-events-none" style={{ left: `${posX}%` }} />
-                <div className="absolute left-0 right-0 h-px bg-white/20 pointer-events-none" style={{ top: `${posY}%` }} />
+                <div className="pointer-events-none absolute inset-0 bg-[#2A1E16]/15" />
+                <div className="pointer-events-none absolute top-0 bottom-0 w-px bg-white/40" style={{ left: `${posX}%` }} />
+                <div className="pointer-events-none absolute left-0 right-0 h-px bg-white/40" style={{ top: `${posY}%` }} />
                 <div
-                    className="absolute pointer-events-none"
+                    className="pointer-events-none absolute"
                     style={{ left: `${posX}%`, top: `${posY}%`, transform: "translate(-50%, -50%)" }}
                 >
-                    <div className="w-6 h-6 rounded-full border-2 border-white shadow-[0_0_8px_rgba(0,0,0,0.8)] bg-violet-500/40 backdrop-blur-sm" />
+                    <div className="h-6 w-6 rounded-full border-2 border-white bg-[#2A1E16]/50 shadow-[0_0_8px_rgba(0,0,0,0.6)]" />
                 </div>
-                <div className="absolute bottom-2 right-2 rounded-md bg-black/70 px-2 py-1 pointer-events-none">
-                    <span className="font-montserrat text-[0.5rem] text-zinc-300">
+                <div className="pointer-events-none absolute bottom-2 right-2 bg-[#2A1E16]/80 px-2 py-1">
+                    <span className="font-montserrat text-[0.5rem] text-[#F7F2EA]">
                         {posX}% · {posY}%
                     </span>
                 </div>
             </div>
-            <p className="font-montserrat text-[0.6rem] text-zinc-500">
+            <p className="font-montserrat text-[0.6rem] text-[#5A4637]">
                 Trascina il mirino sul punto da tenere al centro. L’anteprima ha le proporzioni delle card del portfolio.
             </p>
         </div>
@@ -253,11 +247,11 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
             {/* ── INFO BASE ── */}
-            <div className={cardClass}>
-                <h3 className="font-antonio text-base text-violet-300">Informazioni base</h3>
+            <div className={fmCard}>
+                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Informazioni base</h3>
 
                 <div className="space-y-1.5">
-                    <label htmlFor="fm-names" className={labelClass}>Sposi *</label>
+                    <label htmlFor="fm-names" className={fmLabel}>Sposi *</label>
                     <input
                         id="fm-names"
                         type="text"
@@ -265,13 +259,13 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                         onChange={(e) => setNames(e.target.value)}
                         required
                         placeholder="Giulia & Marco"
-                        className={inputClass}
+                        className={fmInput}
                     />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                        <label htmlFor="fm-location" className={labelClass}>Location *</label>
+                        <label htmlFor="fm-location" className={fmLabel}>Location *</label>
                         <input
                             id="fm-location"
                             type="text"
@@ -279,40 +273,40 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                             onChange={(e) => setLocation(e.target.value)}
                             required
                             placeholder="Villa Aurelia, Roma"
-                            className={inputClass}
+                            className={fmInput}
                         />
                     </div>
                     <div className="space-y-1.5">
-                        <label htmlFor="fm-date" className={labelClass}>Data del matrimonio *</label>
+                        <label htmlFor="fm-date" className={fmLabel}>Data del matrimonio *</label>
                         <input
                             id="fm-date"
                             type="date"
                             value={weddingDate}
                             onChange={(e) => setWeddingDate(e.target.value)}
                             required
-                            className={`${inputClass} [color-scheme:dark]`}
+                            className={`${fmInput} [color-scheme:light]`}
                         />
                     </div>
                 </div>
 
-                <p className="font-montserrat text-[0.6rem] text-zinc-500">
+                <p className="font-montserrat text-[0.6rem] text-[#5A4637]">
                     Indirizzo della pagina: /portfolio/{slug || "…"}
                 </p>
             </div>
 
             {/* ── MEDIA ── */}
-            <div className={cardClass}>
-                <h3 className="font-antonio text-base text-violet-300">Copertina e video</h3>
+            <div className={fmCard}>
+                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Copertina e video</h3>
 
                 <div className="space-y-2">
-                    <span className={labelClass}>Immagine di copertina</span>
+                    <span className={fmLabel}>Immagine di copertina</span>
                     {coverUrl && (
                         <div className="space-y-3">
                             <div className="flex justify-end">
                                 <button
                                     type="button"
                                     onClick={() => setCoverUrl("")}
-                                    className="inline-flex items-center gap-2 rounded-lg bg-black/40 px-3 py-1.5 font-montserrat text-[0.6rem] text-zinc-300 transition hover:bg-red-900/60"
+                                    className="inline-flex items-center gap-2 border border-[#D9C8B2] px-3 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-[#5A4637] transition hover:border-red-300 hover:bg-red-50 hover:text-red-800"
                                 >
                                     <i className="fa-solid fa-xmark text-xs" />
                                     Rimuovi copertina
@@ -321,9 +315,9 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                             <CoverPositionPicker imageUrl={coverUrl} posX={posX} posY={posY} onChange={handlePositionChange} />
                         </div>
                     )}
-                    <label className={`${uploadClass} ${uploadingCover ? "opacity-50 pointer-events-none" : ""}`}>
-                        <i className={`fa-solid ${uploadingCover ? "fa-spinner animate-spin" : "fa-image"} text-violet-400 text-sm`} />
-                        <span className="font-montserrat text-xs text-zinc-400">
+                    <label className={`${fmUpload} ${uploadingCover ? "pointer-events-none opacity-50" : ""}`}>
+                        <i className={`fa-solid ${uploadingCover ? "fa-spinner animate-spin" : "fa-image"} text-sm text-[#5A4637]`} />
+                        <span className="font-montserrat text-xs text-[#2A1E16]">
                             {uploadingCover ? "Caricamento..." : coverUrl ? "Sostituisci copertina" : "Carica copertina"}
                         </span>
                         <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" />
@@ -331,33 +325,33 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                 </div>
 
                 <div className="space-y-1.5">
-                    <label htmlFor="fm-vimeo" className={labelClass}>Link Vimeo (film o trailer)</label>
+                    <label htmlFor="fm-vimeo" className={fmLabel}>Link Vimeo (film o trailer)</label>
                     <input
                         id="fm-vimeo"
                         type="url"
                         value={vimeoUrl}
                         onChange={(e) => setVimeoUrl(e.target.value)}
                         placeholder="https://vimeo.com/123456789"
-                        className={inputClass}
+                        className={fmInput}
                     />
                 </div>
             </div>
 
             {/* ── GALLERIA ── */}
-            <div className={cardClass}>
+            <div className={fmCard}>
                 <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-antonio text-base text-violet-300">Galleria</h3>
-                    <span className="font-montserrat text-[0.6rem] text-zinc-500">
+                    <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Galleria</h3>
+                    <span className="font-montserrat text-[0.6rem] text-[#5A4637]">
                         {photos.length} foto · consigliate 15–30
                     </span>
                 </div>
 
                 {photos.length > 0 && (
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                         {photos.map((photo, i) => (
-                            <div key={photo.url} className="relative aspect-square overflow-hidden rounded-xl">
+                            <div key={photo.url} className="relative aspect-square overflow-hidden bg-[#D9C8B2]">
                                 <img src={photo.url} alt={`Foto ${i + 1}`} className="h-full w-full" style={{ objectFit: "cover" }} />
-                                <span className="absolute top-1.5 left-1.5 rounded-md bg-black/70 px-1.5 py-0.5 font-montserrat text-[0.5rem] text-zinc-300">
+                                <span className="absolute top-1.5 left-1.5 bg-[#2A1E16]/80 px-1.5 py-0.5 font-montserrat text-[0.5rem] text-[#F7F2EA]">
                                     {i + 1}
                                 </span>
                                 <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between">
@@ -370,7 +364,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                                         </button>
                                     </div>
                                     <button type="button" onClick={() => removePhoto(i)} aria-label="Elimina foto" className={thumbButtonClass}>
-                                        <i className="fa-solid fa-trash text-[0.6rem] text-red-400" />
+                                        <i className="fa-solid fa-trash text-[0.6rem]" />
                                     </button>
                                 </div>
                             </div>
@@ -378,9 +372,9 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                     </div>
                 )}
 
-                <label className={`${uploadClass} ${galleryProgress ? "opacity-50 pointer-events-none" : ""}`}>
-                    <i className={`fa-solid ${galleryProgress ? "fa-spinner animate-spin" : "fa-images"} text-violet-400 text-sm`} />
-                    <span className="font-montserrat text-xs text-zinc-400">
+                <label className={`${fmUpload} ${galleryProgress ? "pointer-events-none opacity-50" : ""}`}>
+                    <i className={`fa-solid ${galleryProgress ? "fa-spinner animate-spin" : "fa-images"} text-sm text-[#5A4637]`} />
+                    <span className="font-montserrat text-xs text-[#2A1E16]">
                         {galleryProgress
                             ? `Caricamento ${galleryProgress.done}/${galleryProgress.total}...`
                             : "Aggiungi foto (puoi selezionarne più di una)"}
@@ -388,11 +382,11 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                     <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
                 </label>
 
-                {uploadError && <p className="font-montserrat text-xs text-red-400">{uploadError}</p>}
+                {uploadError && <p className="font-montserrat text-xs text-red-700">{uploadError}</p>}
             </div>
 
             {/* ── FOOTER ── */}
-            <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 via-[#0d0b2a] to-slate-950/80 px-4 sm:px-5 py-4">
+            <div className="border border-[#D9C8B2] bg-[#F7F2EA] px-4 py-4 sm:px-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <button
                         type="button"
@@ -400,17 +394,13 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                         aria-pressed={published}
                         className="flex items-center gap-3"
                     >
-                        <span className={`relative h-6 w-11 rounded-full transition-colors ${published ? "bg-violet-500" : "bg-zinc-700"}`}>
-                            <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${published ? "translate-x-5" : "translate-x-0.5"}`} />
+                        <span className={`relative block h-6 w-11 shrink-0 rounded-full transition-colors ${published ? "bg-[#2A1E16]" : "bg-[#D9C8B2]"}`}>
+                            <span className={`absolute top-0.5 block h-5 w-5 rounded-full bg-[#F7F2EA] shadow transition-transform ${published ? "translate-x-5" : "translate-x-0.5"}`} />
                         </span>
-                        <span className="font-montserrat text-xs text-zinc-300">{published ? "Pubblicato" : "Bozza"}</span>
+                        <span className="font-montserrat text-xs text-[#2A1E16]">{published ? "Pubblicato" : "Bozza"}</span>
                     </button>
 
-                    <button
-                        type="submit"
-                        disabled={!canSave}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-violet-400 px-6 py-3 sm:py-2.5 font-montserrat text-xs font-semibold uppercase tracking-wide text-[#050211] shadow-[0_0_20px_rgba(167,139,250,0.5)] transition hover:bg-violet-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
+                    <button type="submit" disabled={!canSave} className={`${fmButton} w-full sm:w-auto`}>
                         {saving ? (
                             <><i className="fa-solid fa-spinner animate-spin text-xs" />Salvataggio...</>
                         ) : (

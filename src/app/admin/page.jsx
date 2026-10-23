@@ -12,6 +12,8 @@ export default function AdminDashboard() {
     publishedArticles: 0,
     pendingComments: 0,
     totalComments: 0,
+    fmWeddings: 0,
+    publishedFmWeddings: 0,
   });
   const [loading, setLoading] = useState(true);
   const [videoRecensione, setVideoRecensione] = useState("");
@@ -33,6 +35,8 @@ export default function AdminDashboard() {
       { count: pendingComments },
       { count: totalComments },
       { data: videoSetting },
+      { count: fmWeddings },
+      { count: publishedFmWeddings },
     ] = await Promise.all([
       supabase.from("projects").select("*", { count: "exact", head: true }),
       supabase.from("projects").select("*", { count: "exact", head: true }).eq("published", true),
@@ -41,6 +45,8 @@ export default function AdminDashboard() {
       supabase.from("article_comments").select("*", { count: "exact", head: true }).eq("approved", false),
       supabase.from("article_comments").select("*", { count: "exact", head: true }),
       supabase.from("site_settings").select("value").eq("key", "video_recensione_url").single(),
+      supabase.from("fm_weddings").select("*", { count: "exact", head: true }),
+      supabase.from("fm_weddings").select("*", { count: "exact", head: true }).eq("published", true),
     ]);
 
     if (videoSetting?.value) setVideoRecensione(videoSetting.value);
@@ -52,6 +58,8 @@ export default function AdminDashboard() {
       publishedArticles: publishedArticles || 0,
       pendingComments: pendingComments || 0,
       totalComments: totalComments || 0,
+      fmWeddings: fmWeddings || 0,
+      publishedFmWeddings: publishedFmWeddings || 0,
     });
     setLoading(false);
   }
