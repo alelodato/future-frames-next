@@ -48,12 +48,12 @@ export async function saveWedding(payload, id = null) {
     if (id) {
         const { data: old } = await supabase
             .from("fm_weddings")
-            .select("cover_url, fm_wedding_photos(id, url)")
+            .select("cover_url, teaser_url, fm_wedding_photos(id, url)")
             .eq("id", id)
             .single();
         if (old) {
             oldPhotoIds = old.fm_wedding_photos.map((photo) => photo.id);
-            oldUrls = [old.cover_url, ...old.fm_wedding_photos.map((photo) => photo.url)].filter(Boolean);
+            oldUrls = [old.cover_url, old.teaser_url, ...old.fm_wedding_photos.map((photo) => photo.url)].filter(Boolean);
         }
 
         const { error } = await supabase.from("fm_weddings").update(fields).eq("id", id);
@@ -76,8 +76,8 @@ export async function saveWedding(payload, id = null) {
         await supabase.from("fm_wedding_photos").delete().in("id", oldPhotoIds);
     }
 
-    // Elimina dallo storage le foto e la copertina che non sono più usate.
-    const currentUrls = new Set([fields.cover_url, ..._photos.map((photo) => photo.url)]);
+    // Elimina dallo storage i file che non sono più usati.
+    const currentUrls = new Set([fields.cover_url, fields.teaser_url, ..._photos.map((photo) => photo.url)]);
     await removeFiles(supabase, oldUrls.filter((url) => !currentUrls.has(url)));
 
     const siteUpdated = await notifySite();
@@ -88,7 +88,7 @@ export async function deleteWedding(id) {
     const supabase = createSupabaseBrowser();
     const { data: old } = await supabase
         .from("fm_weddings")
-        .select("cover_url, fm_wedding_photos(url)")
+        .select("cover_url, teaser_url, fm_wedding_photos(url)")
         .eq("id", id)
         .single();
 
@@ -96,7 +96,7 @@ export async function deleteWedding(id) {
     if (error) return { error: describeError(error) };
 
     if (old) {
-        await removeFiles(supabase, [old.cover_url, ...old.fm_wedding_photos.map((photo) => photo.url)]);
+        await removeFiles(supabase, [old.cover_url, old.teaser_url, ...old.fm_wedding_photos.map((photo) => photo.url)]);
     }
 
     const siteUpdated = await notifySite();

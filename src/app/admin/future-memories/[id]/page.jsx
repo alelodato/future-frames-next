@@ -20,7 +20,7 @@ export default function EditWeddingPage() {
             const supabase = createSupabaseBrowser();
             const { data, error } = await supabase
                 .from("fm_weddings")
-                .select("*, fm_wedding_photos(url, sort_order)")
+                .select("*, fm_wedding_photos(url, width, height, sort_order)")
                 .eq("id", id)
                 .single();
             if (error) setNotice({ type: "error", text: "Matrimonio non trovato." });

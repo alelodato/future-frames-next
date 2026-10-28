@@ -8,6 +8,7 @@ const BUCKET = "media";
 const FOLDER = "future-memories";
 const MAX_SIDE = 2000;
 const QUALITY = 0.85;
+const MAX_VIDEO_MB = 20;
 
 const thumbButtonClass =
     "flex h-7 w-7 items-center justify-center bg-[#2A1E16]/80 text-[#F7F2EA] transition hover:bg-[#2A1E16] disabled:pointer-events-none disabled:opacity-30";
@@ -23,7 +24,11 @@ function slugify(names, date) {
         .replace(/^-+|-+$/g, "");
 }
 
-// Ridimensiona a MAX_SIDE px sul lato lungo e converte in JPEG.
+function randomName(extension) {
+    return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
+}
+
+// Ridimensiona a MAX_SIDE px sul lato lungo, converte in JPEG e restituisce le dimensioni finali.
 async function compressImage(file) {
     const bitmap = await createImageBitmap(file);
     const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
@@ -32,18 +37,38 @@ async function compressImage(file) {
     canvas.height = Math.round(bitmap.height * scale);
     canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     bitmap.close();
-    return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", QUALITY));
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", QUALITY));
+    return { blob, width: canvas.width, height: canvas.height };
 }
 
 async function uploadImage(supabase, file, subfolder) {
-    const blob = await compressImage(file);
+    const { blob, width, height } = await compressImage(file);
     if (!blob) return null;
-    const filename = `${FOLDER}/${subfolder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+    const filename = `${FOLDER}/${subfolder}/${randomName("jpg")}`;
     const { error } = await supabase.storage
         .from(BUCKET)
         .upload(filename, blob, { contentType: "image/jpeg" });
     if (error) return null;
-    return supabase.storage.from(BUCKET).getPublicUrl(filename).data.publicUrl;
+    const url = supabase.storage.from(BUCKET).getPublicUrl(filename).data.publicUrl;
+    return { url, width, height };
+}
+
+// Legge dimensioni e durata del video senza caricarlo.
+function getVideoMeta(file) {
+    return new Promise((resolve) => {
+        const objectUrl = URL.createObjectURL(file);
+        const video = document.createElement("video");
+        video.preload = "metadata";
+        video.onloadedmetadata = () => {
+            resolve({ width: video.videoWidth, height: video.videoHeight, duration: video.duration });
+            URL.revokeObjectURL(objectUrl);
+        };
+        video.onerror = () => {
+            resolve(null);
+            URL.revokeObjectURL(objectUrl);
+        };
+        video.src = objectUrl;
+    });
 }
 
 function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
@@ -112,8 +137,8 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
         <div className="space-y-2">
             <div
                 ref={containerRef}
-                className="relative w-full cursor-crosshair select-none overflow-hidden border border-[#D9C8B2]"
-                style={{ aspectRatio: "6 / 5" }}
+                className="relative mx-auto w-full max-w-[260px] cursor-crosshair select-none overflow-hidden border border-[#D9C8B2]"
+                style={{ aspectRatio: "9 / 16" }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseEnd}
@@ -141,8 +166,8 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
                     </span>
                 </div>
             </div>
-            <p className="font-montserrat text-[0.6rem] text-[#5A4637]">
-                Trascina il mirino sul punto da tenere al centro. L’anteprima ha le proporzioni delle card del portfolio.
+            <p className="text-center font-montserrat text-[0.6rem] text-[#5A4637]">
+                Trascina il mirino sul punto da tenere al centro. L’anteprima ha il formato verticale delle card.
             </p>
         </div>
     );
@@ -155,6 +180,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
     const [location, setLocation] = useState(initialData?.location || "");
     const [weddingDate, setWeddingDate] = useState(initialData?.wedding_date || "");
     const [vimeoUrl, setVimeoUrl] = useState(initialData?.vimeo_url || "");
+    const [teaserUrl, setTeaserUrl] = useState(initialData?.teaser_url || "");
     const [coverUrl, setCoverUrl] = useState(initialData?.cover_url || "");
     const [posX, setPosX] = useState(initialData?.cover_position_x ?? 50);
     const [posY, setPosY] = useState(initialData?.cover_position_y ?? 50);
@@ -162,20 +188,56 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
     const [photos, setPhotos] = useState(() =>
         [...(initialData?.fm_wedding_photos || [])]
             .sort((a, b) => a.sort_order - b.sort_order)
-            .map((photo) => ({ url: photo.url }))
+            .map((photo) => ({ url: photo.url, width: photo.width, height: photo.height }))
     );
+    const [uploadingTeaser, setUploadingTeaser] = useState(false);
+    const [teaserWarning, setTeaserWarning] = useState("");
     const [uploadingCover, setUploadingCover] = useState(false);
     const [galleryProgress, setGalleryProgress] = useState(null); // { done, total }
     const [uploadError, setUploadError] = useState("");
 
     // Lo slug si genera solo alla creazione: modificarlo dopo romperebbe i link già condivisi.
     const slug = isNew ? slugify(names, weddingDate) : initialData.slug;
-    const uploading = uploadingCover || galleryProgress !== null;
+    const uploading = uploadingTeaser || uploadingCover || galleryProgress !== null;
 
     const handlePositionChange = useCallback((x, y) => {
         setPosX(x);
         setPosY(y);
     }, []);
+
+    async function handleTeaserUpload(e) {
+        const file = e.target.files[0];
+        e.target.value = "";
+        if (!file) return;
+        setUploadError("");
+        setTeaserWarning("");
+
+        if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
+            setUploadError(`Il video pesa ${Math.round(file.size / 1024 / 1024)} MB: il massimo è ${MAX_VIDEO_MB} MB. Esportalo a 720p.`);
+            return;
+        }
+
+        const meta = await getVideoMeta(file);
+        const warnings = [];
+        if (meta && meta.width > meta.height) warnings.push("il video non è verticale e sul sito verrà ritagliato");
+        if (meta && meta.duration > 20) warnings.push(`dura ${Math.round(meta.duration)} secondi, consigliati 10-15`);
+
+        setUploadingTeaser(true);
+        const supabase = createSupabaseBrowser();
+        const extension = file.name.split(".").pop().toLowerCase() || "mp4";
+        const filename = `${FOLDER}/teasers/${randomName(extension)}`;
+        const { error } = await supabase.storage
+            .from(BUCKET)
+            .upload(filename, file, { contentType: file.type || "video/mp4" });
+
+        if (error) {
+            setUploadError("Caricamento del video non riuscito. Riprova.");
+        } else {
+            setTeaserUrl(supabase.storage.from(BUCKET).getPublicUrl(filename).data.publicUrl);
+            if (warnings.length) setTeaserWarning(`Attenzione: ${warnings.join(" e ")}.`);
+        }
+        setUploadingTeaser(false);
+    }
 
     async function handleCoverUpload(e) {
         const file = e.target.files[0];
@@ -183,9 +245,9 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
         if (!file) return;
         setUploadError("");
         setUploadingCover(true);
-        const url = await uploadImage(createSupabaseBrowser(), file, "covers");
-        if (url) {
-            setCoverUrl(url);
+        const result = await uploadImage(createSupabaseBrowser(), file, "covers");
+        if (result) {
+            setCoverUrl(result.url);
             setPosX(50);
             setPosY(50);
         } else {
@@ -203,8 +265,8 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
         let failed = 0;
         setGalleryProgress({ done: 0, total: files.length });
         for (const [index, file] of files.entries()) {
-            const url = await uploadImage(supabase, file, "gallery");
-            if (url) setPhotos((prev) => [...prev, { url }]);
+            const result = await uploadImage(supabase, file, "gallery");
+            if (result) setPhotos((prev) => [...prev, result]);
             else failed += 1;
             setGalleryProgress({ done: index + 1, total: files.length });
         }
@@ -234,11 +296,17 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
             location: location.trim(),
             wedding_date: weddingDate,
             vimeo_url: vimeoUrl.trim() || null,
+            teaser_url: teaserUrl || null,
             cover_url: coverUrl || null,
             cover_position_x: posX,
             cover_position_y: posY,
             published,
-            _photos: photos.map((photo, i) => ({ url: photo.url, sort_order: i })),
+            _photos: photos.map((photo, i) => ({
+                url: photo.url,
+                width: photo.width ?? null,
+                height: photo.height ?? null,
+                sort_order: i,
+            })),
         });
     }
 
@@ -294,15 +362,57 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                 </p>
             </div>
 
-            {/* ── MEDIA ── */}
+            {/* ── VIDEO E COPERTINA ── */}
             <div className={fmCard}>
-                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Copertina e video</h3>
+                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Video e copertina</h3>
 
+                {/* Video di anteprima */}
                 <div className="space-y-2">
+                    <span className={fmLabel}>Video di anteprima</span>
+                    <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
+                        Verticale 9:16, 10-15 secondi, MP4 a 720p, massimo {MAX_VIDEO_MB} MB. Va in loop senza audio
+                        nell’elenco del portfolio e in home.
+                    </p>
+                    {teaserUrl && (
+                        <div className="space-y-3">
+                            <div className="relative mx-auto w-full max-w-[200px] overflow-hidden border border-[#D9C8B2] bg-[#D9C8B2]" style={{ aspectRatio: "9 / 16" }}>
+                                <video src={teaserUrl} className="h-full w-full" style={{ objectFit: "cover" }} muted loop playsInline autoPlay />
+                            </div>
+                            <div className="flex justify-center">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setTeaserUrl("");
+                                        setTeaserWarning("");
+                                    }}
+                                    className="inline-flex items-center gap-2 border border-[#D9C8B2] px-3 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-[#5A4637] transition hover:border-red-300 hover:bg-red-50 hover:text-red-800"
+                                >
+                                    <i className="fa-solid fa-xmark text-xs" />
+                                    Rimuovi video
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {teaserWarning && <p className="font-montserrat text-xs text-amber-800">{teaserWarning}</p>}
+                    <label className={`${fmUpload} ${uploadingTeaser ? "pointer-events-none opacity-50" : ""}`}>
+                        <i className={`fa-solid ${uploadingTeaser ? "fa-spinner animate-spin" : "fa-video"} text-sm text-[#5A4637]`} />
+                        <span className="font-montserrat text-xs text-[#2A1E16]">
+                            {uploadingTeaser ? "Caricamento del video..." : teaserUrl ? "Sostituisci video" : "Carica video di anteprima"}
+                        </span>
+                        <input type="file" accept="video/mp4,video/webm" onChange={handleTeaserUpload} className="hidden" />
+                    </label>
+                </div>
+
+                {/* Copertina */}
+                <div className="space-y-2 border-t border-[#D9C8B2] pt-4">
                     <span className={fmLabel}>Immagine di copertina</span>
+                    <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
+                        Si vede mentre il video si carica e quando il video non c’è.
+                    </p>
                     {coverUrl && (
                         <div className="space-y-3">
-                            <div className="flex justify-end">
+                            <CoverPositionPicker imageUrl={coverUrl} posX={posX} posY={posY} onChange={handlePositionChange} />
+                            <div className="flex justify-center">
                                 <button
                                     type="button"
                                     onClick={() => setCoverUrl("")}
@@ -312,7 +422,6 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                                     Rimuovi copertina
                                 </button>
                             </div>
-                            <CoverPositionPicker imageUrl={coverUrl} posX={posX} posY={posY} onChange={handlePositionChange} />
                         </div>
                     )}
                     <label className={`${fmUpload} ${uploadingCover ? "pointer-events-none opacity-50" : ""}`}>
@@ -324,8 +433,9 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                     </label>
                 </div>
 
-                <div className="space-y-1.5">
-                    <label htmlFor="fm-vimeo" className={fmLabel}>Link Vimeo (film o trailer)</label>
+                {/* Vimeo */}
+                <div className="space-y-1.5 border-t border-[#D9C8B2] pt-4">
+                    <label htmlFor="fm-vimeo" className={fmLabel}>Link Vimeo (film o trailer completo)</label>
                     <input
                         id="fm-vimeo"
                         type="url"
@@ -345,6 +455,10 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                         {photos.length} foto · consigliate 15–30
                     </span>
                 </div>
+                <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
+                    Sul sito le foto vengono impaginate come un album: le orizzontali occupano tutta la riga, due verticali
+                    consecutive si affiancano. L’ordine qui decide il ritmo.
+                </p>
 
                 {photos.length > 0 && (
                     <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -353,6 +467,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                                 <img src={photo.url} alt={`Foto ${i + 1}`} className="h-full w-full" style={{ objectFit: "cover" }} />
                                 <span className="absolute top-1.5 left-1.5 bg-[#2A1E16]/80 px-1.5 py-0.5 font-montserrat text-[0.5rem] text-[#F7F2EA]">
                                     {i + 1}
+                                    {photo.width && photo.height ? (photo.height > photo.width ? " · V" : " · O") : ""}
                                 </span>
                                 <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between">
                                     <div className="flex gap-1">
