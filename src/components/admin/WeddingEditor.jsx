@@ -12,6 +12,9 @@ const MAX_VIDEO_MB = 20;
 
 const thumbButtonClass =
     "flex h-7 w-7 items-center justify-center bg-[#2A1E16]/80 text-[#F7F2EA] transition hover:bg-[#2A1E16] disabled:pointer-events-none disabled:opacity-30";
+const removeButtonClass =
+    "inline-flex items-center gap-2 border border-[#D9C8B2] px-3 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-[#5A4637] transition hover:border-red-300 hover:bg-red-50 hover:text-red-800";
+const hintClass = "font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]";
 
 // "Giulia & Marco" + "2026-06-14" → "giulia-marco-2026"
 function slugify(names, date) {
@@ -71,9 +74,106 @@ function getVideoMeta(file) {
     });
 }
 
-function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
+// Carica un video di anteprima controllando peso, durata e orientamento.
+async function uploadTeaser(file, orientation) {
+    if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
+        return {
+            error: `Il video pesa ${Math.round(file.size / 1024 / 1024)} MB: il massimo è ${MAX_VIDEO_MB} MB. Esportalo a 720p.`,
+        };
+    }
+
+    const meta = await getVideoMeta(file);
+    const warnings = [];
+    if (meta) {
+        const isVertical = meta.height > meta.width;
+        if (orientation === "vertical" && !isVertical) warnings.push("il video non è verticale e sul sito verrà ritagliato");
+        if (orientation === "horizontal" && isVertical) warnings.push("il video non è orizzontale e sul sito verrà ritagliato");
+        if (meta.duration > 20) warnings.push(`dura ${Math.round(meta.duration)} secondi, consigliati 10-15`);
+    }
+
+    const supabase = createSupabaseBrowser();
+    const extension = file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "mp4";
+    const filename = `${FOLDER}/teasers/${randomName(extension)}`;
+    const { error } = await supabase.storage
+        .from(BUCKET)
+        .upload(filename, file, { contentType: file.type || "video/mp4" });
+    if (error) return { error: "Caricamento del video non riuscito. Riprova." };
+
+    return {
+        url: supabase.storage.from(BUCKET).getPublicUrl(filename).data.publicUrl,
+        warning: warnings.length ? `Attenzione: ${warnings.join(" e ")}.` : "",
+    };
+}
+
+function TeaserField({ label, hint, orientation, url, setUrl, uploading, setUploading, onError }) {
+    const [warning, setWarning] = useState("");
+    const vertical = orientation === "vertical";
+
+    async function handleFile(e) {
+        const file = e.target.files[0];
+        e.target.value = "";
+        if (!file) return;
+        onError("");
+        setWarning("");
+        setUploading(true);
+        const result = await uploadTeaser(file, orientation);
+        setUploading(false);
+        if (result.error) {
+            onError(result.error);
+            return;
+        }
+        setUrl(result.url);
+        setWarning(result.warning);
+    }
+
+    return (
+        <div className="space-y-2">
+            <span className={fmLabel}>{label}</span>
+            <p className={hintClass}>{hint}</p>
+            {url && (
+                <div className="space-y-3">
+                    <div
+                        className={`relative mx-auto w-full overflow-hidden border border-[#D9C8B2] bg-[#D9C8B2] ${vertical ? "max-w-[200px]" : "max-w-[420px]"
+                            }`}
+                        style={{ aspectRatio: vertical ? "9 / 16" : "16 / 9" }}
+                    >
+                        <video src={url} className="h-full w-full" style={{ objectFit: "cover" }} muted loop playsInline autoPlay />
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setUrl("");
+                                setWarning("");
+                            }}
+                            className={removeButtonClass}
+                        >
+                            <i className="fa-solid fa-xmark text-xs" />
+                            Rimuovi video
+                        </button>
+                    </div>
+                </div>
+            )}
+            {warning && <p className="font-montserrat text-xs text-amber-800">{warning}</p>}
+            <label className={`${fmUpload} ${uploading ? "pointer-events-none opacity-50" : ""}`}>
+                <i className={`fa-solid ${uploading ? "fa-spinner animate-spin" : "fa-video"} text-sm text-[#5A4637]`} />
+                <span className="font-montserrat text-xs text-[#2A1E16]">
+                    {uploading
+                        ? "Caricamento del video..."
+                        : url
+                            ? "Sostituisci video"
+                            : `Carica video ${vertical ? "verticale" : "orizzontale"}`}
+                </span>
+                <input type="file" accept="video/mp4,video/webm" onChange={handleFile} className="hidden" />
+            </label>
+        </div>
+    );
+}
+
+function CoverPositionPicker({ imageUrl, posX, posY, onChange, orientation }) {
     const containerRef = useRef(null);
     const isDragging = useRef(false);
+    const vertical = orientation === "vertical";
 
     function getPosition(e) {
         const rect = containerRef.current.getBoundingClientRect();
@@ -134,41 +234,37 @@ function CoverPositionPicker({ imageUrl, posX, posY, onChange }) {
     }
 
     return (
-        <div className="space-y-2">
+        <div
+            ref={containerRef}
+            className={`relative mx-auto w-full cursor-crosshair select-none overflow-hidden border border-[#D9C8B2] ${vertical ? "max-w-[260px]" : "max-w-[460px]"
+                }`}
+            style={{ aspectRatio: vertical ? "9 / 16" : "16 / 9" }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseEnd}
+            onMouseLeave={handleMouseEnd}
+        >
+            <img
+                src={imageUrl}
+                alt="Posizione copertina"
+                className="pointer-events-none h-full w-full"
+                style={{ objectFit: "cover", objectPosition: `${posX}% ${posY}%` }}
+                draggable={false}
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[#2A1E16]/15" />
+            <div className="pointer-events-none absolute top-0 bottom-0 w-px bg-white/40" style={{ left: `${posX}%` }} />
+            <div className="pointer-events-none absolute left-0 right-0 h-px bg-white/40" style={{ top: `${posY}%` }} />
             <div
-                ref={containerRef}
-                className="relative mx-auto w-full max-w-[260px] cursor-crosshair select-none overflow-hidden border border-[#D9C8B2]"
-                style={{ aspectRatio: "9 / 16" }}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseEnd}
-                onMouseLeave={handleMouseEnd}
+                className="pointer-events-none absolute"
+                style={{ left: `${posX}%`, top: `${posY}%`, transform: "translate(-50%, -50%)" }}
             >
-                <img
-                    src={imageUrl}
-                    alt="Posizione copertina"
-                    className="pointer-events-none h-full w-full"
-                    style={{ objectFit: "cover", objectPosition: `${posX}% ${posY}%` }}
-                    draggable={false}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[#2A1E16]/15" />
-                <div className="pointer-events-none absolute top-0 bottom-0 w-px bg-white/40" style={{ left: `${posX}%` }} />
-                <div className="pointer-events-none absolute left-0 right-0 h-px bg-white/40" style={{ top: `${posY}%` }} />
-                <div
-                    className="pointer-events-none absolute"
-                    style={{ left: `${posX}%`, top: `${posY}%`, transform: "translate(-50%, -50%)" }}
-                >
-                    <div className="h-6 w-6 rounded-full border-2 border-white bg-[#2A1E16]/50 shadow-[0_0_8px_rgba(0,0,0,0.6)]" />
-                </div>
-                <div className="pointer-events-none absolute bottom-2 right-2 bg-[#2A1E16]/80 px-2 py-1">
-                    <span className="font-montserrat text-[0.5rem] text-[#F7F2EA]">
-                        {posX}% · {posY}%
-                    </span>
-                </div>
+                <div className="h-6 w-6 rounded-full border-2 border-white bg-[#2A1E16]/50 shadow-[0_0_8px_rgba(0,0,0,0.6)]" />
             </div>
-            <p className="text-center font-montserrat text-[0.6rem] text-[#5A4637]">
-                Trascina il mirino sul punto da tenere al centro. L’anteprima ha il formato verticale delle card.
-            </p>
+            <div className="pointer-events-none absolute bottom-2 right-2 bg-[#2A1E16]/80 px-2 py-1">
+                <span className="font-montserrat text-[0.5rem] text-[#F7F2EA]">
+                    {posX}% · {posY}%
+                </span>
+            </div>
         </div>
     );
 }
@@ -181,9 +277,12 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
     const [weddingDate, setWeddingDate] = useState(initialData?.wedding_date || "");
     const [vimeoUrl, setVimeoUrl] = useState(initialData?.vimeo_url || "");
     const [teaserUrl, setTeaserUrl] = useState(initialData?.teaser_url || "");
+    const [teaserLandscapeUrl, setTeaserLandscapeUrl] = useState(initialData?.teaser_landscape_url || "");
     const [coverUrl, setCoverUrl] = useState(initialData?.cover_url || "");
     const [posX, setPosX] = useState(initialData?.cover_position_x ?? 50);
     const [posY, setPosY] = useState(initialData?.cover_position_y ?? 50);
+    const [posXDesktop, setPosXDesktop] = useState(initialData?.cover_position_x_desktop ?? 50);
+    const [posYDesktop, setPosYDesktop] = useState(initialData?.cover_position_y_desktop ?? 50);
     const [published, setPublished] = useState(initialData?.published || false);
     const [photos, setPhotos] = useState(() =>
         [...(initialData?.fm_wedding_photos || [])]
@@ -191,53 +290,25 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
             .map((photo) => ({ url: photo.url, width: photo.width, height: photo.height }))
     );
     const [uploadingTeaser, setUploadingTeaser] = useState(false);
-    const [teaserWarning, setTeaserWarning] = useState("");
+    const [uploadingTeaserLandscape, setUploadingTeaserLandscape] = useState(false);
     const [uploadingCover, setUploadingCover] = useState(false);
     const [galleryProgress, setGalleryProgress] = useState(null); // { done, total }
     const [uploadError, setUploadError] = useState("");
 
     // Lo slug si genera solo alla creazione: modificarlo dopo romperebbe i link già condivisi.
     const slug = isNew ? slugify(names, weddingDate) : initialData.slug;
-    const uploading = uploadingTeaser || uploadingCover || galleryProgress !== null;
+    const uploading =
+        uploadingTeaser || uploadingTeaserLandscape || uploadingCover || galleryProgress !== null;
 
     const handlePositionChange = useCallback((x, y) => {
         setPosX(x);
         setPosY(y);
     }, []);
 
-    async function handleTeaserUpload(e) {
-        const file = e.target.files[0];
-        e.target.value = "";
-        if (!file) return;
-        setUploadError("");
-        setTeaserWarning("");
-
-        if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
-            setUploadError(`Il video pesa ${Math.round(file.size / 1024 / 1024)} MB: il massimo è ${MAX_VIDEO_MB} MB. Esportalo a 720p.`);
-            return;
-        }
-
-        const meta = await getVideoMeta(file);
-        const warnings = [];
-        if (meta && meta.width > meta.height) warnings.push("il video non è verticale e sul sito verrà ritagliato");
-        if (meta && meta.duration > 20) warnings.push(`dura ${Math.round(meta.duration)} secondi, consigliati 10-15`);
-
-        setUploadingTeaser(true);
-        const supabase = createSupabaseBrowser();
-        const extension = file.name.split(".").pop().toLowerCase() || "mp4";
-        const filename = `${FOLDER}/teasers/${randomName(extension)}`;
-        const { error } = await supabase.storage
-            .from(BUCKET)
-            .upload(filename, file, { contentType: file.type || "video/mp4" });
-
-        if (error) {
-            setUploadError("Caricamento del video non riuscito. Riprova.");
-        } else {
-            setTeaserUrl(supabase.storage.from(BUCKET).getPublicUrl(filename).data.publicUrl);
-            if (warnings.length) setTeaserWarning(`Attenzione: ${warnings.join(" e ")}.`);
-        }
-        setUploadingTeaser(false);
-    }
+    const handlePositionChangeDesktop = useCallback((x, y) => {
+        setPosXDesktop(x);
+        setPosYDesktop(y);
+    }, []);
 
     async function handleCoverUpload(e) {
         const file = e.target.files[0];
@@ -250,6 +321,8 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
             setCoverUrl(result.url);
             setPosX(50);
             setPosY(50);
+            setPosXDesktop(50);
+            setPosYDesktop(50);
         } else {
             setUploadError("Caricamento della copertina non riuscito. Riprova.");
         }
@@ -297,9 +370,12 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
             wedding_date: weddingDate,
             vimeo_url: vimeoUrl.trim() || null,
             teaser_url: teaserUrl || null,
+            teaser_landscape_url: teaserLandscapeUrl || null,
             cover_url: coverUrl || null,
             cover_position_x: posX,
             cover_position_y: posY,
+            cover_position_x_desktop: posXDesktop,
+            cover_position_y_desktop: posYDesktop,
             published,
             _photos: photos.map((photo, i) => ({
                 url: photo.url,
@@ -362,62 +438,72 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                 </p>
             </div>
 
-            {/* ── VIDEO E COPERTINA ── */}
+            {/* ── VIDEO DI ANTEPRIMA ── */}
             <div className={fmCard}>
-                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Video e copertina</h3>
+                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Video di anteprima</h3>
+                <p className={hintClass}>
+                    Brevi video in loop senza audio: 10-15 secondi, MP4 a 720p, massimo {MAX_VIDEO_MB} MB ciascuno.
+                </p>
 
-                {/* Video di anteprima */}
-                <div className="space-y-2">
-                    <span className={fmLabel}>Video di anteprima</span>
-                    <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
-                        Verticale 9:16, 10-15 secondi, MP4 a 720p, massimo {MAX_VIDEO_MB} MB. Va in loop senza audio
-                        nell’elenco del portfolio e in home.
-                    </p>
-                    {teaserUrl && (
-                        <div className="space-y-3">
-                            <div className="relative mx-auto w-full max-w-[200px] overflow-hidden border border-[#D9C8B2] bg-[#D9C8B2]" style={{ aspectRatio: "9 / 16" }}>
-                                <video src={teaserUrl} className="h-full w-full" style={{ objectFit: "cover" }} muted loop playsInline autoPlay />
-                            </div>
-                            <div className="flex justify-center">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setTeaserUrl("");
-                                        setTeaserWarning("");
-                                    }}
-                                    className="inline-flex items-center gap-2 border border-[#D9C8B2] px-3 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-[#5A4637] transition hover:border-red-300 hover:bg-red-50 hover:text-red-800"
-                                >
-                                    <i className="fa-solid fa-xmark text-xs" />
-                                    Rimuovi video
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                    {teaserWarning && <p className="font-montserrat text-xs text-amber-800">{teaserWarning}</p>}
-                    <label className={`${fmUpload} ${uploadingTeaser ? "pointer-events-none opacity-50" : ""}`}>
-                        <i className={`fa-solid ${uploadingTeaser ? "fa-spinner animate-spin" : "fa-video"} text-sm text-[#5A4637]`} />
-                        <span className="font-montserrat text-xs text-[#2A1E16]">
-                            {uploadingTeaser ? "Caricamento del video..." : teaserUrl ? "Sostituisci video" : "Carica video di anteprima"}
-                        </span>
-                        <input type="file" accept="video/mp4,video/webm" onChange={handleTeaserUpload} className="hidden" />
-                    </label>
+                <TeaserField
+                    label="Verticale 9:16 · telefono e home"
+                    hint="Si vede nell’elenco del portfolio su telefono e nell’anteprima in home."
+                    orientation="vertical"
+                    url={teaserUrl}
+                    setUrl={setTeaserUrl}
+                    uploading={uploadingTeaser}
+                    setUploading={setUploadingTeaser}
+                    onError={setUploadError}
+                />
+
+                <div className="border-t border-[#D9C8B2] pt-4">
+                    <TeaserField
+                        label="Orizzontale 16:9 · computer"
+                        hint="Si vede nell’elenco del portfolio su schermi grandi. Se manca, al suo posto compare la copertina."
+                        orientation="horizontal"
+                        url={teaserLandscapeUrl}
+                        setUrl={setTeaserLandscapeUrl}
+                        uploading={uploadingTeaserLandscape}
+                        setUploading={setUploadingTeaserLandscape}
+                        onError={setUploadError}
+                    />
                 </div>
+            </div>
 
-                {/* Copertina */}
-                <div className="space-y-2 border-t border-[#D9C8B2] pt-4">
+            {/* ── COPERTINA E FILM ── */}
+            <div className={fmCard}>
+                <h3 className="text-2xl text-[#2A1E16]" style={fmSerif}>Copertina e film</h3>
+
+                <div className="space-y-2">
                     <span className={fmLabel}>Immagine di copertina</span>
-                    <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
-                        Si vede mentre il video si carica e quando il video non c’è.
+                    <p className={hintClass}>
+                        Si vede mentre i video si caricano e quando un video manca. Scegli l’inquadratura per ciascun formato
+                        trascinando il mirino sul punto da tenere al centro.
                     </p>
                     {coverUrl && (
-                        <div className="space-y-3">
-                            <CoverPositionPicker imageUrl={coverUrl} posX={posX} posY={posY} onChange={handlePositionChange} />
+                        <div className="space-y-5">
+                            <div className="space-y-2">
+                                <p className={`${fmLabel} text-center`}>Inquadratura telefono · 9:16</p>
+                                <CoverPositionPicker
+                                    imageUrl={coverUrl}
+                                    posX={posX}
+                                    posY={posY}
+                                    onChange={handlePositionChange}
+                                    orientation="vertical"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <p className={`${fmLabel} text-center`}>Inquadratura computer · 16:9</p>
+                                <CoverPositionPicker
+                                    imageUrl={coverUrl}
+                                    posX={posXDesktop}
+                                    posY={posYDesktop}
+                                    onChange={handlePositionChangeDesktop}
+                                    orientation="horizontal"
+                                />
+                            </div>
                             <div className="flex justify-center">
-                                <button
-                                    type="button"
-                                    onClick={() => setCoverUrl("")}
-                                    className="inline-flex items-center gap-2 border border-[#D9C8B2] px-3 py-1.5 font-montserrat text-[0.6rem] uppercase tracking-[0.15em] text-[#5A4637] transition hover:border-red-300 hover:bg-red-50 hover:text-red-800"
-                                >
+                                <button type="button" onClick={() => setCoverUrl("")} className={removeButtonClass}>
                                     <i className="fa-solid fa-xmark text-xs" />
                                     Rimuovi copertina
                                 </button>
@@ -433,7 +519,6 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                     </label>
                 </div>
 
-                {/* Vimeo */}
                 <div className="space-y-1.5 border-t border-[#D9C8B2] pt-4">
                     <label htmlFor="fm-vimeo" className={fmLabel}>Link Vimeo (film o trailer completo)</label>
                     <input
@@ -455,7 +540,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
                         {photos.length} foto · consigliate 15–30
                     </span>
                 </div>
-                <p className="font-montserrat text-[0.65rem] leading-relaxed text-[#5A4637]">
+                <p className={hintClass}>
                     Sul sito le foto vengono impaginate come un album: le orizzontali occupano tutta la riga, due verticali
                     consecutive si affiancano. L’ordine qui decide il ritmo.
                 </p>

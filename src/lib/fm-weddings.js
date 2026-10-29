@@ -3,6 +3,7 @@ import { createSupabaseBrowser } from "@/lib/supabase-browser";
 const BUCKET = "media";
 const FOLDER = "future-memories/";
 const MARKER = `/object/public/${BUCKET}/`;
+const MEDIA_FIELDS = "cover_url, teaser_url, teaser_landscape_url";
 
 // Dall'URL pubblico al percorso nel bucket, solo per i file di Future Memories.
 function pathFromUrl(url) {
@@ -16,6 +17,10 @@ function pathFromUrl(url) {
 async function removeFiles(supabase, urls) {
     const paths = urls.map(pathFromUrl).filter(Boolean);
     if (paths.length) await supabase.storage.from(BUCKET).remove(paths);
+}
+
+function mediaUrls(row) {
+    return [row.cover_url, row.teaser_url, row.teaser_landscape_url].filter(Boolean);
 }
 
 function describeError(error) {
@@ -48,12 +53,12 @@ export async function saveWedding(payload, id = null) {
     if (id) {
         const { data: old } = await supabase
             .from("fm_weddings")
-            .select("cover_url, teaser_url, fm_wedding_photos(id, url)")
+            .select(`${MEDIA_FIELDS}, fm_wedding_photos(id, url)`)
             .eq("id", id)
             .single();
         if (old) {
             oldPhotoIds = old.fm_wedding_photos.map((photo) => photo.id);
-            oldUrls = [old.cover_url, old.teaser_url, ...old.fm_wedding_photos.map((photo) => photo.url)].filter(Boolean);
+            oldUrls = [...mediaUrls(old), ...old.fm_wedding_photos.map((photo) => photo.url)];
         }
 
         const { error } = await supabase.from("fm_weddings").update(fields).eq("id", id);
@@ -77,7 +82,7 @@ export async function saveWedding(payload, id = null) {
     }
 
     // Elimina dallo storage i file che non sono più usati.
-    const currentUrls = new Set([fields.cover_url, fields.teaser_url, ..._photos.map((photo) => photo.url)]);
+    const currentUrls = new Set([...mediaUrls(fields), ..._photos.map((photo) => photo.url)]);
     await removeFiles(supabase, oldUrls.filter((url) => !currentUrls.has(url)));
 
     const siteUpdated = await notifySite();
@@ -88,7 +93,7 @@ export async function deleteWedding(id) {
     const supabase = createSupabaseBrowser();
     const { data: old } = await supabase
         .from("fm_weddings")
-        .select("cover_url, teaser_url, fm_wedding_photos(url)")
+        .select(`${MEDIA_FIELDS}, fm_wedding_photos(url)`)
         .eq("id", id)
         .single();
 
@@ -96,7 +101,7 @@ export async function deleteWedding(id) {
     if (error) return { error: describeError(error) };
 
     if (old) {
-        await removeFiles(supabase, [old.cover_url, old.teaser_url, ...old.fm_wedding_photos.map((photo) => photo.url)]);
+        await removeFiles(supabase, [...mediaUrls(old), ...old.fm_wedding_photos.map((photo) => photo.url)]);
     }
 
     const siteUpdated = await notifySite();
