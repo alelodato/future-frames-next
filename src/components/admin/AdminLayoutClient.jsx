@@ -14,7 +14,7 @@ const navItems = [
 
 const FM_PATH = "/admin/future-memories";
 const FM_QUOTES_PATH = "/admin/future-memories/preventivi";
-const FM_SITE_URL = process.env.NEXT_PUBLIC_FM_SITE_URL || "https://future-memories-wheat.vercel.app";
+const FM_SITE_URL = process.env.NEXT_PUBLIC_FM_SITE_URL || "https://www.futurememories.it";
 
 const fmNavItems = [
   { href: FM_PATH, label: "Portfolio", icon: "fa-solid fa-film" },

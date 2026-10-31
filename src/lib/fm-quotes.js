@@ -1,6 +1,6 @@
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
-export const FM_SITE_URL = process.env.NEXT_PUBLIC_FM_SITE_URL || "https://future-memories-wheat.vercel.app";
+export const FM_SITE_URL = process.env.NEXT_PUBLIC_FM_SITE_URL || "https://www.futurememories.it";
 
 const VALIDITY_DAYS = 10;
 const LIST_FIELDS =
