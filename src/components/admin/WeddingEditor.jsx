@@ -325,6 +325,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
   const [names, setNames] = useState(initialData?.names || "");
   const [location, setLocation] = useState(initialData?.location || "");
   const [weddingDate, setWeddingDate] = useState(initialData?.wedding_date || "");
+  const [caption, setCaption] = useState(initialData?.caption || "");
   const [vimeoUrl, setVimeoUrl] = useState(initialData?.vimeo_url || "");
   const [teaserUrl, setTeaserUrl] = useState(initialData?.teaser_url || "");
   const [teaserLandscapeUrl, setTeaserLandscapeUrl] = useState(initialData?.teaser_landscape_url || "");
@@ -424,6 +425,7 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
       names: names.trim(),
       location: location.trim(),
       wedding_date: weddingDate,
+      caption,
       vimeo_url: vimeoUrl.trim() || null,
       teaser_url: teaserUrl || null,
       teaser_landscape_url: teaserLandscapeUrl || null,
@@ -526,6 +528,25 @@ export default function WeddingEditor({ initialData, onSave, saving }) {
               required
               className={`${fmInput} [color-scheme:light]`}
             />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <label htmlFor="fm-caption" className={fmLabel}>Didascalia (facoltativa)</label>
+          <textarea
+            id="fm-caption"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            rows={5}
+            className={`${fmInput} resize-y`}
+          />
+          <div className="flex items-start justify-between gap-4">
+            <p className={hintClass}>
+              Compare nella pagina del progetto: sotto il film per i video, sopra la galleria per le foto.
+            </p>
+            <span className="shrink-0 font-montserrat text-[0.6rem] text-[#5A4637]">
+              {caption.length} caratteri
+            </span>
           </div>
         </div>
 

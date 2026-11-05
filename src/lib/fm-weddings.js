@@ -46,6 +46,7 @@ export async function notifySite() {
 export async function saveWedding(payload, id = null) {
     const supabase = createSupabaseBrowser();
     const { _photos, ...fields } = payload;
+    fields.caption = fields.caption?.trim() || null;
     let weddingId = id;
     let oldPhotoIds = [];
     let oldUrls = [];
