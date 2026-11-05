@@ -166,7 +166,7 @@ export default function AdminLayout({ children }) {
                 className="!mt-5 flex items-center justify-center border border-[#D9C8B2] px-4 py-5 transition hover:border-[#2A1E16] hover:scale-[1.02]"
                 style={{ backgroundColor: "#F7F2EA" }}
               >
-                <img src="/LogoFutureMemories.png" alt="Future Memories" className="h-20 w-auto" />
+                <img src="/images/LogoFutureMemories.png" alt="Future Memories" className="h-20 w-auto" />
               </Link>
             </>
           )}
